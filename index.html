@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerBI 作品集 | AIA Group</title>
-    <!-- Power BI Embedded SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2/dist/powerbi.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -15,7 +13,6 @@
             min-height: 100vh;
         }
 
-        /* ── Header ── */
         .header {
             background: linear-gradient(135deg, #12121e 0%, #1a1a2e 50%, #0f1a30 100%);
             padding: 36px 24px 24px;
@@ -31,92 +28,44 @@
             width: 200px; height: 2px;
             background: linear-gradient(90deg, transparent, #e94560, #f5a623, transparent);
         }
-        .header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+        .header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
         .header h1 .hl {
             background: linear-gradient(90deg, #e94560, #f5a623);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .header .subtitle {
-            margin-top: 4px;
-            font-size: 0.85rem;
-            color: #6a7a8a;
-            letter-spacing: 1px;
-        }
+        .header .subtitle { margin-top: 4px; font-size: 0.85rem; color: #6a7a8a; letter-spacing: 1px; }
 
-        /* ── Section Switcher ── */
-        .section-wrapper {
-            max-width: 600px;
-            margin: 28px auto 0;
-            padding: 0 16px;
-        }
+        .section-wrapper { max-width: 600px; margin: 28px auto 0; padding: 0 16px; }
         .section-tabs {
-            display: flex;
-            gap: 3px;
+            display: flex; gap: 3px;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 3px;
+            border-radius: 10px; padding: 3px;
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .section-tab {
-            flex: 1;
-            padding: 10px 16px;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #6a7a8a;
-            font-size: 0.82rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            touch-action: manipulation;
+            flex: 1; padding: 10px 16px; border: none; border-radius: 8px;
+            background: transparent; color: #6a7a8a; font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
         }
         .section-tab:hover { color: #c0d0e0; background: rgba(255, 255, 255, 0.04); }
-        .section-tab.active {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.08);
-        }
+        .section-tab.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
         .section-tab .sec-icon { margin-right: 6px; }
 
-        /* ── Main Tabs ── */
-        .tabs-wrapper {
-            max-width: 1000px;
-            margin: 16px auto 0;
-            padding: 0 16px;
-        }
+        .tabs-wrapper { max-width: 1000px; margin: 16px auto 0; padding: 0 16px; }
         .main-tabs {
-            display: flex;
-            gap: 3px;
+            display: flex; gap: 3px;
             background: rgba(255, 255, 255, 0.035);
-            border-radius: 12px;
-            padding: 3px;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px; padding: 3px;
+            backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06);
         }
         .main-tab {
-            flex: 1;
-            min-width: 0;
-            padding: 11px 8px;
-            border: none;
-            border-radius: 10px;
-            background: transparent;
-            color: #7a8a9a;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            touch-action: manipulation;
+            flex: 1; min-width: 0; padding: 11px 8px; border: none; border-radius: 10px;
+            background: transparent; color: #7a8a9a; font-size: 0.75rem; font-weight: 600;
+            cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
         }
         .main-tab:hover { color: #c0d0e0; background: rgba(255, 255, 255, 0.04); }
         .main-tab.active {
@@ -124,52 +73,26 @@
             background: linear-gradient(135deg, #e94560, #c23152);
             box-shadow: 0 4px 18px rgba(233, 69, 96, 0.3);
         }
-        .main-tab .tab-hint {
-            display: block;
-            font-size: 0.5rem;
-            font-weight: 400;
-            opacity: 0.45;
-            margin-top: 1px;
-        }
+        .main-tab .tab-hint { display: block; font-size: 0.5rem; font-weight: 400; opacity: 0.45; margin-top: 1px; }
         .main-tab.active .tab-hint { opacity: 0.7; }
 
-        /* ── Sub Tabs ── */
         .sub-tabs-bar {
-            display: flex;
-            justify-content: center;
-            gap: 4px;
-            margin: 14px auto 0;
-            padding: 3px;
+            display: flex; justify-content: center; gap: 4px;
+            margin: 14px auto 0; padding: 3px;
             background: rgba(255, 255, 255, 0.025);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05);
             max-width: 420px;
         }
         .main-panel:not(.active) .sub-tabs-bar { display: none; }
         .sub-tab {
-            flex: 1;
-            padding: 9px 18px;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: #667;
-            font-size: 0.82rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            touch-action: manipulation;
+            flex: 1; padding: 9px 18px; border: none; border-radius: 8px;
+            background: transparent; color: #667; font-size: 0.82rem; font-weight: 500;
+            cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
+            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
         }
         .sub-tab:hover { color: #aab; background: rgba(255, 255, 255, 0.04); }
-        .sub-tab.active {
-            color: #fff;
-            background: rgba(233, 69, 96, 0.3);
-            box-shadow: 0 2px 8px rgba(233, 69, 96, 0.12);
-        }
+        .sub-tab.active { color: #fff; background: rgba(233, 69, 96, 0.3); box-shadow: 0 2px 8px rgba(233, 69, 96, 0.12); }
 
-        /* ── Content ── */
         .content { max-width: 1240px; margin: 0 auto; padding: 0 24px 56px; }
         .section-content { display: none; }
         .section-content.active { display: block; }
@@ -178,61 +101,39 @@
         .sub-panel { display: none; animation: fadeUp 0.35s ease; }
         .sub-panel.active { display: block; }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ── Report Card ── */
         .report-card {
-            background: #151525;
-            border-radius: 14px;
+            background: #151525; border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             margin-top: 14px;
         }
         .report-card .card-header {
             padding: 12px 22px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             background: rgba(255, 255, 255, 0.015);
         }
-        .report-card .card-header h2 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #e8ecf0;
-        }
+        .report-card .card-header h2 { font-size: 0.95rem; font-weight: 600; color: #e8ecf0; }
         .report-card .card-header .type-tag {
-            display: inline-block;
-            font-size: 0.65rem;
-            font-weight: 600;
-            padding: 2px 12px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
+            display: inline-block; font-size: 0.65rem; font-weight: 600;
+            padding: 2px 12px; border-radius: 20px; letter-spacing: 0.5px;
         }
         .type-tag.profile { background: rgba(79, 172, 254, 0.15); color: #4facfe; }
         .type-tag.report  { background: rgba(244, 166, 74, 0.15);  color: #f4a64a; }
         .type-tag.dashboard { background: rgba(129, 216, 129, 0.15); color: #81d881; }
 
-        /* ── Embed Container (取代 iframe) ── */
         .report-card .card-body {
             position: relative;
             width: 100%;
             padding-top: 56.25%;
             background: #10101a;
         }
-        .embed-container {
+        .report-card .card-body iframe {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            border: 0;
-        }
-        .embed-container iframe {
-            width: 100% !important;
-            height: 100% !important;
             border: 0;
         }
         .card-body .loader {
@@ -246,7 +147,6 @@
             font-size: 0.85rem;
             gap: 10px;
             pointer-events: none;
-            z-index: 1;
         }
         .card-body .loader .spinner {
             width: 32px; height: 32px;
@@ -257,15 +157,8 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ── Footer ── */
-        .footer {
-            text-align: center; padding: 28px 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            color: #445;
-            font-size: 0.82rem;
-        }
+        .footer { text-align: center; padding: 28px 24px; border-top: 1px solid rgba(255, 255, 255, 0.04); color: #445; font-size: 0.82rem; }
 
-        /* ── Responsive ── */
         @media (max-width: 768px) {
             .header { padding: 28px 16px 20px; }
             .header h1 { font-size: 1.35rem; }
@@ -275,19 +168,8 @@
             .section-tab { font-size: 0.65rem; padding: 8px 6px; min-height: 40px; }
             .section-tab .sec-icon { margin-right: 4px; }
             .tabs-wrapper { margin-top: 12px; padding: 0 10px; }
-            .main-tabs {
-                gap: 2px; padding: 2px; border-radius: 8px;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                scroll-snap-type: x proximity;
-            }
-            .main-tab {
-                font-size: 0.6rem; padding: 10px 6px;
-                min-height: 40px;
-                scroll-snap-align: start;
-                flex: 0 0 auto;
-                min-width: calc(50% - 2px);
-            }
+            .main-tabs { gap: 2px; padding: 2px; border-radius: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+            .main-tab { font-size: 0.6rem; padding: 10px 6px; min-height: 40px; scroll-snap-align: start; flex: 0 0 auto; min-width: calc(50% - 2px); }
             .main-tab .tab-hint { display: block; font-size: 0.45rem; }
             .sub-tabs-bar { max-width: 100%; margin-top: 10px; gap: 3px; padding: 2px; border-radius: 8px; }
             .sub-tab { font-size: 0.72rem; padding: 10px 10px; min-height: 40px; }
@@ -307,13 +189,11 @@
 </head>
 <body>
 
-<!-- ═══ Header ═══ -->
 <header class="header">
     <h1><span class="hl">PowerBI</span> 作品集</h1>
     <div class="subtitle">AIA Group · 数据分析与监控</div>
 </header>
 
-<!-- ═══ Section Switcher ═══ -->
 <div class="section-wrapper">
     <nav class="section-tabs" role="tablist">
         <button class="section-tab active" role="tab" aria-selected="true" data-section="0">
@@ -360,7 +240,7 @@
                     <div class="card-header"><h2>Consumption Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-0p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-0p"></div>
+                        <iframe title="Consumption Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZDZmMzM0MDYtYjU0Ny00ZGIwLWIzMDEtZTFhNWEyOGZmZjgzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-0p').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -369,7 +249,7 @@
                     <div class="card-header"><h2>Consumption Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-0r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-0r"></div>
+                        <iframe title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-0r').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -386,7 +266,7 @@
                     <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-1p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-1p"></div>
+                        <iframe title="Cloud Efficiency Saving Profile" src="https://app.powerbi.com/view?r=eyJrIjoiNjhhNWRlZWYtMzA4OC00Mzc3LTkyZWMtOWU3MmYzYTI3NjZiIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-1p').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -395,7 +275,7 @@
                     <div class="card-header"><h2>Cloud Efficiency Saving Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-1r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-1r"></div>
+                        <iframe title="Cloud Efficiency Saving" src="https://app.powerbi.com/view?r=eyJrIjoiMjEzZjVmYTUtMTdiYS00MmQ4LWIwMWYtODI1NmFjMzg4OGIzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-1r').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -412,7 +292,7 @@
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-2p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-2p"></div>
+                        <iframe title="Cloud and Kyndryl Spend Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZGIxMTZlNjQtMzZhNy00MDU1LWE2NmYtNTZiYzJhZmVlZDYwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-2p').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -421,7 +301,7 @@
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-2r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-2r"></div>
+                        <iframe title="Cloud and Kyndryl Spend" src="https://app.powerbi.com/view?r=eyJrIjoiYzZmNTc4MWYtMDk1Ny00MjY5LTlmN2QtMGJhMTQzNWI0ZGEwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-2r').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -438,7 +318,7 @@
                     <div class="card-header"><h2>Cloud Cost Management Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-3p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-3p"></div>
+                        <iframe title="Cloud Cost Management Profile" src="https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-3p').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -447,7 +327,7 @@
                     <div class="card-header"><h2>Cloud Cost Management Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-3r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <div class="embed-container" id="embed-3r"></div>
+                        <iframe title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-3r').style.display='none'"></iframe>
                     </div>
                 </div>
             </div>
@@ -478,226 +358,123 @@
                 </div>
                 <div class="card-body">
                     <div class="loader" id="loader-s1-0"><div class="spinner"></div><span>正在加载报告…</span></div>
-                    <div class="embed-container" id="embed-s1-0"></div>
+                    <iframe title="Group Applications Monitoring Dashboard"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US"
+                        allowFullScreen="true"
+                        onload="document.getElementById('loader-s1-0').style.display='none'">
+                    </iframe>
                 </div>
             </div>
         </section>
     </main>
 </div>
 
-<!-- ═══ Footer ═══ -->
 <footer class="footer">
-    © 2026 AIA Group · 基于 Microsoft Power BI Embedded 构建 · Locale: en-US
+    © 2026 AIA Group · 基于 Microsoft Power BI 构建 · Locale: en-US
 </footer>
 
 <script>
-(function() {
-    'use strict';
+    (function() {
+        'use strict';
 
-    // ════════════════════════════════════════════
-    // Report embed configuration
-    // ════════════════════════════════════════════
-    const REPORTS = {
-        '0p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiZDZmMzM0MDYtYjU0Ny00ZGIwLWIzMDEtZTFhNWEyOGZmZjgzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '0r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '1p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiNjhhNWRlZWYtMzA4OC00Mzc3LTkyZWMtOWU3MmYzYTI3NjZiIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '1r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiMjEzZjVmYTUtMTdiYS00MmQ4LWIwMWYtODI1NmFjMzg4OGIzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '2p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiZGIxMTZlNjQtMzZhNy00MDU1LWE2NmYtNTZiYzJhZmVlZDYwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '2r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiYzZmNTc4MWYtMDk1Ny00MjY5LTlmN2QtMGJhMTQzNWI0ZGEwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '3p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        '3r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-        's1-0': { url: 'https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
-    };
+        var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
+        var sectionContents = Array.from(document.querySelectorAll('.section-content'));
 
-    // ════════════════════════════════════════════
-    // Power BI Embedding
-    // ════════════════════════════════════════════
-    var embedded = {}; // track which reports have been embedded
-
-    function embedReport(key) {
-        // Skip if already embedded
-        if (embedded[key]) return;
-        var config = REPORTS[key];
-        if (!config) return;
-
-        var container = document.getElementById('embed-' + key);
-        if (!container) return;
-
-        // Mark as embedded immediately to prevent double-init
-        embedded[key] = true;
-
-        try {
-            var report = powerbi.embed(container, {
-                type: 'report',
-                id: key,
-                embedUrl: config.url,
-                localeSettings: { language: 'en-us' }
+        sectionTabs.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var idx = btn.dataset.section;
+                sectionTabs.forEach(function(b) {
+                    b.classList.toggle('active', b.dataset.section === idx);
+                    b.setAttribute('aria-selected', b.dataset.section === idx);
+                });
+                sectionContents.forEach(function(c) {
+                    c.classList.toggle('active', c.dataset.section === idx);
+                });
             });
-
-            // Hide loader when report renders
-            report.on('rendered', function() {
-                var loader = document.getElementById('loader-' + key);
-                if (loader) loader.style.display = 'none';
-            });
-
-            // Also hide loader on load (fallback)
-            report.on('loaded', function() {
-                var loader = document.getElementById('loader-' + key);
-                if (loader) loader.style.display = 'none';
-            });
-        } catch (e) {
-            console.warn('PowerBI embed failed for', key, e);
-            // Fallback: if SDK fails, create an iframe directly
-            container.innerHTML = '<iframe title="' + key + '" src="' + config.url + '" style="width:100%;height:100%;border:0;" allowFullScreen="true"></iframe>';
-            var loader = document.getElementById('loader-' + key);
-            if (loader) loader.style.display = 'none';
-        }
-    }
-
-    function embedActiveReports() {
-        // Find the currently visible sub-panel (or main-panel for no-sub cases)
-        var visiblePanels = document.querySelectorAll('.sub-panel.active, .main-panel.active .embed-container');
-        document.querySelectorAll('.embed-container').forEach(function(c) {
-            if (c.offsetParent !== null) {
-                var panel = c.closest('.sub-panel') || c.closest('.main-panel');
-                if (panel && panel.classList.contains('active')) {
-                    var key = c.id.replace('embed-', '');
-                    embedReport(key);
-                }
-            }
         });
-    }
 
-    // ════════════════════════════════════════════
-    // Tab switching
-    // ════════════════════════════════════════════
-    var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
-    var sectionContents = Array.from(document.querySelectorAll('.section-content'));
+        document.querySelectorAll('.main-tab').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var idx = btn.dataset.main;
+                var parentContent = btn.closest('.section-content');
+                if (!parentContent) return;
 
-    sectionTabs.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var idx = btn.dataset.section;
-            sectionTabs.forEach(function(b) {
-                b.classList.toggle('active', b.dataset.section === idx);
-                b.setAttribute('aria-selected', b.dataset.section === idx);
+                parentContent.querySelectorAll('.main-tab').forEach(function(b) {
+                    b.classList.toggle('active', b.dataset.main === idx);
+                    b.setAttribute('aria-selected', b.dataset.main === idx);
+                });
+                parentContent.querySelectorAll('.main-panel').forEach(function(p) {
+                    p.classList.toggle('active', p.dataset.main === idx);
+                });
             });
-            sectionContents.forEach(function(c) {
-                c.classList.toggle('active', c.dataset.section === idx);
-            });
-            // Embed visible reports after DOM update
-            setTimeout(embedActiveReports, 50);
         });
-    });
 
-    // Main tab switching
-    document.querySelectorAll('.main-tab').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var idx = btn.dataset.main;
-            var parentContent = btn.closest('.section-content');
-            if (!parentContent) return;
+        document.querySelectorAll('.sub-tab').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var subKey = btn.dataset.sub;
+                var parent = btn.closest('.main-panel');
+                if (!parent) return;
 
-            parentContent.querySelectorAll('.main-tab').forEach(function(b) {
-                b.classList.toggle('active', b.dataset.main === idx);
-                b.setAttribute('aria-selected', b.dataset.main === idx);
+                parent.querySelectorAll('.sub-tab').forEach(function(b) {
+                    b.classList.toggle('active', b.dataset.sub === subKey);
+                    b.setAttribute('aria-selected', b.dataset.sub === subKey);
+                });
+                parent.querySelectorAll('.sub-panel').forEach(function(p) {
+                    p.classList.toggle('active', p.dataset.sub === subKey);
+                });
             });
-            parentContent.querySelectorAll('.main-panel').forEach(function(p) {
-                p.classList.toggle('active', p.dataset.main === idx);
-            });
-            setTimeout(embedActiveReports, 50);
         });
-    });
 
-    // Sub-tab switching
-    document.querySelectorAll('.sub-tab').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            var subKey = btn.dataset.sub;
-            var parent = btn.closest('.main-panel');
-            if (!parent) return;
+        function applyHash() {
+            var hash = location.hash.replace('#', '');
+            if (!hash) return;
+            var parts = hash.split('-');
+            var sIdx = parts[0], mIdx = parts[1], subKey = parts[2];
 
-            parent.querySelectorAll('.sub-tab').forEach(function(b) {
-                b.classList.toggle('active', b.dataset.sub === subKey);
-                b.setAttribute('aria-selected', b.dataset.sub === subKey);
-            });
-            parent.querySelectorAll('.sub-panel').forEach(function(p) {
-                p.classList.toggle('active', p.dataset.sub === subKey);
-            });
-            setTimeout(embedActiveReports, 50);
-        });
-    });
+            var secBtn = sectionTabs.find(function(t) { return t.dataset.section === sIdx; });
+            if (secBtn) secBtn.click();
 
-    // ════════════════════════════════════════════
-    // URL hash support
-    // ════════════════════════════════════════════
-    function applyHash() {
-        var hash = location.hash.replace('#', '');
-        if (!hash) return;
-        var parts = hash.split('-');
-        var sIdx = parts[0];
-        var mIdx = parts[1];
-        var subKey = parts[2];
+            if (mIdx) {
+                var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
+                if (content) {
+                    var mainBtn = content.querySelector('.main-tab[data-main="' + mIdx + '"]');
+                    if (mainBtn) mainBtn.click();
 
-        var secBtn = sectionTabs.find(function(t) { return t.dataset.section === sIdx; });
-        if (secBtn) secBtn.click();
-
-        if (mIdx) {
-            var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
-            if (content) {
-                var mainBtn = content.querySelector('.main-tab[data-main="' + mIdx + '"]');
-                if (mainBtn) mainBtn.click();
-
-                if (subKey) {
-                    var panel = content.querySelector('.main-panel[data-main="' + mIdx + '"]');
-                    if (panel) {
-                        var subBtn = panel.querySelector('.sub-tab[data-sub="' + subKey + '"]');
-                        if (subBtn) subBtn.click();
+                    if (subKey) {
+                        var panel = content.querySelector('.main-panel[data-main="' + mIdx + '"]');
+                        if (panel) {
+                            var subBtn = panel.querySelector('.sub-tab[data-sub="' + subKey + '"]');
+                            if (subBtn) subBtn.click();
+                        }
                     }
                 }
             }
         }
-    }
 
-    function updateHash() {
-        var activeSec = sectionTabs.find(function(b) { return b.classList.contains('active'); });
-        if (!activeSec) return;
-        var sIdx = activeSec.dataset.section;
-        var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
-        if (!content) return;
-        var activeMain = content.querySelector('.main-tab.active');
-        if (!activeMain) return;
-        var mIdx = activeMain.dataset.main;
-        var panel = content.querySelector('.main-panel.active');
-        var activeSub = panel ? panel.querySelector('.sub-tab.active') : null;
-        var subKey = activeSub ? activeSub.dataset.sub : 'profile';
-        history.replaceState(null, '', '#' + sIdx + '-' + mIdx + '-' + subKey);
-    }
-
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.section-tab, .main-tab, .sub-tab')) {
-            setTimeout(updateHash, 10);
+        function updateHash() {
+            var activeSec = sectionTabs.find(function(b) { return b.classList.contains('active'); });
+            if (!activeSec) return;
+            var sIdx = activeSec.dataset.section;
+            var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
+            if (!content) return;
+            var activeMain = content.querySelector('.main-tab.active');
+            if (!activeMain) return;
+            var mIdx = activeMain.dataset.main;
+            var panel = content.querySelector('.main-panel.active');
+            var activeSub = panel ? panel.querySelector('.sub-tab.active') : null;
+            var subKey = activeSub ? activeSub.dataset.sub : 'profile';
+            history.replaceState(null, '', '#' + sIdx + '-' + mIdx + '-' + subKey);
         }
-    });
 
-    window.addEventListener('hashchange', applyHash);
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.section-tab, .main-tab, .sub-tab')) {
+                setTimeout(updateHash, 10);
+            }
+        });
 
-    // ════════════════════════════════════════════
-    // Initialize: wait for powerbi-client then embed
-    // ════════════════════════════════════════════
-    function init() {
-        if (typeof powerbi === 'undefined') {
-            setTimeout(init, 200);
-            return;
-        }
-        applyHash();
-        setTimeout(embedActiveReports, 100);
-    }
-
-    // Run after DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
+        window.addEventListener('load', applyHash);
+        window.addEventListener('hashchange', applyHash);
+    })();
 </script>
 
 </body>
