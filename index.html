@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerBI 作品集 | AIA Group</title>
+    <!-- Power BI Embedded SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2/dist/powerbi.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -47,7 +49,7 @@
             letter-spacing: 1px;
         }
 
-        /* ── Section Switcher ( # 层级切换 ) ── */
+        /* ── Section Switcher ── */
         .section-wrapper {
             max-width: 600px;
             margin: 28px auto 0;
@@ -71,22 +73,20 @@
             font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             touch-action: manipulation;
-        }
-            transition: all 0.25s ease;
-            white-space: nowrap;
         }
         .section-tab:hover { color: #c0d0e0; background: rgba(255, 255, 255, 0.04); }
         .section-tab.active {
             color: #fff;
             background: rgba(255, 255, 255, 0.08);
-            box-shadow: none;
         }
         .section-tab .sec-icon { margin-right: 6px; }
 
-        /* ── Main Tabs ( ## 层级 ) ── */
+        /* ── Main Tabs ── */
         .tabs-wrapper {
             max-width: 1000px;
             margin: 16px auto 0;
@@ -133,7 +133,7 @@
         }
         .main-tab.active .tab-hint { opacity: 0.7; }
 
-        /* ── Sub Tabs ( ### 层级 ) ── */
+        /* ── Sub Tabs ── */
         .sub-tabs-bar {
             display: flex;
             justify-content: center;
@@ -171,13 +171,10 @@
 
         /* ── Content ── */
         .content { max-width: 1240px; margin: 0 auto; padding: 0 24px 56px; }
-
         .section-content { display: none; }
         .section-content.active { display: block; }
-
         .main-panel { display: none; }
         .main-panel.active { display: block; }
-
         .sub-panel { display: none; animation: fadeUp 0.35s ease; }
         .sub-panel.active { display: block; }
 
@@ -220,16 +217,22 @@
         .type-tag.report  { background: rgba(244, 166, 74, 0.15);  color: #f4a64a; }
         .type-tag.dashboard { background: rgba(129, 216, 129, 0.15); color: #81d881; }
 
+        /* ── Embed Container (取代 iframe) ── */
         .report-card .card-body {
             position: relative;
             width: 100%;
             padding-top: 56.25%;
             background: #10101a;
         }
-        .report-card .card-body iframe {
+        .embed-container {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
+            border: 0;
+        }
+        .embed-container iframe {
+            width: 100% !important;
+            height: 100% !important;
             border: 0;
         }
         .card-body .loader {
@@ -243,6 +246,7 @@
             font-size: 0.85rem;
             gap: 10px;
             pointer-events: none;
+            z-index: 1;
         }
         .card-body .loader .spinner {
             width: 32px; height: 32px;
@@ -266,17 +270,11 @@
             .header { padding: 28px 16px 20px; }
             .header h1 { font-size: 1.35rem; }
             .header .subtitle { font-size: 0.72rem; }
-
             .section-wrapper { margin-top: 20px; padding: 0 10px; }
             .section-tabs { gap: 2px; padding: 2px; border-radius: 8px; }
-            .section-tab {
-                font-size: 0.65rem; padding: 8px 6px;
-                min-height: 40px;
-            }
+            .section-tab { font-size: 0.65rem; padding: 8px 6px; min-height: 40px; }
             .section-tab .sec-icon { margin-right: 4px; }
-
             .tabs-wrapper { margin-top: 12px; padding: 0 10px; }
-
             .main-tabs {
                 gap: 2px; padding: 2px; border-radius: 8px;
                 overflow-x: auto;
@@ -291,23 +289,14 @@
                 min-width: calc(50% - 2px);
             }
             .main-tab .tab-hint { display: block; font-size: 0.45rem; }
-
             .sub-tabs-bar { max-width: 100%; margin-top: 10px; gap: 3px; padding: 2px; border-radius: 8px; }
-            .sub-tab {
-                font-size: 0.72rem; padding: 10px 10px;
-                min-height: 40px;
-            }
-
+            .sub-tab { font-size: 0.72rem; padding: 10px 10px; min-height: 40px; }
             .content { padding: 0 10px 28px; }
             .report-card { margin-top: 10px; border-radius: 12px; }
             .report-card .card-header { padding: 10px 14px; flex-wrap: wrap; gap: 4px; }
             .report-card .card-header h2 { font-size: 0.8rem; }
-            .report-card .card-body { padding-top: 56.25%; }
-            .report-card .card-body iframe { height: 100%; }
-
             .footer { padding: 20px 16px; font-size: 0.7rem; }
         }
-
         @media (max-width: 480px) {
             .main-tab { min-width: calc(100% / 3); font-size: 0.55rem; }
             .main-tab .tab-hint { display: none; }
@@ -324,7 +313,7 @@
     <div class="subtitle">AIA Group · 数据分析与监控</div>
 </header>
 
-<!-- ═══ Section Switcher (对应 md # 层级) ═══ -->
+<!-- ═══ Section Switcher ═══ -->
 <div class="section-wrapper">
     <nav class="section-tabs" role="tablist">
         <button class="section-tab active" role="tab" aria-selected="true" data-section="0">
@@ -371,7 +360,7 @@
                     <div class="card-header"><h2>Consumption Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-0p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Consumption Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZDZmMzM0MDYtYjU0Ny00ZGIwLWIzMDEtZTFhNWEyOGZmZjgzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-0p').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-0p"></div>
                     </div>
                 </div>
             </div>
@@ -380,7 +369,7 @@
                     <div class="card-header"><h2>Consumption Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-0r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-0r').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-0r"></div>
                     </div>
                 </div>
             </div>
@@ -397,7 +386,7 @@
                     <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-1p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud Efficiency Saving Profile" src="https://app.powerbi.com/view?r=eyJrIjoiNjhhNWRlZWYtMzA4OC00Mzc3LTkyZWMtOWU3MmYzYTI3NjZiIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-1p').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-1p"></div>
                     </div>
                 </div>
             </div>
@@ -406,7 +395,7 @@
                     <div class="card-header"><h2>Cloud Efficiency Saving Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-1r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud Efficiency Saving" src="https://app.powerbi.com/view?r=eyJrIjoiMjEzZjVmYTUtMTdiYS00MmQ4LWIwMWYtODI1NmFjMzg4OGIzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-1r').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-1r"></div>
                     </div>
                 </div>
             </div>
@@ -423,7 +412,7 @@
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-2p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud and Kyndryl Spend Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZGIxMTZlNjQtMzZhNy00MDU1LWE2NmYtNTZiYzJhZmVlZDYwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-2p').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-2p"></div>
                     </div>
                 </div>
             </div>
@@ -432,7 +421,7 @@
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-2r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud and Kyndryl Spend" src="https://app.powerbi.com/view?r=eyJrIjoiYzZmNTc4MWYtMDk1Ny00MjY5LTlmN2QtMGJhMTQzNWI0ZGEwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-2r').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-2r"></div>
                     </div>
                 </div>
             </div>
@@ -449,7 +438,7 @@
                     <div class="card-header"><h2>Cloud Cost Management Profile</h2><span class="type-tag profile">Profile</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-3p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud Cost Management Profile" src="https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-3p').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-3p"></div>
                     </div>
                 </div>
             </div>
@@ -458,7 +447,7 @@
                     <div class="card-header"><h2>Cloud Cost Management Report</h2><span class="type-tag report">Report</span></div>
                     <div class="card-body">
                         <div class="loader" id="loader-3r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" allowFullScreen="true" onload="document.getElementById('loader-3r').style.display='none'"></iframe>
+                        <div class="embed-container" id="embed-3r"></div>
                     </div>
                 </div>
             </div>
@@ -481,7 +470,6 @@
     </div>
 
     <main class="content">
-
         <section class="main-panel active" role="tabpanel" data-main="0">
             <div class="report-card">
                 <div class="card-header">
@@ -490,133 +478,226 @@
                 </div>
                 <div class="card-body">
                     <div class="loader" id="loader-s1-0"><div class="spinner"></div><span>正在加载报告…</span></div>
-                    <iframe title="Group Applications Monitoring Dashboard"
-                        src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D"
-                        allowFullScreen="true"
-                        onload="document.getElementById('loader-s1-0').style.display='none'">
-                    </iframe>
+                    <div class="embed-container" id="embed-s1-0"></div>
                 </div>
             </div>
         </section>
-
     </main>
 </div>
 
 <!-- ═══ Footer ═══ -->
 <footer class="footer">
-    © 2026 AIA Group · 基于 Microsoft Power BI 构建
+    © 2026 AIA Group · 基于 Microsoft Power BI Embedded 构建 · Locale: en-US
 </footer>
 
 <script>
-    (function() {
-        'use strict';
+(function() {
+    'use strict';
 
-        // ── Section switching ( # 层级 ) ──
-        const sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
-        const sectionContents = Array.from(document.querySelectorAll('.section-content'));
+    // ════════════════════════════════════════════
+    // Report embed configuration
+    // ════════════════════════════════════════════
+    const REPORTS = {
+        '0p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiZDZmMzM0MDYtYjU0Ny00ZGIwLWIzMDEtZTFhNWEyOGZmZjgzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '0r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '1p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiNjhhNWRlZWYtMzA4OC00Mzc3LTkyZWMtOWU3MmYzYTI3NjZiIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '1r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiMjEzZjVmYTUtMTdiYS00MmQ4LWIwMWYtODI1NmFjMzg4OGIzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '2p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiZGIxMTZlNjQtMzZhNy00MDU1LWE2NmYtNTZiYzJhZmVlZDYwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '2r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiYzZmNTc4MWYtMDk1Ny00MjY5LTlmN2QtMGJhMTQzNWI0ZGEwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '3p':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        '3r':  { url: 'https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+        's1-0': { url: 'https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D' },
+    };
 
-        sectionTabs.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = btn.dataset.section;
-                sectionTabs.forEach(b => {
-                    b.classList.toggle('active', b.dataset.section === idx);
-                    b.setAttribute('aria-selected', b.dataset.section === idx);
-                });
-                sectionContents.forEach(c => {
-                    c.classList.toggle('active', c.dataset.section === idx);
-                });
+    // ════════════════════════════════════════════
+    // Power BI Embedding
+    // ════════════════════════════════════════════
+    var embedded = {}; // track which reports have been embedded
+
+    function embedReport(key) {
+        // Skip if already embedded
+        if (embedded[key]) return;
+        var config = REPORTS[key];
+        if (!config) return;
+
+        var container = document.getElementById('embed-' + key);
+        if (!container) return;
+
+        // Mark as embedded immediately to prevent double-init
+        embedded[key] = true;
+
+        try {
+            var report = powerbi.embed(container, {
+                type: 'report',
+                id: key,
+                embedUrl: config.url,
+                localeSettings: { language: 'en-us' }
             });
-        });
 
-        // ── Main tab switching ( ## 层级 ) ──
-        document.querySelectorAll('.main-tab').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const idx = btn.dataset.main;
-                // Only affect tabs within the same section
-                const parentContent = btn.closest('.section-content');
-                if (!parentContent) return;
-
-                parentContent.querySelectorAll('.main-tab').forEach(b => {
-                    b.classList.toggle('active', b.dataset.main === idx);
-                    b.setAttribute('aria-selected', b.dataset.main === idx);
-                });
-                parentContent.querySelectorAll('.main-panel').forEach(p => {
-                    p.classList.toggle('active', p.dataset.main === idx);
-                });
+            // Hide loader when report renders
+            report.on('rendered', function() {
+                var loader = document.getElementById('loader-' + key);
+                if (loader) loader.style.display = 'none';
             });
-        });
 
-        // ── Sub-tab switching ( ### 层级 ) ──
-        document.querySelectorAll('.sub-tab').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const subKey = btn.dataset.sub;
-                const parent = btn.closest('.main-panel');
-                if (!parent) return;
-
-                parent.querySelectorAll('.sub-tab').forEach(b => {
-                    b.classList.toggle('active', b.dataset.sub === subKey);
-                    b.setAttribute('aria-selected', b.dataset.sub === subKey);
-                });
-                parent.querySelectorAll('.sub-panel').forEach(p => {
-                    p.classList.toggle('active', p.dataset.sub === subKey);
-                });
+            // Also hide loader on load (fallback)
+            report.on('loaded', function() {
+                var loader = document.getElementById('loader-' + key);
+                if (loader) loader.style.display = 'none';
             });
+        } catch (e) {
+            console.warn('PowerBI embed failed for', key, e);
+            // Fallback: if SDK fails, create an iframe directly
+            container.innerHTML = '<iframe title="' + key + '" src="' + config.url + '" style="width:100%;height:100%;border:0;" allowFullScreen="true"></iframe>';
+            var loader = document.getElementById('loader-' + key);
+            if (loader) loader.style.display = 'none';
+        }
+    }
+
+    function embedActiveReports() {
+        // Find the currently visible sub-panel (or main-panel for no-sub cases)
+        var visiblePanels = document.querySelectorAll('.sub-panel.active, .main-panel.active .embed-container');
+        document.querySelectorAll('.embed-container').forEach(function(c) {
+            if (c.offsetParent !== null) {
+                var panel = c.closest('.sub-panel') || c.closest('.main-panel');
+                if (panel && panel.classList.contains('active')) {
+                    var key = c.id.replace('embed-', '');
+                    embedReport(key);
+                }
+            }
         });
+    }
 
-        // ── URL hash support ──
-        function applyHash() {
-            const hash = location.hash.replace('#', '');
-            if (!hash) return;
-            const parts = hash.split('-');
-            const sIdx = parts[0];
-            const mIdx = parts[1];
-            const subKey = parts[2];
+    // ════════════════════════════════════════════
+    // Tab switching
+    // ════════════════════════════════════════════
+    var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
+    var sectionContents = Array.from(document.querySelectorAll('.section-content'));
 
-            const secBtn = sectionTabs.find(t => t.dataset.section === sIdx);
-            if (secBtn) { secBtn.click(); }
+    sectionTabs.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = btn.dataset.section;
+            sectionTabs.forEach(function(b) {
+                b.classList.toggle('active', b.dataset.section === idx);
+                b.setAttribute('aria-selected', b.dataset.section === idx);
+            });
+            sectionContents.forEach(function(c) {
+                c.classList.toggle('active', c.dataset.section === idx);
+            });
+            // Embed visible reports after DOM update
+            setTimeout(embedActiveReports, 50);
+        });
+    });
 
-            if (mIdx) {
-                const content = sectionContents.find(c => c.dataset.section === sIdx);
-                if (content) {
-                    const mainBtn = content.querySelector(`.main-tab[data-main="${mIdx}"]`);
-                    if (mainBtn) mainBtn.click();
+    // Main tab switching
+    document.querySelectorAll('.main-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = btn.dataset.main;
+            var parentContent = btn.closest('.section-content');
+            if (!parentContent) return;
 
-                    if (subKey) {
-                        const panel = content.querySelector(`.main-panel[data-main="${mIdx}"]`);
-                        if (panel) {
-                            const subBtn = panel.querySelector(`.sub-tab[data-sub="${subKey}"]`);
-                            if (subBtn) subBtn.click();
-                        }
+            parentContent.querySelectorAll('.main-tab').forEach(function(b) {
+                b.classList.toggle('active', b.dataset.main === idx);
+                b.setAttribute('aria-selected', b.dataset.main === idx);
+            });
+            parentContent.querySelectorAll('.main-panel').forEach(function(p) {
+                p.classList.toggle('active', p.dataset.main === idx);
+            });
+            setTimeout(embedActiveReports, 50);
+        });
+    });
+
+    // Sub-tab switching
+    document.querySelectorAll('.sub-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var subKey = btn.dataset.sub;
+            var parent = btn.closest('.main-panel');
+            if (!parent) return;
+
+            parent.querySelectorAll('.sub-tab').forEach(function(b) {
+                b.classList.toggle('active', b.dataset.sub === subKey);
+                b.setAttribute('aria-selected', b.dataset.sub === subKey);
+            });
+            parent.querySelectorAll('.sub-panel').forEach(function(p) {
+                p.classList.toggle('active', p.dataset.sub === subKey);
+            });
+            setTimeout(embedActiveReports, 50);
+        });
+    });
+
+    // ════════════════════════════════════════════
+    // URL hash support
+    // ════════════════════════════════════════════
+    function applyHash() {
+        var hash = location.hash.replace('#', '');
+        if (!hash) return;
+        var parts = hash.split('-');
+        var sIdx = parts[0];
+        var mIdx = parts[1];
+        var subKey = parts[2];
+
+        var secBtn = sectionTabs.find(function(t) { return t.dataset.section === sIdx; });
+        if (secBtn) secBtn.click();
+
+        if (mIdx) {
+            var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
+            if (content) {
+                var mainBtn = content.querySelector('.main-tab[data-main="' + mIdx + '"]');
+                if (mainBtn) mainBtn.click();
+
+                if (subKey) {
+                    var panel = content.querySelector('.main-panel[data-main="' + mIdx + '"]');
+                    if (panel) {
+                        var subBtn = panel.querySelector('.sub-tab[data-sub="' + subKey + '"]');
+                        if (subBtn) subBtn.click();
                     }
                 }
             }
         }
+    }
 
-        function updateHash() {
-            const activeSec = sectionTabs.find(b => b.classList.contains('active'));
-            if (!activeSec) return;
-            const sIdx = activeSec.dataset.section;
-            const content = sectionContents.find(c => c.dataset.section === sIdx);
-            if (!content) return;
-            const activeMain = content.querySelector('.main-tab.active');
-            if (!activeMain) return;
-            const mIdx = activeMain.dataset.main;
-            const panel = content.querySelector('.main-panel.active');
-            const activeSub = panel ? panel.querySelector('.sub-tab.active') : null;
-            const subKey = activeSub ? activeSub.dataset.sub : 'profile';
-            history.replaceState(null, '', `#${sIdx}-${mIdx}-${subKey}`);
+    function updateHash() {
+        var activeSec = sectionTabs.find(function(b) { return b.classList.contains('active'); });
+        if (!activeSec) return;
+        var sIdx = activeSec.dataset.section;
+        var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
+        if (!content) return;
+        var activeMain = content.querySelector('.main-tab.active');
+        if (!activeMain) return;
+        var mIdx = activeMain.dataset.main;
+        var panel = content.querySelector('.main-panel.active');
+        var activeSub = panel ? panel.querySelector('.sub-tab.active') : null;
+        var subKey = activeSub ? activeSub.dataset.sub : 'profile';
+        history.replaceState(null, '', '#' + sIdx + '-' + mIdx + '-' + subKey);
+    }
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.section-tab, .main-tab, .sub-tab')) {
+            setTimeout(updateHash, 10);
         }
+    });
 
-        document.addEventListener('click', e => {
-            if (e.target.closest('.section-tab, .main-tab, .sub-tab')) {
-                setTimeout(updateHash, 10);
-            }
-        });
+    window.addEventListener('hashchange', applyHash);
 
-        window.addEventListener('load', applyHash);
-        window.addEventListener('hashchange', applyHash);
+    // ════════════════════════════════════════════
+    // Initialize: wait for powerbi-client then embed
+    // ════════════════════════════════════════════
+    function init() {
+        if (typeof powerbi === 'undefined') {
+            setTimeout(init, 200);
+            return;
+        }
+        applyHash();
+        setTimeout(embedActiveReports, 100);
+    }
 
-    })();
+    // Run after DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
 </script>
 
 </body>
