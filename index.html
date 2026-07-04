@@ -445,7 +445,7 @@
                 <div class="card-section active" data-card="intro">
                     <div class="card-video">
                         <video id="video-0" controls playsinline preload="metadata" onplay="pauseOtherVideos(this)">
-                            <source src="Consumption Introduction.mp4" type="video/mp4">
+                            <source src="YOUR_VIDEO_URL_Consumption" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -512,7 +512,7 @@
                 <div class="card-section active" data-card="intro">
                     <div class="card-video">
                         <video id="video-1" controls playsinline preload="metadata" onplay="pauseOtherVideos(this)">
-                            <source src="Cloud Efficiency Saving Introduction.mp4" type="video/mp4">
+                            <source src="YOUR_VIDEO_URL_CloudEfficiencySaving" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -579,7 +579,7 @@
                 <div class="card-section active" data-card="intro">
                     <div class="card-video">
                         <video id="video-2" controls playsinline preload="metadata" onplay="pauseOtherVideos(this)">
-                            <source src="Cloud & kyndryl Spend Introduction.mp4" type="video/mp4">
+                            <source src="YOUR_VIDEO_URL_CloudKyndrylSpend" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -645,7 +645,7 @@
                 <div class="card-section active" data-card="intro">
                     <div class="card-video">
                         <video id="video-3" controls playsinline preload="metadata" onplay="pauseOtherVideos(this)">
-                            <source src="Cloud Cost Management Introduction.mp4" type="video/mp4">
+                            <source src="YOUR_VIDEO_URL_CloudCostManagement" type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -848,14 +848,21 @@
                     var cardIdx = card.closest('.main-panel') ? card.closest('.main-panel').dataset.main : '0';
                     var secIdx = card.closest('.section-content') ? card.closest('.section-content').dataset.section : '0';
                     var docFiles = [
-                        {s: '0', m: '0', file: 'Consumption语义模型文档.md'},
-                        {s: '0', m: '1', file: 'Cloud Efficiency Saving语义模型文档.md'},
-                        {s: '0', m: '2', file: 'Cloud & kyndryl Spend语义模型文档.md'},
-                        {s: '0', m: '3', file: 'Cloud Cost Management Introduction语义模型文档.md'}
+                        {s: '0', m: '0', file: 'Consumption%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8B%E6%96%87%E6%A1%A3.md'},
+                        {s: '0', m: '1', file: 'Cloud%20Efficiency%20Saving%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8B%E6%96%87%E6%A1%A3.md'},
+                        {s: '0', m: '2', file: 'Cloud%20%26%20kyndryl%20Spend%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8B%E6%96%87%E6%A1%A3.md'},
+                        {s: '0', m: '3', file: 'Cloud%20Cost%20Management%20Introduction%E8%AF%AD%E4%B9%89%E6%A8%A1%E5%9E%8B%E6%96%87%E6%A1%A3.md'}
                     ];
                     var match = docFiles.find(function(d) { return d.s === secIdx && d.m === cardIdx; });
                     if (match) {
-                        fetch(match.file).then(function(r) { return r.text(); }).then(function(md) {
+                        if (typeof marked === 'undefined') {
+                            loading.innerHTML = '<span style="color:#f4a64a">正在加载解析库，请稍后重试…</span>';
+                            return;
+                        }
+                        fetch(match.file).then(function(r) {
+                            if (!r.ok) throw new Error('HTTP ' + r.status);
+                            return r.text();
+                        }).then(function(md) {
                             content.innerHTML = marked.parse(md);
                             loading.style.display = 'none';
                             content.style.display = 'block';
