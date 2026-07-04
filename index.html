@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -59,42 +59,52 @@
         /* ── Hero / Title ── */
         .hero {
             position: sticky; top: 0; text-align: center; z-index: 100;
-            height: 190px;
+            padding: 48px 24px 32px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            overflow: hidden;
-            transition: height .35s ease-out, box-shadow .35s ease-out;
         }
-        .hero.compact {
-            height: 58px;
-            box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+        .hero::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 320px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent), transparent);
         }
+        .hero .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+        .hero .top-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+        .hero .top-badge {
+            display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px 6px 14px; border-radius: 20px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
+        }
+        .hero .top-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; animation: dotAlive 2s ease-in-out infinite; }
+        @keyframes dotAlive { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero .author-credit { display: inline-flex; align-items: center; gap: 10px; }
+        .hero .author-credit .avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.15); animation: avatarBreathe 3s ease-in-out infinite; }
+        @keyframes avatarBreathe { 0%,100% { box-shadow: 0 0 0 0 rgba(233,69,96,0); } 50% { box-shadow: 0 0 0 5px rgba(233,69,96,0.15); border-color: rgba(233,69,96,0.35); } }
+        .hero .author-credit .author-text { display: flex; flex-direction: column; align-items: flex-start; }
+        .hero .author-credit .author-text .by { font-size: 0.62rem; color: var(--color-text-muted); letter-spacing: 0.06em; }
+        .hero .author-credit .author-text .name { font-size: 0.82rem; font-weight: 600; color: #c0d0e0; letter-spacing: 0.03em; }
+        .hero .author-credit:hover .author-text .name { color: var(--color-primary); }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
+        .hero h1 .hl {
+            background: linear-gradient(135deg, var(--color-primary) 0%, #f06a80 30%, var(--color-accent) 70%, #f8c14a 100%);
+            background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            animation: gradShift 4s ease-in-out infinite alternate;
+        }
+        @keyframes gradShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        .hero .disclaimer-badge {
+            display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+            padding: 5px 16px; border-radius: 20px;
+            background: rgba(233,185,50,0.05); border: 1px solid rgba(233,185,50,0.1);
+            font-size: 0.68rem; color: #998833;
+        }
+        .hero .disclaimer-badge svg { width: 12px; height: 12px; opacity: 0.6; }
+        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
-        .hero .hero-inner {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity .3s ease-out;
-        }
-        .hero .hero-inner-expanded { opacity: 1; }
-        .hero.compact .hero-inner-expanded { opacity: 0; }
-        .hero .hero-inner-compact { opacity: 0; }
-        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: opacity .3s ease-out; }
-        .hero.compact .deco-layer { opacity: 0; }
-        .hero .mouse-glow, .hero .shine-divider { transition: opacity .3s ease-out; }
-        .hero.compact .mouse-glow, .hero.compact .shine-divider { opacity: 0; }
-        .hero .compact-row { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
-
-        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: opacity .3s ease-out; }
-        .hero.compact .deco-layer { opacity: 0; }
+        .hero .glow-orb {
             position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
             will-change: transform; z-index: 0;
         }
         .hero .glow-orb.orb-1 {
-            width: 420px; height: 420px; top: -160px; right: -80px;
-            background: radial-gradient(circle, rgba(233,69,96,0.12) 0%, transparent 70%);
-            animation: orbFloat 12s ease-in-out infinite alternate;
-        }
-        .hero .glow-orb.orb-2 {
             width: 300px; height: 300px; bottom: -100px; left: -60px;
             background: radial-gradient(circle, rgba(245,166,35,0.07) 0%, transparent 70%);
             animation: orbFloat 16s ease-in-out infinite alternate-reverse;
@@ -580,7 +590,7 @@
     </div>
     <div class="mouse-glow" id="mouseGlow"></div>
     <div class="shine-divider"></div>
-    <div class="hero-inner hero-inner-expanded">
+    <div class="hero-inner">
         <div class="top-row">
             <div class="top-badge">
                 <span class="dot"></span>
@@ -599,22 +609,6 @@
         <div class="disclaimer-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01M10.29 20.14l-7.21-7.21c-.57-.57-.57-1.5 0-2.07l7.21-7.21c.57-.57 1.5-.57 2.07 0l7.21 7.21c.57.57.57 1.5 0 2.07l-7.21 7.21c-.57.57-1.5.57-2.07 0z"/></svg>
             模拟演示数据 · 不代表真实业务信息
-        </div>
-    </div>
-    <div class="hero-inner hero-inner-compact">
-        <div class="compact-row">
-            <div class="top-badge">
-                <span class="dot"></span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                AIA Group
-            </div>
-            <div class="author-credit">
-                <img class="avatar" src="icon-red.jpg" alt="Jevon Zhu" style="width:22px;height:22px">
-                <span class="author-text">
-                    <span class="name" style="font-size:0.72rem">Jevon Zhu</span>
-                </span>
-            </div>
-            <h1 style="font-size:1.1rem;margin:0;text-shadow:none"><span class="hl">PowerBI</span> 作品集</h1>
         </div>
     </div>
 </header>
@@ -1198,18 +1192,10 @@
         });
     })();
 
-    /* ── Hero scroll shrink ── */
-    (function() {
-        var hero = document.querySelector('.hero');
-        if (!hero) return;
-        function sync() {
-            hero.classList.toggle('compact', window.scrollY > 80);
-        }
-        window.addEventListener('scroll', sync, {passive: true});
-        sync();
-    })();
+    /* ── No hero scroll shrink ── */
 })();
 </script>
 
 </body>
 </html>
+
