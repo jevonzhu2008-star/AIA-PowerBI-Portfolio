@@ -36,6 +36,7 @@
             background-clip: text;
         }
         .header .subtitle { margin-top: 4px; font-size: 0.85rem; color: #6a7a8a; letter-spacing: 1px; }
+        .header .header-disclaimer { margin-top: 10px; font-size: 0.72rem; color: #8a8a4a; border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 8px; }
 
         .section-wrapper { max-width: 600px; margin: 28px auto 0; padding: 0 16px; }
         .section-tabs {
@@ -163,6 +164,7 @@
             .header { padding: 28px 16px 20px; }
             .header h1 { font-size: 1.35rem; }
             .header .subtitle { font-size: 0.72rem; }
+            .header .header-disclaimer { font-size: 0.6rem; margin-top: 8px; padding-top: 6px; }
             .section-wrapper { margin-top: 20px; padding: 0 10px; }
             .section-tabs { gap: 2px; padding: 2px; border-radius: 8px; }
             .section-tab { font-size: 0.65rem; padding: 8px 6px; min-height: 40px; }
@@ -192,6 +194,7 @@
 <header class="header">
     <h1><span class="hl">PowerBI</span> 作品集</h1>
     <div class="subtitle">AIA Group · 数据分析与监控</div>
+    <div class="header-disclaimer">本作品集所涉及的全部数据均为模拟演示数据，不代表真实业务信息。</div>
 </header>
 
 <div class="section-wrapper">
@@ -354,7 +357,7 @@
             <div class="report-card">
                 <div class="card-header">
                     <h2>Group Applications Monitoring Dashboard</h2>
-                    <span class="type-tag dashboard">Dashboard</span>
+                    <span class="type-tag report">Report</span>
                 </div>
                 <div class="card-body">
                     <div class="loader" id="loader-s1-0"><div class="spinner"></div><span>正在加载报告…</span></div>
@@ -370,7 +373,7 @@
 </div>
 
 <footer class="footer">
-    © 2026 AIA Group · 基于 Microsoft Power BI 构建 · Locale: en-US
+    <p>© 2026 AIA Group · 基于 Microsoft Power BI 构建 · Locale: en-US</p>
 </footer>
 
 <script>
