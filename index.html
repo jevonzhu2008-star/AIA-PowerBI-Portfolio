@@ -58,47 +58,56 @@
 
         /* ── Hero / Title ── */
         .hero {
-            position: sticky; top: 0; overflow: hidden; text-align: center;
+            position: sticky; top: 0; text-align: center;
             padding: 56px var(--space-lg) 40px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             isolation: isolate; z-index: 100;
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+            transition: padding .3s, box-shadow .3s;
+            transition-timing-function: var(--ease-out);
+            will-change: padding;
+            contain: layout style paint;
         }
         .hero.compact {
-            padding: 18px var(--space-lg) 14px;
+            padding: 16px var(--space-lg) 14px;
             background: linear-gradient(135deg, #0a0a14 0%, #10101e 50%, #0a0a14 100%);
             box-shadow: 0 4px 40px rgba(0,0,0,0.6);
         }
-        .hero.compact .glow-orb,
-        .hero.compact .grid-lines,
-        .hero.compact .particles,
-        .hero.compact .mouse-glow,
-        .hero.compact .shine-divider,
-        .hero.compact .disclaimer-badge { opacity: 0; transition: opacity 0.3s; pointer-events: none; }
-        /* but keep the orb-3 fade-out slower as a subtle holdover */
-        .hero .glow-orb,
-        .hero .grid-lines,
-        .hero .particles,
-        .hero .mouse-glow,
+        .hero .deco-layer {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            transition: opacity .3s var(--ease-out);
+        }
+        .hero.compact .deco-layer { opacity: 0; }
+        .hero .deco-layer .glow-orb,
+        .hero .deco-layer .grid-lines,
+        .hero .deco-layer .particles,
+        .hero .mouse-glow { transition: opacity .3s var(--ease-out); }
         .hero .shine-divider,
-        .hero .disclaimer-badge { transition: opacity 0.4s var(--ease-out); }
+        .hero .disclaimer-badge { transition: opacity .3s var(--ease-out); }
+        .hero.compact .shine-divider,
+        .hero.compact .disclaimer-badge { opacity: 0; }
 
         .hero.compact .top-row { margin-bottom: 0; }
         .hero.compact .top-badge { font-size: 0.65rem; padding: 3px 12px 3px 10px; }
         .hero.compact .top-badge .dot { width: 4px; height: 4px; }
         .hero.compact .top-badge svg { width: 12px; height: 12px; }
         .hero.compact .author-credit { gap: 6px; }
-        .hero.compact .author-credit .avatar { width: 22px; height: 22px; animation: none; box-shadow: 0 0 0 0 transparent; }
+        .hero.compact .author-credit .avatar { width: 22px; height: 22px; animation: none; box-shadow: none; }
         .hero.compact .author-credit .author-text .by { display: none; }
         .hero.compact .author-credit .author-text .name { font-size: 0.72rem; }
         .hero.compact h1 {
-            font-size: 1.3rem; margin: 2px 0 0;
-            text-shadow: none;
+            font-size: 1.3rem; margin: 0;
+            text-shadow: none; transform: none;
         }
-        .hero.compact h1:hover { transform: none; }
         .hero.compact h1 .hl::after { display: none; }
-        .hero.compact .hero-inner { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .hero.compact .hero-inner { gap: 20px; }
+
+        .hero-inner {
+            position: relative; z-index: 1;
+            display: flex; flex-direction: column; align-items: center;
+            transition: gap .3s var(--ease-out);
+            contain: layout;
+        }
         .hero .glow-orb {
             position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
             will-change: transform; z-index: 0;
@@ -584,10 +593,13 @@
 <body>
 
 <header class="hero">
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-    <div class="glow-orb orb-3"></div>
-    <div class="grid-lines"></div>
+    <div class="deco-layer">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+        <div class="grid-lines"></div>
+        <div class="particles" id="particles"></div>
+    </div>
     <div class="mouse-glow" id="mouseGlow"></div>
     <div class="particles" id="particles"></div>
     <div class="shine-divider"></div>
