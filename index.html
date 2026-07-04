@@ -148,9 +148,13 @@
         }
 
         /* ── Logo badge ── */
+        .hero .top-row {
+            display: flex; align-items: center; justify-content: center; gap: 16px;
+            margin-bottom: 20px; position: relative; z-index: 1;
+            flex-wrap: wrap;
+        }
         .hero .top-badge {
             display: inline-flex; align-items: center; gap: 8px;
-            margin-bottom: 20px; position: relative; z-index: 1;
             padding: 6px 18px 6px 14px; border-radius: 20px;
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
             font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
@@ -197,8 +201,8 @@
 
         .hero .author-credit {
             display: inline-flex; align-items: center; gap: 10px;
-            margin-top: 12px; position: relative; z-index: 1;
-            animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+            position: relative; z-index: 1;
+            animation: fadeUp 0.8s var(--ease-out) 0.15s both;
         }
         .hero .author-credit .avatar {
             width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
@@ -537,19 +541,21 @@
     <div class="particles" id="particles"></div>
     <div class="shine-divider"></div>
     <div class="hero-inner">
-        <div class="top-badge">
-            <span class="dot"></span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            AIA Group
+        <div class="top-row">
+            <div class="top-badge">
+                <span class="dot"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                AIA Group
+            </div>
+            <div class="author-credit">
+                <img class="avatar" src="icon-red.jpg" alt="Jevon Zhu">
+                <span class="author-text">
+                    <span class="by">CREATED BY</span>
+                    <span class="name">Jevon Zhu</span>
+                </span>
+            </div>
         </div>
         <h1><span class="hl">PowerBI</span> 作品集</h1>
-        <div class="author-credit">
-            <img class="avatar" src="icon-red.jpg" alt="Jevon Zhu">
-            <span class="author-text">
-                <span class="by">CREATED BY</span>
-                <span class="name">Jevon Zhu</span>
-            </span>
-        </div>
         <div class="disclaimer-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01M10.29 20.14l-7.21-7.21c-.57-.57-.57-1.5 0-2.07l7.21-7.21c.57-.57 1.5-.57 2.07 0l7.21 7.21c.57.57.57 1.5 0 2.07l-7.21 7.21c-.57.57-1.5.57-2.07 0z"/></svg>
             模拟演示数据 · 不代表真实业务信息
