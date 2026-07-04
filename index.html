@@ -513,6 +513,14 @@
         }
         .card-video .video-placeholder svg { width: 48px; height: 48px; opacity: 0.3; }
 
+        /* ── Analysis Section ── */
+        .card-analysis {
+            background: #0d0d18; width: 100%;
+        }
+        .card-analysis iframe {
+            display: block; width: 100%; border: 0;
+        }
+
         /* ── Business Overview ── */
         .biz-section {
             padding: var(--space-lg);
@@ -670,6 +678,9 @@
                     <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
                     </button>
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Analysis
+                    </button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -714,6 +725,10 @@
                 <div class="card-section card-doc" data-card="doc">
                     <div class="doc-loading" id="doc-loading-0"><div class="spinner"></div><span>正在加载文档…</span></div>
                     <div class="doc-content" id="doc-content-0" style="display:none"></div>
+                </div>
+
+                <div class="card-section card-analysis" data-card="analysis">
+                    <iframe title="Consumption Analysis Report" src="Consumption_report.html"></iframe>
                 </div>
             </div>
         </section>
@@ -1105,6 +1120,25 @@
                             loading.innerHTML = '<span style="color:#d31145">文档加载失败</span>';
                         });
                     }
+                }
+            }
+
+            /* ── Auto-height Analysis iframe ── */
+            if (cardKey === 'analysis') {
+                var iframe = card.querySelector('iframe');
+                if (iframe && !iframe.dataset.autoresized) {
+                    iframe.dataset.autoresized = '1';
+                    iframe.onload = function() {
+                        try {
+                            var h = iframe.contentWindow.document.documentElement.scrollHeight;
+                            if (h > 100) iframe.style.height = h + 'px';
+                        } catch(e) {}
+                    };
+                    // also try immediately if already loaded
+                    try {
+                        var h = iframe.contentWindow.document.documentElement.scrollHeight;
+                        if (h > 100) iframe.style.height = h + 'px';
+                    } catch(e) {}
                 }
             }
         });
