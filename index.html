@@ -195,9 +195,38 @@
         }
         .hero .tagline strong { color: #c0d0e0; font-weight: 500; }
 
+        .hero .author-credit {
+            display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 12px; position: relative; z-index: 1;
+            animation: fadeUp 0.8s var(--ease-out) 0.2s both;
+        }
+        .hero .author-credit .avatar {
+            width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+            border: 1.5px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+            flex-shrink: 0;
+        }
+        .hero .author-credit:hover .avatar {
+            transform: scale(1.15);
+            border-color: var(--color-primary);
+        }
+        .hero .author-credit .author-text {
+            display: flex; flex-direction: column; align-items: flex-start; gap: 0;
+        }
+        .hero .author-credit .author-text .by {
+            font-size: 0.62rem; color: var(--color-text-muted); letter-spacing: 0.06em;
+            line-height: 1;
+        }
+        .hero .author-credit .author-text .name {
+            font-size: 0.82rem; font-weight: 600; color: #c0d0e0;
+            letter-spacing: 0.03em; line-height: 1.4;
+            transition: color 0.3s var(--ease-out);
+        }
+        .hero .author-credit:hover .author-text .name { color: var(--color-primary); }
+
         .hero .disclaimer-badge {
             display: inline-flex; align-items: center; gap: 6px;
-            margin-top: 18px; padding: 5px 16px; border-radius: 20px;
+            margin-top: 16px; padding: 5px 16px; border-radius: 20px;
             background: rgba(233,185,50,0.05);
             border: 1px solid rgba(233,185,50,0.1);
             font-size: 0.68rem; color: #998833; position: relative; z-index: 1;
@@ -516,6 +545,13 @@
         <h1><span class="hl">PowerBI</span> 作品集</h1>
         <div class="hero-sub">
             <div class="tagline"><strong>Cloud &amp; FinOps</strong> · 数据分析与监控解决方案</div>
+        </div>
+        <div class="author-credit">
+            <img class="avatar" src="icon.jpg" alt="Jevon Zhu">
+            <span class="author-text">
+                <span class="by">CREATED BY</span>
+                <span class="name">Jevon Zhu</span>
+            </span>
         </div>
         <div class="disclaimer-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01M10.29 20.14l-7.21-7.21c-.57-.57-.57-1.5 0-2.07l7.21-7.21c.57-.57 1.5-.57 2.07 0l7.21 7.21c.57.57.57 1.5 0 2.07l-7.21 7.21c-.57.57-1.5.57-2.07 0z"/></svg>
