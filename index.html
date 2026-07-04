@@ -59,37 +59,33 @@
         /* ── Hero / Title ── */
         .hero {
             position: sticky; top: 0; text-align: center; z-index: 100;
-            padding: 56px 24px 40px;
+            height: 190px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+            overflow: hidden;
+            transition: height .35s ease-out, box-shadow .35s ease-out;
         }
         .hero.compact {
-            padding: 14px 24px 12px;
-            background: linear-gradient(135deg, #0a0a14 0%, #10101e 50%, #0a0a14 100%);
+            height: 58px;
             box-shadow: 0 4px 40px rgba(0,0,0,0.6);
         }
-        .hero .deco-layer,
-        .hero .mouse-glow,
-        .hero .shine-divider { transition: opacity .3s ease-out; }
-        .hero.compact .deco-layer,
-        .hero.compact .mouse-glow,
-        .hero.compact .shine-divider { opacity: 0; }
 
-        .hero.compact .disclaimer-badge { display: none; }
-        .hero.compact .top-row { margin-bottom: 0; }
-        .hero.compact .top-badge { font-size: 0.65rem; padding: 3px 12px 3px 10px; }
-        .hero.compact .top-badge .dot { width: 4px; height: 4px; }
-        .hero.compact .top-badge svg { width: 12px; height: 12px; }
-        .hero.compact .author-credit .avatar { width: 22px; height: 22px; animation: none; }
-        .hero.compact .author-credit .author-text .by { display: none; }
-        .hero.compact .author-credit .author-text .name { font-size: 0.72rem; }
-        .hero.compact h1 { font-size: 1.25rem; text-shadow: none; }
-        .hero.compact h1 .hl::after { display: none; }
-        .hero.compact .hero-inner { flex-direction: row; justify-content: center; gap: 18px; }
+        .hero .hero-inner {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity .3s ease-out;
+        }
+        .hero .hero-inner-expanded { opacity: 1; }
+        .hero.compact .hero-inner-expanded { opacity: 0; }
+        .hero .hero-inner-compact { opacity: 0; }
+        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: opacity .3s ease-out; }
+        .hero.compact .deco-layer { opacity: 0; }
+        .hero .mouse-glow, .hero .shine-divider { transition: opacity .3s ease-out; }
+        .hero.compact .mouse-glow, .hero.compact .shine-divider { opacity: 0; }
+        .hero .compact-row { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
 
-        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-        .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-        .hero .glow-orb {
+        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: opacity .3s ease-out; }
+        .hero.compact .deco-layer { opacity: 0; }
             position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
             will-change: transform; z-index: 0;
         }
@@ -584,7 +580,7 @@
     </div>
     <div class="mouse-glow" id="mouseGlow"></div>
     <div class="shine-divider"></div>
-    <div class="hero-inner">
+    <div class="hero-inner hero-inner-expanded">
         <div class="top-row">
             <div class="top-badge">
                 <span class="dot"></span>
@@ -603,6 +599,22 @@
         <div class="disclaimer-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01M10.29 20.14l-7.21-7.21c-.57-.57-.57-1.5 0-2.07l7.21-7.21c.57-.57 1.5-.57 2.07 0l7.21 7.21c.57.57.57 1.5 0 2.07l-7.21 7.21c-.57.57-1.5.57-2.07 0z"/></svg>
             模拟演示数据 · 不代表真实业务信息
+        </div>
+    </div>
+    <div class="hero-inner hero-inner-compact">
+        <div class="compact-row">
+            <div class="top-badge">
+                <span class="dot"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                AIA Group
+            </div>
+            <div class="author-credit">
+                <img class="avatar" src="icon-red.jpg" alt="Jevon Zhu" style="width:22px;height:22px">
+                <span class="author-text">
+                    <span class="name" style="font-size:0.72rem">Jevon Zhu</span>
+                </span>
+            </div>
+            <h1 style="font-size:1.1rem;margin:0;text-shadow:none"><span class="hl">PowerBI</span> 作品集</h1>
         </div>
     </div>
 </header>
