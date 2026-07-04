@@ -577,54 +577,104 @@
         .footer .footer-brand { display: inline-flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs); }
         .footer .footer-brand svg { width: 18px; height: 18px; opacity: 0.4; }
 
-        /* ── WeChat / Mobile Adaptation ── */
+        /* ── Responsive Design ── */
         @supports (-webkit-overflow-scrolling: touch) or (-webkit-touch-callout: none) {
             body { -webkit-text-size-adjust: 100%; }
         }
-        @media (max-width: 600px) {
-            .hero { padding: 20px 12px 16px; }
-            .hero .top-row { gap: 8px; margin-bottom: 10px; }
-            .hero .top-badge { font-size: 0.62rem; padding: 4px 12px 4px 10px; }
-            .hero .top-badge .dot { width: 4px; height: 4px; }
-            .hero .top-badge svg { width: 12px; height: 12px; }
-            .hero .author-credit { gap: 6px; }
-            .hero .author-credit .avatar { width: 22px; height: 22px; }
-            .hero .author-credit .author-text .by { font-size: 0.55rem; }
-            .hero .author-credit .author-text .name { font-size: 0.72rem; }
-            .hero h1 { font-size: 1.4rem; }
-            .hero .disclaimer-badge { font-size: 0.6rem; padding: 3px 10px; margin-top: 6px; }
-            .hero .disclaimer-badge svg { width: 10px; height: 10px; }
-            .hero .shine-divider { width: 200px; }
-            .container { padding: 0 10px; }
-            .section-tabs { gap: 2px; padding: 3px; }
-            .section-tab { font-size: 0.7rem; padding: 8px 8px; min-height: 36px; }
-            .section-tab .icon { width: 14px; height: 14px; }
-            .main-tab { font-size: 0.68rem; padding: 10px 6px; min-height: 42px; }
-            .main-tab .icon { width: 14px; height: 14px; }
+
+        /* ── Large Desktop (≥1400px) ── */
+        @media (min-width: 1400px) {
+            :root {
+                --max-width: 1320px;
+                --max-width-nav: 1200px;
+            }
+            .hero { padding: 48px 32px 32px; }
+            .hero h1 { font-size: 3rem; }
+            .biz-grid { grid-template-columns: 1fr 1fr 1fr; }
+            .content-wrapper { padding: 0 32px 60px; }
+            .container { padding: 0 32px; }
+        }
+
+        /* ── Desktop (1025px–1399px) ── */
+        @media (min-width: 1025px) and (max-width: 1399px) {
+            .biz-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        /* ── Tablet / Small Screen (601px–1024px) ── */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .hero { padding: 28px 20px 20px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero .top-row { gap: 12px; margin-bottom: 12px; }
+            .container { padding: 0 16px; }
+            .content-wrapper { padding: 0 16px 40px; }
+            .section-tab { font-size: 0.78rem; padding: 10px 14px; }
+            .main-tab { font-size: 0.72rem; padding: 11px 8px; }
             .main-tab .tab-hint { font-size: 0.45rem; }
-            .card-tabs { padding: 6px 10px; gap: 3px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .card-tabs { padding: 8px 14px; gap: 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
             .card-tabs::-webkit-scrollbar { display: none; }
-            .card-tab { font-size: 0.7rem; padding: 6px 10px; min-width: auto; min-height: 32px; }
-            .card-tab svg { width: 14px; height: 14px; }
-            .card-header { padding: 10px 12px; flex-wrap: wrap; }
-            .card-header h2 { font-size: 0.85rem; }
-            .card-desc { padding: 10px 12px; font-size: 0.74rem; }
-            .biz-section { padding: 14px; }
-            .biz-grid { grid-template-columns: 1fr; gap: 10px; }
-            .biz-grid .biz-card { padding: 12px; }
-            .biz-grid .biz-card .biz-num { font-size: 1rem; }
-            .biz-grid .biz-card .biz-label { font-size: 0.72rem; }
-            .content-wrapper { padding: 0 10px 40px; }
-            .report-card { margin-top: 12px; border-radius: 10px; }
-            .card-video .video-placeholder { padding: 40px 16px; }
-            .card-doc { padding: 14px; }
-            .card-doc .doc-content { font-size: 0.78rem; }
-            .footer { font-size: 0.7rem; padding: 20px 12px; }
-            .hero .glow-orb.orb-1 { width: 160px; height: 160px; bottom: -60px; left: -40px; }
-            .hero .glow-orb.orb-3 { width: 100px; height: 100px; filter: blur(50px); }
+            .card-tab { font-size: 0.75rem; padding: 7px 12px; min-width: auto; min-height: 34px; }
+            .card-header { padding: 12px 16px; }
+            .card-header h2 { font-size: 0.9rem; }
+            .card-desc { padding: 10px 16px; font-size: 0.78rem; }
+            .biz-section { padding: 16px; }
+            .biz-grid { gap: 12px; }
+            .biz-grid .biz-card { padding: 14px; }
+            .report-card { margin-top: 14px; }
+            .footer { padding: 24px 16px; }
+        }
+
+        /* ── Mobile / WeChat (<600px) ── */
+        @media (max-width: 600px) {
+            .hero { padding: 18px 10px 14px; }
+            .hero .top-row { gap: 6px; margin-bottom: 8px; }
+            .hero .top-badge { font-size: 0.58rem; padding: 3px 10px 3px 8px; }
+            .hero .top-badge .dot { width: 4px; height: 4px; }
+            .hero .top-badge svg { width: 11px; height: 11px; }
+            .hero .author-credit { gap: 4px; }
+            .hero .author-credit .avatar { width: 20px; height: 20px; }
+            .hero .author-credit .author-text .by { font-size: 0.5rem; }
+            .hero .author-credit .author-text .name { font-size: 0.68rem; }
+            .hero h1 { font-size: 1.25rem; }
+            .hero .disclaimer-badge { font-size: 0.55rem; padding: 2px 8px; margin-top: 4px; }
+            .hero .shine-divider { width: 180px; }
+            .container { padding: 0 8px; }
+            .section-tabs { gap: 2px; padding: 3px; }
+            .section-tab { font-size: 0.62rem; padding: 6px 6px; min-height: 32px; }
+            .section-tab .icon { width: 12px; height: 12px; }
+            .main-tab { font-size: 0.6rem; padding: 8px 4px; min-height: 38px; }
+            .main-tab .icon { width: 12px; height: 12px; }
+            .main-tab .tab-hint { font-size: 0.4rem; }
+            .card-tabs { padding: 4px 8px; gap: 2px; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .card-tabs::-webkit-scrollbar { display: none; }
+            .card-tab { font-size: 0.62rem; padding: 5px 8px; min-width: auto; min-height: 28px; }
+            .card-tab svg { width: 12px; height: 12px; }
+            .card-header { padding: 8px 10px; flex-wrap: wrap; gap: 6px; }
+            .card-header h2 { font-size: 0.78rem; }
+            .refresh-btn { min-height: 30px; padding: 4px 6px; }
+            .refresh-btn svg { width: 14px; height: 14px; }
+            .type-tag { font-size: 0.55rem; padding: 2px 10px; }
+            .card-desc { padding: 8px 10px; font-size: 0.7rem; }
+            .biz-section { padding: 10px; }
+            .biz-grid { grid-template-columns: 1fr; gap: 8px; }
+            .biz-grid .biz-card { padding: 10px; }
+            .biz-grid .biz-card .biz-num { font-size: 0.9rem; }
+            .biz-grid .biz-card .biz-label { font-size: 0.68rem; }
+            .biz-grid .biz-card .biz-desc { font-size: 0.66rem; }
+            .content-wrapper { padding: 0 8px 30px; }
+            .report-card { margin-top: 10px; border-radius: 8px; }
+            .card-video .video-placeholder { padding: 30px 12px; }
+            .card-doc { padding: 10px; }
+            .card-doc .doc-content { font-size: 0.72rem; }
+            .footer { font-size: 0.65rem; padding: 16px 10px; }
+            .hero .glow-orb.orb-1 { width: 120px; height: 120px; bottom: -40px; left: -30px; filter: blur(40px); }
+            .hero .glow-orb.orb-3 { width: 80px; height: 80px; filter: blur(30px); }
             .hero .grid-lines { display: none; }
             .hero .particles { display: none; }
             .card-body { padding-top: 56.25%; }
+            .card-body .loader .load-text { font-size: 0.72rem; }
+            .card-body .loader .spinner { width: 28px; height: 28px; }
+            .doc-loading .spinner { width: 28px; height: 28px; }
+            .hero::after { width: 180px; }
         }
     </style>
 </head>
