@@ -1130,14 +1130,13 @@
                     var resizeFn = function() {
                         try {
                             var h = iframe.contentWindow.document.documentElement.scrollHeight;
-                            if (h > 100) iframe.style.height = h + 'px';
+                            if (h > 100) iframe.style.height = (h * 10) + 'px';
                         } catch(e) {}
                     };
-                    // retry a few times to wait for iframe content to render
                     resizeFn();
-                    setTimeout(resizeFn, 100);
-                    setTimeout(resizeFn, 500);
-                    setTimeout(resizeFn, 1500);
+                    setTimeout(resizeFn, 200);
+                    setTimeout(resizeFn, 800);
+                    setTimeout(resizeFn, 2000);
                 }
             }
         });
