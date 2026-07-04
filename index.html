@@ -63,13 +63,45 @@
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             isolation: isolate; z-index: 100;
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
         }
-        .hero.scrolled { padding: 10px var(--space-lg); }
+        .hero.compact {
+            padding: 18px var(--space-lg) 14px;
+            background: linear-gradient(135deg, #0a0a14 0%, #10101e 50%, #0a0a14 100%);
+            box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+        }
+        .hero.compact .glow-orb,
+        .hero.compact .grid-lines,
+        .hero.compact .particles,
+        .hero.compact .mouse-glow,
+        .hero.compact .shine-divider,
+        .hero.compact .disclaimer-badge { opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+        /* but keep the orb-3 fade-out slower as a subtle holdover */
+        .hero .glow-orb,
+        .hero .grid-lines,
+        .hero .particles,
+        .hero .mouse-glow,
+        .hero .shine-divider,
+        .hero .disclaimer-badge { transition: opacity 0.4s var(--ease-out); }
+
+        .hero.compact .top-row { margin-bottom: 0; }
+        .hero.compact .top-badge { font-size: 0.65rem; padding: 3px 12px 3px 10px; }
+        .hero.compact .top-badge .dot { width: 4px; height: 4px; }
+        .hero.compact .top-badge svg { width: 12px; height: 12px; }
+        .hero.compact .author-credit { gap: 6px; }
+        .hero.compact .author-credit .avatar { width: 22px; height: 22px; animation: none; box-shadow: 0 0 0 0 transparent; }
+        .hero.compact .author-credit .author-text .by { display: none; }
+        .hero.compact .author-credit .author-text .name { font-size: 0.72rem; }
+        .hero.compact h1 {
+            font-size: 1.3rem; margin: 2px 0 0;
+            text-shadow: none;
+        }
+        .hero.compact h1:hover { transform: none; }
+        .hero.compact h1 .hl::after { display: none; }
+        .hero.compact .hero-inner { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; }
         .hero .glow-orb {
             position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
             will-change: transform; z-index: 0;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero .glow-orb.orb-1 {
             width: 420px; height: 420px; top: -160px; right: -80px;
@@ -97,29 +129,15 @@
         .hero .mouse-glow {
             position: absolute; width: 500px; height: 500px; border-radius: 50%;
             background: radial-gradient(circle, rgba(233,69,96,0.04) 0%, transparent 60%);
-            pointer-events: none; z-index: 0; opacity: 0;
+            pointer-events: none; z-index: 0; opacity: 0; transition: opacity 0.6s;
             will-change: transform;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero:hover .mouse-glow { opacity: 1; }
-        .hero .hero-inner {
-            position: relative; z-index: 1;
-            display: flex; flex-direction: column; align-items: center;
-            transition: gap 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        flex-direction 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hero.scrolled .hero-inner { flex-direction: row; gap: 14px; }
+        .hero .hero-inner { position: relative; z-index: 1; }
 
-        .hero.scrolled .glow-orb,
-        .hero.scrolled .grid-lines,
-        .hero.scrolled .particles,
-        .hero.scrolled .shine-divider,
-        .hero.scrolled .mouse-glow { opacity: 0; pointer-events: none; }
         /* ── Decorative Grid Lines ── */
         .hero .grid-lines {
             position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             mask-image: linear-gradient(to bottom, transparent 10%, rgba(0,0,0,0.15) 50%, transparent 90%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 10%, rgba(0,0,0,0.15) 50%, transparent 90%);
         }
@@ -134,7 +152,6 @@
         /* ── Scrolling Dot Particles ── */
         .hero .particles {
             position: absolute; inset: 0; z-index: 0; pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .hero .particle {
             position: absolute; width: 3px; height: 3px; border-radius: 50%;
@@ -151,7 +168,6 @@
         .hero .shine-divider {
             position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
             width: 320px; height: 2px; z-index: 1;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             background: linear-gradient(90deg, transparent,
                 var(--color-primary), rgba(233,69,96,0.6),
                 var(--color-accent), transparent);
@@ -179,25 +195,18 @@
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
             font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
         }
-        .hero .top-badge { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .hero .top-badge .dot {
             width: 6px; height: 6px; border-radius: 50%;
             background: #22c55e; display: inline-block;
             animation: dotAlive 2s ease-in-out infinite;
         }
         @keyframes dotAlive { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .hero.scrolled h1 { font-size: 1.5rem; margin: 0; line-height: 1.2; }
-        .hero.scrolled .disclaimer-badge { display: none; }
-        .hero.scrolled .top-row { margin-bottom: 0; }
-        .hero.scrolled .author-credit { animation: none; }
 
         .hero h1 {
             font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em;
             line-height: 1.2; position: relative; z-index: 1;
             text-shadow: 0 0 40px rgba(233,69,96,0.1);
-            transition: font-size 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        margin 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.3s var(--ease-out);
+            transition: transform 0.3s var(--ease-out);
         }
         .hero h1:hover { transform: scale(1.02); }
         .hero h1 .hl {
@@ -270,8 +279,7 @@
         }
         .hero .author-credit:hover .author-text .name { color: var(--color-primary); }
 
-        .hero .disclaimer-badge { transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), margin 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow: hidden; max-height: 60px; }
-        .hero.scrolled .disclaimer-badge { opacity: 0; max-height: 0; margin: 0; pointer-events: none; }
+        .hero .disclaimer-badge {
             display: inline-flex; align-items: center; gap: 6px;
             margin-top: 16px; padding: 5px 16px; border-radius: 20px;
             background: rgba(233,185,50,0.05);
@@ -1151,25 +1159,6 @@
     window.addEventListener('load', applyHash);
     window.addEventListener('hashchange', applyHash);
 
-    /* ── Sticky header shrink-on-scroll ── */
-    (function() {
-        var hero = document.querySelector('.hero');
-        if (!hero) return;
-        var ticking = false;
-        function onScroll() {
-            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-            hero.classList.toggle('scrolled', scrollY > 60);
-            ticking = false;
-        }
-        window.addEventListener('scroll', function() {
-            if (!ticking) {
-                requestAnimationFrame(onScroll);
-                ticking = true;
-            }
-        }, { passive: true });
-        onScroll();
-    })();
-
     /* ── Hero Particles ── */
     (function() {
         var container = document.getElementById('particles');
@@ -1202,6 +1191,24 @@
             glow.style.left = 'calc(' + x + '% - 250px)';
             glow.style.top = 'calc(' + y + '% - 250px)';
         });
+    })();
+
+    /* ── Hero scroll shrink ── */
+    (function() {
+        var hero = document.querySelector('.hero');
+        if (!hero) return;
+        var ticking = false;
+        function checkScroll() {
+            hero.classList.toggle('compact', window.scrollY > 120);
+            ticking = false;
+        }
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(checkScroll);
+                ticking = true;
+            }
+        }, {passive: true});
+        checkScroll();
     })();
 })();
 </script>
