@@ -57,43 +57,39 @@
         button:focus:not(:focus-visible) { outline: none; }
 
         /* ── Hero / Title ── */
+        .hero-spacer { height: 264px; }
         .hero {
-            position: sticky; top: 0; overflow: hidden; text-align: center;
-            z-index: 100;
-            padding: 56px var(--space-lg) 40px;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            text-align: center; overflow: hidden;
+            padding: 56px 24px 40px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            transition: box-shadow .35s var(--ease-out);
+            transition: padding .35s ease-out, box-shadow .35s ease-out;
         }
         .hero.compact {
-            padding: 16px var(--space-lg) 14px;
+            padding: 14px 24px 12px;
             background: linear-gradient(135deg, #0a0a14 0%, #10101e 50%, #0a0a14 100%);
             box-shadow: 0 4px 40px rgba(0,0,0,0.6);
         }
         .hero .deco-layer,
         .hero .mouse-glow,
         .hero .shine-divider,
-        .hero .disclaimer-badge {
-            transition: opacity .35s var(--ease-out);
-        }
+        .hero .disclaimer-badge { transition: opacity .35s ease-out; }
         .hero.compact .deco-layer,
         .hero.compact .mouse-glow,
         .hero.compact .shine-divider,
         .hero.compact .disclaimer-badge { opacity: 0; }
+
         .hero.compact .top-row { margin-bottom: 0; }
         .hero.compact .top-badge { font-size: 0.65rem; padding: 3px 12px 3px 10px; }
         .hero.compact .top-badge .dot { width: 4px; height: 4px; }
         .hero.compact .top-badge svg { width: 12px; height: 12px; }
-        .hero.compact .author-credit { gap: 6px; }
-        .hero.compact .author-credit .avatar { width: 22px; height: 22px; }
+        .hero.compact .author-credit .avatar { width: 22px; height: 22px; animation: none; }
         .hero.compact .author-credit .author-text .by { display: none; }
         .hero.compact .author-credit .author-text .name { font-size: 0.72rem; }
-        .hero.compact h1 {
-            font-size: 1.3rem; margin: 0;
-            text-shadow: none;
-        }
+        .hero.compact h1 { font-size: 1.25rem; text-shadow: none; }
         .hero.compact h1 .hl::after { display: none; }
-        .hero.compact .hero-inner { gap: 20px; }
+        .hero.compact .hero-inner { flex-direction: row; justify-content: center; gap: 18px; }
 
         .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
         .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
@@ -131,7 +127,6 @@
             will-change: transform;
         }
         .hero:hover .mouse-glow { opacity: 1; }
-        .hero .hero-inner { position: relative; z-index: 1; }
 
         /* ── Decorative Grid Lines ── */
         .hero .grid-lines {
@@ -184,27 +179,31 @@
         /* ── Logo badge ── */
         .hero .top-row {
             display: flex; align-items: center; justify-content: center; gap: 16px;
-            margin-bottom: 20px; position: relative; z-index: 1;
-            flex-wrap: wrap;
+            margin-bottom: 20px; flex-wrap: wrap;
+            transition: margin .35s ease-out;
         }
         .hero .top-badge {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 6px 18px 6px 14px; border-radius: 20px;
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
             font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
+            transition: padding .35s ease-out, font-size .35s ease-out;
+            flex-shrink: 0;
         }
         .hero .top-badge .dot {
             width: 6px; height: 6px; border-radius: 50%;
             background: #22c55e; display: inline-block;
             animation: dotAlive 2s ease-in-out infinite;
+            transition: width .35s ease-out, height .35s ease-out;
         }
         @keyframes dotAlive { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         .hero h1 {
             font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em;
-            line-height: 1.2; position: relative; z-index: 1;
+            line-height: 1.2;
             text-shadow: 0 0 40px rgba(233,69,96,0.1);
-            transition: transform 0.3s var(--ease-out);
+            transition: font-size .35s ease-out, text-shadow .35s ease-out;
+            flex-shrink: 0;
         }
         .hero h1:hover { transform: scale(1.02); }
         .hero h1 .hl {
@@ -243,11 +242,9 @@
             border: 1.5px solid rgba(255,255,255,0.15);
             flex-shrink: 0;
             animation: avatarBreathe 3s ease-in-out infinite;
-            box-shadow: 0 0 0 0 rgba(233,69,96,0.15);
-            transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+            transition: width .35s ease-out, height .35s ease-out;
         }
         .hero .author-credit:hover .avatar {
-            transform: scale(1.15);
             border-color: var(--color-primary);
             animation-play-state: paused;
         }
@@ -273,7 +270,7 @@
         .hero .author-credit .author-text .name {
             font-size: 0.82rem; font-weight: 600; color: #c0d0e0;
             letter-spacing: 0.03em; line-height: 1.4;
-            transition: color 0.3s var(--ease-out);
+            transition: color 0.3s var(--ease-out), font-size .35s ease-out;
         }
         .hero .author-credit:hover .author-text .name { color: var(--color-primary); }
 
@@ -282,8 +279,8 @@
             margin-top: 16px; padding: 5px 16px; border-radius: 20px;
             background: rgba(233,185,50,0.05);
             border: 1px solid rgba(233,185,50,0.1);
-            font-size: 0.68rem; color: #998833; position: relative; z-index: 1;
-            animation: fadeUp 0.8s var(--ease-out) 0.3s both;
+            font-size: 0.68rem; color: #998833;
+            transition: opacity .35s ease-out;
         }
         .hero .disclaimer-badge svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.6; }
 
@@ -613,6 +610,7 @@
         </div>
     </div>
 </header>
+<div class="hero-spacer"></div>
 
 <div class="container section-outer">
     <nav class="section-tabs" role="tablist" aria-label="主题切换">
@@ -1196,11 +1194,14 @@
     /* ── Hero scroll shrink ── */
     (function() {
         var hero = document.querySelector('.hero');
+        var spacer = document.querySelector('.hero-spacer');
         if (!hero) return;
         function sync() {
             hero.classList.toggle('compact', window.scrollY > 80);
+            if (spacer) spacer.style.height = hero.offsetHeight + 'px';
         }
         window.addEventListener('scroll', sync, {passive: true});
+        window.addEventListener('resize', sync);
         sync();
     })();
 })();
