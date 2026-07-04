@@ -179,24 +179,6 @@
         }
 
         /* ── Logo badge ── */
-        .hero .top-row {
-            display: flex; align-items: center; justify-content: center; gap: 16px;
-            margin-bottom: 20px; flex-wrap: wrap;
-            transition: margin .35s ease-out;
-        }
-        .hero .top-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 18px 6px 14px; border-radius: 20px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
-            transition: padding .35s ease-out, font-size .35s ease-out;
-            flex-shrink: 0;
-        }
-        .hero .top-badge .dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: #22c55e; display: inline-block;
-            animation: dotAlive 2s ease-in-out infinite;
-            transition: width .35s ease-out, height .35s ease-out;
         }
         @keyframes dotAlive { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
@@ -293,10 +275,15 @@
 
         .container { max-width: var(--max-width-nav); margin: 0 auto; padding: 0 var(--space-lg); }
         .section-outer { margin-top: var(--space-xl); }
+        .section-tabs-outer { position: sticky; top: 110px; z-index: 99; }
         .section-tabs {
             display: flex; gap: var(--space-xs);
             background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
             padding: var(--space-xs); border: 1px solid var(--color-border);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+        }
+        body.scrolled .section-tabs-outer .section-tabs {
+            background: rgba(10,10,18,0.85);
         }
         .section-tab {
             flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
@@ -614,7 +601,8 @@
 </header>
 
 <div class="container section-outer">
-    <nav class="section-tabs" role="tablist" aria-label="主题切换">
+    <div class="section-tabs-outer">
+        <nav class="section-tabs" role="tablist" aria-label="主题切换">
         <button class="section-tab active" role="tab" aria-selected="true" data-section="0">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
             Cloud Finance &amp; FinOps
@@ -1192,7 +1180,13 @@
         });
     })();
 
-    /* ── No hero scroll shrink ── */
+    /* ── Scrolled body class for section-tabs background ── */
+    (function() {
+        var body = document.body;
+        function sync() { body.classList.toggle('scrolled', window.scrollY > 10); }
+        window.addEventListener('scroll', sync, {passive: true});
+        sync();
+    })();
 })();
 </script>
 
