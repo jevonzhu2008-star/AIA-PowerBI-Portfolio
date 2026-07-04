@@ -1126,19 +1126,18 @@
             /* ── Auto-height Analysis iframe ── */
             if (cardKey === 'analysis') {
                 var iframe = card.querySelector('iframe');
-                if (iframe && !iframe.dataset.autoresized) {
-                    iframe.dataset.autoresized = '1';
-                    iframe.onload = function() {
+                if (iframe) {
+                    var resizeFn = function() {
                         try {
                             var h = iframe.contentWindow.document.documentElement.scrollHeight;
                             if (h > 100) iframe.style.height = h + 'px';
                         } catch(e) {}
                     };
-                    // also try immediately if already loaded
-                    try {
-                        var h = iframe.contentWindow.document.documentElement.scrollHeight;
-                        if (h > 100) iframe.style.height = h + 'px';
-                    } catch(e) {}
+                    // retry a few times to wait for iframe content to render
+                    resizeFn();
+                    setTimeout(resizeFn, 100);
+                    setTimeout(resizeFn, 500);
+                    setTimeout(resizeFn, 1500);
                 }
             }
         });
