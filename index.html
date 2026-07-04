@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerBI 作品集 | AIA Group</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root {
             --color-bg: #0a0a12;
@@ -233,6 +234,63 @@
         @keyframes dotPulse { 0%,80%,100% { opacity:0.2; transform:scale(0.8); } 40% { opacity:1; transform:scale(1); } }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ── Documentation Section ── */
+        .card-doc {
+            padding: var(--space-lg);
+        }
+        .card-doc .doc-loading {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 12px; padding: 60px 24px;
+            color: var(--color-text-muted); font-size: 0.85rem;
+        }
+        .card-doc .doc-loading .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid rgba(255,255,255,0.05);
+            border-top-color: var(--color-primary);
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        .card-doc .doc-content {
+            font-size: 0.85rem; line-height: 1.8; color: var(--color-text-secondary);
+            max-width: 100%; overflow-x: auto;
+        }
+        .card-doc .doc-content h1, .card-doc .doc-content h2, .card-doc .doc-content h3,
+        .card-doc .doc-content h4 {
+            color: var(--color-text-primary);
+            margin-top: var(--space-lg); margin-bottom: var(--space-sm);
+            font-weight: 600;
+        }
+        .card-doc .doc-content h1 { font-size: 1.4rem; border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-sm); }
+        .card-doc .doc-content h2 { font-size: 1.15rem; }
+        .card-doc .doc-content h3 { font-size: 1rem; }
+        .card-doc .doc-content p { margin-bottom: var(--space-sm); }
+        .card-doc .doc-content ul, .card-doc .doc-content ol { padding-left: var(--space-lg); margin-bottom: var(--space-sm); }
+        .card-doc .doc-content li { margin-bottom: var(--space-xs); }
+        .card-doc .doc-content strong { color: #b0c0d0; }
+        .card-doc .doc-content code {
+            background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;
+            font-size: 0.8rem; color: #e8ecf0;
+        }
+        .card-doc .doc-content pre {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm); padding: var(--space-md);
+            overflow-x: auto; margin-bottom: var(--space-md);
+        }
+        .card-doc .doc-content pre code { background: none; padding: 0; }
+        .card-doc .doc-content table {
+            width: 100%; border-collapse: collapse; margin-bottom: var(--space-md);
+        }
+        .card-doc .doc-content th, .card-doc .doc-content td {
+            padding: var(--space-sm) var(--space-md); text-align: left;
+            border: 1px solid var(--color-border); font-size: 0.78rem;
+        }
+        .card-doc .doc-content th { background: rgba(255,255,255,0.03); color: var(--color-text-primary); font-weight: 600; }
+        .card-doc .doc-content tr:nth-child(even) { background: rgba(255,255,255,0.01); }
+        .card-doc .doc-content hr { border: none; border-top: 1px solid var(--color-border); margin: var(--space-md) 0; }
+        .card-doc .doc-content blockquote {
+            border-left: 3px solid var(--color-primary); padding-left: var(--space-md);
+            margin-bottom: var(--space-sm); color: #9aaabc;
+        }
+
         /* ── Video Section ── */
         .card-video {
             position: relative; width: 100%;
@@ -379,6 +437,9 @@
                     <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Business
                     </button>
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Documentation
+                    </button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -388,6 +449,8 @@
                         </video>
                     </div>
                 </div>
+
+                <div class="card-section" data-card="profile">
                     <div class="card-header"><h2>Consumption Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Consumption Profile</strong> — 展示云资源消耗概览，包含月度消费趋势、按服务分类的支出分布及 Top 消费项目排行。</div>
                     <div class="card-body">
@@ -417,6 +480,11 @@
                         <div class="biz-card"><div class="biz-num">06</div><div class="biz-label">Anomaly Detection</div><div class="biz-desc">异常消费行为的智能识别与预警。交叉比对运行时间与非工作日、非生产环境，自动高亮异常资源，帮助运维团队快速止血。</div></div>
                     </div>
                 </div>
+
+                <div class="card-section card-doc" data-card="doc">
+                    <div class="doc-loading" id="doc-loading-0"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-0" style="display:none"></div>
+                </div>
             </div>
         </section>
 
@@ -436,6 +504,9 @@
                     <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Business
                     </button>
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Documentation
+                    </button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -446,7 +517,7 @@
                     </div>
                 </div>
 
-                <div class="card-section active" data-card="profile">
+                <div class="card-section" data-card="profile">
                     <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Cloud Efficiency Saving Profile</strong> — 汇总云资源优化建议与节省金额，涵盖 Reserved Instance、Saving Plans 及 Rightsizing 推荐概览。</div>
                     <div class="card-body">
@@ -476,6 +547,11 @@
                         <div class="biz-card"><div class="biz-num">06</div><div class="biz-label">Data Silos Reduction</div><div class="biz-desc">消除组织内部的财务对账信息孤岛。基于 Databricks 铜-银-金三层架构进行 ETL 清洗与标准化，自动化月度刷新，实现全公司云节约效益的"一盘棋"管理。</div></div>
                     </div>
                 </div>
+
+                <div class="card-section card-doc" data-card="doc">
+                    <div class="doc-loading" id="doc-loading-1"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-1" style="display:none"></div>
+                </div>
             </div>
         </section>
 
@@ -495,6 +571,9 @@
                     <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Business
                     </button>
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Documentation
+                    </button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -505,7 +584,7 @@
                     </div>
                 </div>
 
-                <div class="card-section active" data-card="profile">
+                <div class="card-section" data-card="profile">
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Cloud and Kyndryl Spend Profile</strong> — 展示云服务及 Kyndryl 托管服务的总支出概览，含月度趋势、服务商分布及预算对比。</div>
                     <div class="card-body">
@@ -534,6 +613,11 @@
                         <div class="biz-card"><div class="biz-num">05</div><div class="biz-label">Data Governance &amp; RLS</div><div class="biz-desc">多租户环境下敏感财务数据的行级安全隔离。建立包含 27 个业务单元在内的 28 个 RLS 矩阵，普通经理限本部门，高管与审计拥有全透视权限。</div></div>
                     </div>
                 </div>
+
+                <div class="card-section card-doc" data-card="doc">
+                    <div class="doc-loading" id="doc-loading-2"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-2" style="display:none"></div>
+                </div>
             </div>
         </section>
 
@@ -553,6 +637,9 @@
                     <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Business
                     </button>
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Documentation
+                    </button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -563,7 +650,7 @@
                     </div>
                 </div>
 
-                <div class="card-section active" data-card="profile">
+                <div class="card-section" data-card="profile">
                     <div class="card-header"><h2>Cloud Cost Management Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Cloud Cost Management Profile</strong> — 提供成本管理制度的核心 KPI，包括预算达成率、异常预警数及未分配资源占比概览。</div>
                     <div class="card-body">
@@ -592,6 +679,11 @@
                         <div class="biz-card"><div class="biz-num">05</div><div class="biz-label">Resource Optimization</div><div class="biz-desc">资源运维视角的闲置浪费与异常负载识别。结合 Hrs、CPU 核心小时数等指标，对非生产环境在周末异常高耗能行为自动染色标红，辅助缩容降配决策。</div></div>
                         <div class="biz-card"><div class="biz-num">06</div><div class="biz-label">Data Governance via RLS</div><div class="biz-desc">多租户 BU 财务敏感数据的行级安全隔离。配置 28 个 RLS 角色（1 个 Full Access + 27 个地区/BU 专属），安全过滤自动下推至 Databricks 执行。</div></div>
                     </div>
+                </div>
+
+                <div class="card-section card-doc" data-card="doc">
+                    <div class="doc-loading" id="doc-loading-3"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-3" style="display:none"></div>
                 </div>
             </div>
         </section>
@@ -686,6 +778,11 @@
             sectionContents.forEach(function(c) {
                 c.classList.toggle('active', c.dataset.section === idx);
             });
+
+            /* ── Pause all videos on section switch ── */
+            document.querySelectorAll('.card-video video').forEach(function(v) {
+                v.pause();
+            });
         });
     });
 
@@ -702,6 +799,20 @@
             parentContent.querySelectorAll('.main-panel').forEach(function(p) {
                 p.classList.toggle('active', p.dataset.main === idx);
             });
+
+            /* ── Pause all videos, then play active panel's intro if selected ── */
+            parentContent.querySelectorAll('.card-video video').forEach(function(v) {
+                v.pause();
+            });
+            var activePanel = parentContent.querySelector('.main-panel.active');
+            if (activePanel) {
+                var introTab = activePanel.querySelector('.card-tab[data-card="intro"]');
+                var activeTab = activePanel.querySelector('.card-tab.active');
+                if (introTab && activeTab && activeTab.dataset.card === 'intro') {
+                    var video = activePanel.querySelector('.card-video video');
+                    if (video) video.play().catch(function(){});
+                }
+            }
         });
     });
 
@@ -718,6 +829,42 @@
             card.querySelectorAll('.card-section').forEach(function(s) {
                 s.classList.toggle('active', s.dataset.card === cardKey);
             });
+
+            /* ── Auto-play video on Intro, pause on others ── */
+            var video = card.querySelector('.card-video video');
+            if (video) {
+                if (cardKey === 'intro') {
+                    video.play().catch(function(){});
+                } else {
+                    video.pause();
+                }
+            }
+
+            /* ── Lazy-load documentation on first Doc tab click ── */
+            if (cardKey === 'doc') {
+                var loading = card.querySelector('.doc-loading');
+                var content = card.querySelector('.doc-content');
+                if (loading && content && content.style.display === 'none') {
+                    var cardIdx = card.closest('.main-panel') ? card.closest('.main-panel').dataset.main : '0';
+                    var secIdx = card.closest('.section-content') ? card.closest('.section-content').dataset.section : '0';
+                    var docFiles = [
+                        {s: '0', m: '0', file: 'Consumption语义模型文档.md'},
+                        {s: '0', m: '1', file: 'Cloud Efficiency Saving语义模型文档.md'},
+                        {s: '0', m: '2', file: 'Cloud & kyndryl Spend语义模型文档.md'},
+                        {s: '0', m: '3', file: 'Cloud Cost Management Introduction语义模型文档.md'}
+                    ];
+                    var match = docFiles.find(function(d) { return d.s === secIdx && d.m === cardIdx; });
+                    if (match) {
+                        fetch(match.file).then(function(r) { return r.text(); }).then(function(md) {
+                            content.innerHTML = marked.parse(md);
+                            loading.style.display = 'none';
+                            content.style.display = 'block';
+                        }).catch(function() {
+                            loading.innerHTML = '<span style="color:#d31145">文档加载失败</span>';
+                        });
+                    }
+                }
+            }
         });
     });
 
