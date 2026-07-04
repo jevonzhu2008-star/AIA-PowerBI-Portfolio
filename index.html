@@ -336,6 +336,66 @@
         .type-tag.report  { background: rgba(244,166,74,0.15);  color: var(--color-report); }
 
         /* ── Card Description ── */
+        /* ── Business Overview ── */
+        .biz-overview {
+            background: linear-gradient(135deg, rgba(233,69,96,0.04) 0%, rgba(245,166,35,0.04) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: 18px;
+        }
+        .biz-overview h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        .biz-overview h3 svg { width: 20px; height: 20px; color: var(--color-primary); flex-shrink: 0; }
+        .biz-overview p {
+            font-size: 0.82rem;
+            line-height: 1.8;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
+        }
+        .biz-overview p:last-child { margin-bottom: 0; }
+        .biz-overview .highlight { color: #b0c0d0; font-weight: 500; }
+        .biz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+        .biz-grid .biz-card {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            transition: border-color var(--duration-fast) var(--ease-out);
+        }
+        .biz-grid .biz-card:hover { border-color: rgba(255,255,255,0.08); }
+        .biz-grid .biz-card .biz-num {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .biz-grid .biz-card .biz-label {
+            font-size: 0.72rem;
+            color: var(--color-text-muted);
+            margin-top: var(--space-xs);
+        }
+        .biz-grid .biz-card .biz-desc {
+            font-size: 0.78rem;
+            color: var(--color-text-secondary);
+            margin-top: var(--space-sm);
+            line-height: 1.6;
+        }
+
         .card-desc {
             padding: 14px var(--space-lg);
             background: rgba(255,255,255,0.008);
@@ -513,6 +573,45 @@
                             <div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div>
                         </div>
                         <iframe id="iframe-0r" title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('0r')"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="biz-overview">
+                <h3>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    业务概述
+                </h3>
+                <p>该模型主要用于<span class="highlight">企业级云成本管理与优化（FinOps）</span>。它通过整合多源数据（实际消费、预算预测、预留实例、商务承诺等），主要解决了以下核心业务问题：</p>
+                <div class="biz-grid">
+                    <div class="biz-card">
+                        <div class="biz-num">01</div>
+                        <div class="biz-label">Cost Allocation</div>
+                        <div class="biz-desc">云精细化成本分摊与"谁消费、谁买单"的问责机制。通过多层级组织架构映射与多维度标签分析，将云消费精准归属到业务单元，实现内部财务转资与成本问责。</div>
+                    </div>
+                    <div class="biz-card">
+                        <div class="biz-num">02</div>
+                        <div class="biz-label">Visibility &amp; Tracking</div>
+                        <div class="biz-desc">成本全生命周期监控与多视角财务度量。提供账面与实际净成本对账、商务节省可量化，消除财务与运维部门的跨部门沟通壁垒。</div>
+                    </div>
+                    <div class="biz-card">
+                        <div class="biz-num">03</div>
+                        <div class="biz-label">Performance</div>
+                        <div class="biz-desc">多粒度性能优化与大数据量下的秒级报表响应。采用多层事实表设计（Layered Fact Grain），高层看聚合看板快如闪电，下层钻取明细实时精准。</div>
+                    </div>
+                    <div class="biz-card">
+                        <div class="biz-num">04</div>
+                        <div class="biz-label">Forecast &amp; Commitment</div>
+                        <div class="biz-desc">动态趋势预测与承诺指标达成监控。实时展示实际发生额与预测对比的全景视图，监控 MACC 消耗完成进度，防止承诺达标失败。</div>
+                    </div>
+                    <div class="biz-card">
+                        <div class="biz-num">05</div>
+                        <div class="biz-label">Reservation Optimization</div>
+                        <div class="biz-desc">RI/SP 优化与降本增效诊断。监控预留资源利用率，量化"未实现节省"指标，辅助 FinOps 团队进行精准的资源购买决策。</div>
+                    </div>
+                    <div class="biz-card">
+                        <div class="biz-num">06</div>
+                        <div class="biz-label">Anomaly Detection</div>
+                        <div class="biz-desc">异常消费行为的智能识别与预警。交叉比对运行时间与非工作日、非生产环境，自动高亮异常资源，帮助运维团队快速止血。</div>
                     </div>
                 </div>
             </div>
