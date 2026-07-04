@@ -59,7 +59,7 @@
         /* ── Hero / Title ── */
         .hero {
             position: sticky; top: 0; text-align: center; z-index: 100;
-            padding: 22px 24px 14px;
+            padding: 28px 24px 18px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
         }
@@ -69,9 +69,9 @@
             background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent), transparent);
         }
         .hero .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-        .hero .top-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
+        .hero .top-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
         .hero .top-badge {
-            display: inline-flex; align-items: center; gap: 8px; padding: 6px 18px 6px 14px; border-radius: 20px;
+            display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px 4px 10px; border-radius: 16px;
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
             font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
         }
@@ -84,7 +84,7 @@
         .hero .author-credit .author-text .by { font-size: 0.62rem; color: var(--color-text-muted); letter-spacing: 0.06em; }
         .hero .author-credit .author-text .name { font-size: 0.82rem; font-weight: 600; color: #c0d0e0; letter-spacing: 0.03em; }
         .hero .author-credit:hover .author-text .name { color: var(--color-primary); }
-        .hero h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; display: inline; }
+        .hero h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.2; }
         .hero h1 .hl {
             background: linear-gradient(135deg, var(--color-primary) 0%, #f06a80 30%, var(--color-accent) 70%, #f8c14a 100%);
             background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -92,13 +92,12 @@
         }
         @keyframes gradShift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         .hero .disclaimer-badge {
-            display: inline-flex; align-items: center; gap: 4px; margin-left: 10px;
-            padding: 2px 10px; border-radius: 12px;
+            display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+            padding: 3px 14px; border-radius: 16px;
             background: rgba(233,185,50,0.05); border: 1px solid rgba(233,185,50,0.1);
-            font-size: 0.62rem; color: #998833; vertical-align: middle;
+            font-size: 0.68rem; color: #998833;
         }
-        .hero .disclaimer-badge svg { width: 10px; height: 10px; opacity: 0.6; }
-        .hero .title-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; }
+        .hero .disclaimer-badge svg { width: 12px; height: 12px; opacity: 0.6; }
         .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
         .hero .glow-orb {
@@ -609,7 +608,7 @@
         <h1><span class="hl">PowerBI</span> 作品集</h1>
         <div class="disclaimer-badge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01M10.29 20.14l-7.21-7.21c-.57-.57-.57-1.5 0-2.07l7.21-7.21c.57-.57 1.5-.57 2.07 0l7.21 7.21c.57.57.57 1.5 0 2.07l-7.21 7.21c-.57.57-1.5.57-2.07 0z"/></svg>
-            模拟演示数据
+            模拟演示数据 · 不代表真实业务信息
         </div>
     </div>
 </header>
