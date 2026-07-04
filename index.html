@@ -744,7 +744,7 @@
         var section = card.querySelector('.card-section.active');
         var iframe = section ? section.querySelector('iframe') : card.querySelector('iframe');
         if (!iframe) return;
-        var loader = card.querySelector('.loader');
+        var loader = section ? section.querySelector('.loader') : card.querySelector('.loader');
         if (loader) loader.style.display = 'flex';
         btn.classList.add('spinning');
         var src = iframe.src;
