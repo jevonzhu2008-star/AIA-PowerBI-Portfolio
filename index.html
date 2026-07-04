@@ -206,13 +206,28 @@
         }
         .hero .author-credit .avatar {
             width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
-            border: 1.5px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
+            border: 1.5px solid rgba(255,255,255,0.15);
             flex-shrink: 0;
+            animation: avatarBreathe 3s ease-in-out infinite;
+            box-shadow: 0 0 0 0 rgba(233,69,96,0.15);
+            transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
         }
         .hero .author-credit:hover .avatar {
             transform: scale(1.15);
             border-color: var(--color-primary);
+            animation-play-state: paused;
+        }
+        @keyframes avatarBreathe {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(233,69,96,0);
+                border-color: rgba(255,255,255,0.12);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 0 0 5px rgba(233,69,96,0.15);
+                border-color: rgba(233,69,96,0.35);
+                transform: scale(1.04);
+            }
         }
         .hero .author-credit .author-text {
             display: flex; flex-direction: column; align-items: flex-start; gap: 0;
