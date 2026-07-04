@@ -343,6 +343,12 @@
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
             margin-top: 18px;
+            transition: border-color var(--duration-base) var(--ease-out),
+                        box-shadow var(--duration-base) var(--ease-out);
+        }
+        .biz-overview:hover {
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
         }
         .biz-overview h3 {
             font-size: 0.95rem;
@@ -353,15 +359,22 @@
             align-items: center;
             gap: var(--space-sm);
         }
-        .biz-overview h3 svg { width: 20px; height: 20px; color: var(--color-primary); flex-shrink: 0; }
+        .biz-overview h3 svg {
+            width: 20px; height: 20px; color: var(--color-primary); flex-shrink: 0;
+            transition: transform var(--duration-base) var(--ease-out);
+        }
+        .biz-overview:hover h3 svg { transform: rotate(-8deg) scale(1.1); }
         .biz-overview p {
             font-size: 0.82rem;
             line-height: 1.8;
             color: var(--color-text-secondary);
             margin-bottom: var(--space-md);
+            transition: color var(--duration-base) var(--ease-out);
         }
+        .biz-overview:hover p { color: var(--color-text-nav-hover); }
         .biz-overview p:last-child { margin-bottom: 0; }
         .biz-overview .highlight { color: #b0c0d0; font-weight: 500; }
+        .biz-overview:hover .highlight { color: #d0e0f0; }
         .biz-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -373,9 +386,36 @@
             border: 1px solid rgba(255,255,255,0.04);
             border-radius: var(--radius-md);
             padding: var(--space-md);
-            transition: border-color var(--duration-fast) var(--ease-out);
+            transition: border-color var(--duration-fast) var(--ease-out),
+                        background var(--duration-base) var(--ease-out),
+                        transform var(--duration-base) var(--ease-out),
+                        box-shadow var(--duration-base) var(--ease-out);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
         }
-        .biz-grid .biz-card:hover { border-color: rgba(255,255,255,0.08); }
+        .biz-grid .biz-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(233,69,96,0.06) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity var(--duration-base) var(--ease-out);
+            pointer-events: none;
+        }
+        .biz-grid .biz-card:hover {
+            border-color: rgba(233,69,96,0.25);
+            background: rgba(255,255,255,0.025);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(233,69,96,0.08);
+        }
+        .biz-grid .biz-card:hover::before { opacity: 1; }
+        .biz-grid .biz-card:hover .biz-num {
+            transform: scale(1.08);
+            filter: brightness(1.2);
+        }
+        .biz-grid .biz-card:hover .biz-label { color: var(--color-text-primary); }
         .biz-grid .biz-card .biz-num {
             font-size: 1.6rem;
             font-weight: 700;
@@ -383,18 +423,23 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            transition: transform var(--duration-base) var(--ease-out),
+                        filter var(--duration-base) var(--ease-out);
         }
         .biz-grid .biz-card .biz-label {
             font-size: 0.72rem;
             color: var(--color-text-muted);
             margin-top: var(--space-xs);
+            transition: color var(--duration-fast) var(--ease-out);
         }
         .biz-grid .biz-card .biz-desc {
             font-size: 0.78rem;
             color: var(--color-text-secondary);
             margin-top: var(--space-sm);
             line-height: 1.6;
+            transition: color var(--duration-base) var(--ease-out);
         }
+        .biz-grid .biz-card:hover .biz-desc { color: #9aaabc; }
 
         .card-desc {
             padding: 14px var(--space-lg);
