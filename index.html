@@ -117,6 +117,16 @@
             background: rgba(255, 255, 255, 0.015);
         }
         .report-card .card-header h2 { font-size: 0.95rem; font-weight: 600; color: #e8ecf0; }
+        .report-card .card-header .header-actions { display: flex; align-items: center; gap: 8px; }
+        .refresh-btn {
+            background: none; border: none; color: #556; font-size: 1rem; line-height: 1;
+            cursor: pointer; padding: 2px 8px; border-radius: 6px;
+            transition: all 0.25s ease;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+        }
+        .refresh-btn:hover { color: #e94560; background: rgba(233, 69, 96, 0.12); }
+        .refresh-btn:active { transform: rotate(60deg); }
+        .refresh-btn.spinning { animation: spin 0.6s linear infinite; color: #e94560; }
         .report-card .card-header .type-tag {
             display: inline-block; font-size: 0.65rem; font-weight: 600;
             padding: 2px 12px; border-radius: 20px; letter-spacing: 0.5px;
@@ -124,6 +134,16 @@
         .type-tag.profile { background: rgba(79, 172, 254, 0.15); color: #4facfe; }
         .type-tag.report  { background: rgba(244, 166, 74, 0.15);  color: #f4a64a; }
         .type-tag.dashboard { background: rgba(129, 216, 129, 0.15); color: #81d881; }
+        .refresh-btn {
+            background: none; border: none; color: #556; font-size: 0.9rem;
+            cursor: pointer; padding: 2px 8px; border-radius: 6px;
+            transition: all 0.25s ease;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
+            line-height: 1;
+        }
+        .refresh-btn:hover { color: #e94560; background: rgba(233, 69, 96, 0.12); }
+        .refresh-btn:active { transform: rotate(60deg); }
+        .refresh-btn.spinning { animation: spin 0.6s linear infinite; color: #e94560; }
 
         .report-card .card-body {
             position: relative;
@@ -240,19 +260,19 @@
             </div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
-                    <div class="card-header"><h2>Consumption Profile</h2><span class="type-tag profile">Profile</span></div>
+                    <div class="card-header"><h2>Consumption Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-0p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Consumption Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZDZmMzM0MDYtYjU0Ny00ZGIwLWIzMDEtZTFhNWEyOGZmZjgzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-0p').style.display='none'"></iframe>
+                        <iframe id="iframe-0p" title="Consumption Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZDZmMzM0MDYtYjU0Ny00ZGIwLWIzMDEtZTFhNWEyOGZmZjgzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('0p')"></iframe>
                     </div>
                 </div>
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
-                    <div class="card-header"><h2>Consumption Report</h2><span class="type-tag report">Report</span></div>
+                    <div class="card-header"><h2>Consumption Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag report">Report</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-0r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-0r').style.display='none'"></iframe>
+                        <iframe id="iframe-0r" title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('0r')"></iframe>
                     </div>
                 </div>
             </div>
@@ -266,19 +286,19 @@
             </div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
-                    <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><span class="type-tag profile">Profile</span></div>
+                    <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-1p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud Efficiency Saving Profile" src="https://app.powerbi.com/view?r=eyJrIjoiNjhhNWRlZWYtMzA4OC00Mzc3LTkyZWMtOWU3MmYzYTI3NjZiIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-1p').style.display='none'"></iframe>
+                        <iframe id="iframe-1p" title="Cloud Efficiency Saving Profile" src="https://app.powerbi.com/view?r=eyJrIjoiNjhhNWRlZWYtMzA4OC00Mzc3LTkyZWMtOWU3MmYzYTI3NjZiIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('1p')"></iframe>
                     </div>
                 </div>
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
-                    <div class="card-header"><h2>Cloud Efficiency Saving Report</h2><span class="type-tag report">Report</span></div>
+                    <div class="card-header"><h2>Cloud Efficiency Saving Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag report">Report</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-1r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud Efficiency Saving" src="https://app.powerbi.com/view?r=eyJrIjoiMjEzZjVmYTUtMTdiYS00MmQ4LWIwMWYtODI1NmFjMzg4OGIzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-1r').style.display='none'"></iframe>
+                        <iframe id="iframe-1r" title="Cloud Efficiency Saving" src="https://app.powerbi.com/view?r=eyJrIjoiMjEzZjVmYTUtMTdiYS00MmQ4LWIwMWYtODI1NmFjMzg4OGIzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('1r')"></iframe>
                     </div>
                 </div>
             </div>
@@ -292,19 +312,19 @@
             </div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
-                    <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><span class="type-tag profile">Profile</span></div>
+                    <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-2p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud and Kyndryl Spend Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZGIxMTZlNjQtMzZhNy00MDU1LWE2NmYtNTZiYzJhZmVlZDYwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-2p').style.display='none'"></iframe>
+                        <iframe id="iframe-2p" title="Cloud and Kyndryl Spend Profile" src="https://app.powerbi.com/view?r=eyJrIjoiZGIxMTZlNjQtMzZhNy00MDU1LWE2NmYtNTZiYzJhZmVlZDYwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('2p')"></iframe>
                     </div>
                 </div>
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
-                    <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2><span class="type-tag report">Report</span></div>
+                    <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag report">Report</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-2r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud and Kyndryl Spend" src="https://app.powerbi.com/view?r=eyJrIjoiYzZmNTc4MWYtMDk1Ny00MjY5LTlmN2QtMGJhMTQzNWI0ZGEwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-2r').style.display='none'"></iframe>
+                        <iframe id="iframe-2r" title="Cloud and Kyndryl Spend" src="https://app.powerbi.com/view?r=eyJrIjoiYzZmNTc4MWYtMDk1Ny00MjY5LTlmN2QtMGJhMTQzNWI0ZGEwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('2r')"></iframe>
                     </div>
                 </div>
             </div>
@@ -318,19 +338,19 @@
             </div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
-                    <div class="card-header"><h2>Cloud Cost Management Profile</h2><span class="type-tag profile">Profile</span></div>
+                    <div class="card-header"><h2>Cloud Cost Management Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-3p"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Cloud Cost Management Profile" src="https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-3p').style.display='none'"></iframe>
+                        <iframe id="iframe-3p" title="Cloud Cost Management Profile" src="https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('3p')"></iframe>
                     </div>
                 </div>
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
-                    <div class="card-header"><h2>Cloud Cost Management Report</h2><span class="type-tag report">Report</span></div>
+                    <div class="card-header"><h2>Cloud Cost Management Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag report">Report</span></div></div>
                     <div class="card-body">
                         <div class="loader" id="loader-3r"><div class="spinner"></div><span>正在加载报告…</span></div>
-                        <iframe title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="document.getElementById('loader-3r').style.display='none'"></iframe>
+                        <iframe id="iframe-3r" title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('3r')"></iframe>
                     </div>
                 </div>
             </div>
@@ -357,14 +377,14 @@
             <div class="report-card">
                 <div class="card-header">
                     <h2>Group Applications Monitoring Dashboard</h2>
-                    <span class="type-tag report">Report</span>
+                    <div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag report">Report</span></div>
                 </div>
                 <div class="card-body">
                     <div class="loader" id="loader-s1-0"><div class="spinner"></div><span>正在加载报告…</span></div>
-                    <iframe title="Group Applications Monitoring Dashboard"
+                    <iframe id="iframe-s1-0" title="Group Applications Monitoring Dashboard"
                         src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US"
                         allowFullScreen="true"
-                        onload="document.getElementById('loader-s1-0').style.display='none'">
+                        onload="loaderHide('s1-0')">
                     </iframe>
                 </div>
             </div>
@@ -379,6 +399,34 @@
 <script>
     (function() {
         'use strict';
+
+        // Refresh an iframe by replacing its src
+        window.refreshIframe = function(btn) {
+            var card = btn.closest('.report-card');
+            if (!card) return;
+            var iframe = card.querySelector('iframe');
+            if (!iframe) return;
+            var loader = card.querySelector('.loader');
+            if (loader) loader.style.display = 'flex';
+            btn.classList.add('spinning');
+            var src = iframe.src;
+            // Strip any cache-busting param then re-add
+            src = src.replace(/[?&]_refresh=\d+/g, '');
+            var sep = src.indexOf('?') === -1 ? '?' : '&';
+            iframe.src = src + sep + '_refresh=' + Date.now();
+        };
+
+        // Hide loader when iframe loads
+        window.loaderHide = function(id) {
+            var el = document.getElementById('loader-' + id);
+            if (el) el.style.display = 'none';
+            // Remove spinning state from refresh btn
+            var card = el ? el.closest('.report-card') : null;
+            if (card) {
+                var btn = card.querySelector('.refresh-btn');
+                if (btn) btn.classList.remove('spinning');
+            }
+        };
 
         var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
         var sectionContents = Array.from(document.querySelectorAll('.section-content'));
