@@ -741,7 +741,8 @@
     window.refreshIframe = function(btn) {
         var card = btn.closest('.report-card');
         if (!card) return;
-        var iframe = card.querySelector('iframe');
+        var section = card.querySelector('.card-section.active');
+        var iframe = section ? section.querySelector('iframe') : card.querySelector('iframe');
         if (!iframe) return;
         var loader = card.querySelector('.loader');
         if (loader) loader.style.display = 'flex';
