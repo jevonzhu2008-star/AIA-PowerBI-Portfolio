@@ -57,42 +57,30 @@
         button:focus:not(:focus-visible) { outline: none; }
 
         /* ── Hero / Title ── */
+        .hero-spacer { transition: height .35s var(--ease-out); }
         .hero {
-            position: sticky; top: 0; text-align: center;
+            position: fixed; top: 0; left: 0; right: 0; text-align: center;
             padding: 56px var(--space-lg) 40px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
-            isolation: isolate; z-index: 100;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            transition: padding .3s, box-shadow .3s;
-            transition-timing-function: var(--ease-out);
-            will-change: padding;
-            contain: layout style paint;
+            z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+            transition: padding .35s var(--ease-out), box-shadow .35s var(--ease-out);
         }
+        .hero .mouse-glow { transition: opacity .35s var(--ease-out); }
+        .hero.compact .mouse-glow { opacity: 0; }
         .hero.compact {
             padding: 16px var(--space-lg) 14px;
             background: linear-gradient(135deg, #0a0a14 0%, #10101e 50%, #0a0a14 100%);
             box-shadow: 0 4px 40px rgba(0,0,0,0.6);
         }
-        .hero .deco-layer {
-            position: absolute; inset: 0; z-index: 0; pointer-events: none;
-            transition: opacity .3s var(--ease-out);
-        }
         .hero.compact .deco-layer { opacity: 0; }
-        .hero .deco-layer .glow-orb,
-        .hero .deco-layer .grid-lines,
-        .hero .deco-layer .particles,
-        .hero .mouse-glow { transition: opacity .3s var(--ease-out); }
-        .hero .shine-divider,
-        .hero .disclaimer-badge { transition: opacity .3s var(--ease-out); }
         .hero.compact .shine-divider,
         .hero.compact .disclaimer-badge { opacity: 0; }
-
         .hero.compact .top-row { margin-bottom: 0; }
         .hero.compact .top-badge { font-size: 0.65rem; padding: 3px 12px 3px 10px; }
         .hero.compact .top-badge .dot { width: 4px; height: 4px; }
         .hero.compact .top-badge svg { width: 12px; height: 12px; }
         .hero.compact .author-credit { gap: 6px; }
-        .hero.compact .author-credit .avatar { width: 22px; height: 22px; animation: none; box-shadow: none; }
+        .hero.compact .author-credit .avatar { width: 22px; height: 22px; }
         .hero.compact .author-credit .author-text .by { display: none; }
         .hero.compact .author-credit .author-text .name { font-size: 0.72rem; }
         .hero.compact h1 {
@@ -102,10 +90,11 @@
         .hero.compact h1 .hl::after { display: none; }
         .hero.compact .hero-inner { gap: 20px; }
 
+        .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; transition: opacity .35s var(--ease-out); }
         .hero-inner {
             position: relative; z-index: 1;
             display: flex; flex-direction: column; align-items: center;
-            transition: gap .3s var(--ease-out);
+            transition: gap .35s var(--ease-out);
             contain: layout;
         }
         .hero .glow-orb {
@@ -601,7 +590,6 @@
         <div class="particles" id="particles"></div>
     </div>
     <div class="mouse-glow" id="mouseGlow"></div>
-    <div class="particles" id="particles"></div>
     <div class="shine-divider"></div>
     <div class="hero-inner">
         <div class="top-row">
@@ -625,6 +613,7 @@
         </div>
     </div>
 </header>
+<div class="hero-spacer"></div>
 
 <div class="container section-outer">
     <nav class="section-tabs" role="tablist" aria-label="主题切换">
@@ -1208,19 +1197,25 @@
     /* ── Hero scroll shrink ── */
     (function() {
         var hero = document.querySelector('.hero');
+        var spacer = document.querySelector('.hero-spacer');
         if (!hero) return;
         var ticking = false;
-        function checkScroll() {
-            hero.classList.toggle('compact', window.scrollY > 120);
+        function sync() {
+            if (window.scrollY > 80) {
+                hero.classList.add('compact');
+            } else {
+                hero.classList.remove('compact');
+            }
+            if (spacer) spacer.style.height = hero.offsetHeight + 'px';
             ticking = false;
         }
         window.addEventListener('scroll', function() {
-            if (!ticking) {
-                requestAnimationFrame(checkScroll);
-                ticking = true;
-            }
+            if (!ticking) { requestAnimationFrame(sync); ticking = true; }
         }, {passive: true});
-        checkScroll();
+        window.addEventListener('resize', sync);
+        // initial sync after layout settles
+        if (document.readyState === 'complete') sync();
+        else window.addEventListener('load', sync);
     })();
 })();
 </script>
