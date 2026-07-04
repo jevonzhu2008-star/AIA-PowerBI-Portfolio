@@ -58,10 +58,11 @@
 
         /* ── Hero / Title ── */
         .hero {
-            position: relative; overflow: hidden; text-align: center;
+            position: sticky; top: 0; overflow: hidden; text-align: center;
             padding: 56px var(--space-lg) 40px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
-            isolation: isolate;
+            isolation: isolate; z-index: 100;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
         }
         .hero .glow-orb {
             position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px);
