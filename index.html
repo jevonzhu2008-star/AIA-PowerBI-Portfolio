@@ -57,14 +57,11 @@
         button:focus:not(:focus-visible) { outline: none; }
 
         /* ── Hero / Title ── */
-        .hero-spacer { height: 256px; flex-shrink: 0; }
         .hero {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            text-align: center;
+            position: sticky; top: 0; text-align: center; z-index: 100;
             padding: 56px 24px 40px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            transition: padding .35s ease-out, box-shadow .35s ease-out;
         }
         .hero.compact {
             padding: 14px 24px 12px;
@@ -73,13 +70,12 @@
         }
         .hero .deco-layer,
         .hero .mouse-glow,
-        .hero .shine-divider,
-        .hero .disclaimer-badge { transition: opacity .35s ease-out; }
+        .hero .shine-divider { transition: opacity .3s ease-out; }
         .hero.compact .deco-layer,
         .hero.compact .mouse-glow,
-        .hero.compact .shine-divider,
-        .hero.compact .disclaimer-badge { opacity: 0; }
+        .hero.compact .shine-divider { opacity: 0; }
 
+        .hero.compact .disclaimer-badge { display: none; }
         .hero.compact .top-row { margin-bottom: 0; }
         .hero.compact .top-badge { font-size: 0.65rem; padding: 3px 12px 3px 10px; }
         .hero.compact .top-badge .dot { width: 4px; height: 4px; }
@@ -610,7 +606,6 @@
         </div>
     </div>
 </header>
-<div class="hero-spacer"></div>
 
 <div class="container section-outer">
     <nav class="section-tabs" role="tablist" aria-label="主题切换">
@@ -1194,14 +1189,11 @@
     /* ── Hero scroll shrink ── */
     (function() {
         var hero = document.querySelector('.hero');
-        var spacer = document.querySelector('.hero-spacer');
         if (!hero) return;
         function sync() {
             hero.classList.toggle('compact', window.scrollY > 80);
-            if (spacer) spacer.style.height = hero.offsetHeight + 'px';
         }
         window.addEventListener('scroll', sync, {passive: true});
-        window.addEventListener('resize', sync);
         sync();
     })();
 })();
