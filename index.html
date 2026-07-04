@@ -211,25 +211,19 @@
         }
         .main-tab.active .tab-hint { opacity: 0.75; }
 
-        /* ═══════════════════════════════════════
-           Sub Tabs
-           ═══════════════════════════════════════ */
-        .sub-tabs-outer { max-width: 400px; margin: var(--space-md) auto 0; }
-        .sub-tabs-bar {
+        /* ── Sub Tabs inside report card ── */
+        .report-card .card-tabs {
             display: flex; gap: var(--space-xs);
-            background: rgba(255,255,255,0.025);
-            border-radius: 10px;
-            padding: 3px;
-            border: 1px solid var(--color-border);
+            padding: var(--space-sm) var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+            background: rgba(255,255,255,0.012);
         }
-        .main-panel:not(.active) .sub-tabs-bar { display: none; }
-        .sub-tab {
-            flex: 1;
+        .report-card .card-tabs .sub-tab {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: var(--space-sm);
-            padding: 10px 20px;
+            padding: 9px 18px;
             border: none;
             border-radius: var(--radius-sm);
             background: transparent;
@@ -241,11 +235,12 @@
                         color var(--duration-fast) var(--ease-out),
                         box-shadow var(--duration-fast) var(--ease-out);
             white-space: nowrap;
-            min-height: 44px;
+            min-height: 38px;
+            min-width: 120px;
         }
-        .sub-tab:hover { color: #aab; background: rgba(255,255,255,0.04); }
-        .sub-tab.active { color: #fff; background: rgba(233,69,96,0.25); box-shadow: 0 2px 8px rgba(233,69,96,0.1); }
-        .sub-tab svg { width: 16px; height: 16px; flex-shrink: 0; }
+        .report-card .card-tabs .sub-tab:hover { color: #aab; background: rgba(255,255,255,0.04); }
+        .report-card .card-tabs .sub-tab.active { color: #fff; background: rgba(233,69,96,0.25); box-shadow: 0 2px 8px rgba(233,69,96,0.1); }
+        .report-card .card-tabs .sub-tab svg { width: 16px; height: 16px; flex-shrink: 0; }
 
         /* ═══════════════════════════════════════
            Content Panels
@@ -571,18 +566,18 @@
 
         <!-- Panel 0: Consumption -->
         <section class="main-panel active" role="tabpanel" data-main="0">
-            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist" aria-label="视图切换">
-                <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    Profile
-                </button>
-                <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    Report
-                </button>
-            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Consumption Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Consumption Profile</strong> — 展示云资源消耗概览，包含月度消费趋势、按服务分类的支出分布及 Top 消费项目排行。</div>
                     <div class="card-body">
@@ -596,6 +591,16 @@
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Consumption Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag report" aria-label="Report 类型">Report</span></div></div>
                     <div class="card-desc"><strong>Consumption Report</strong> — 深入分析云资源使用明细，支持按部门、项目、区域维度筛选，帮助识别消费热点与异常波动。</div>
                     <div class="card-body">
@@ -650,18 +655,18 @@
 
         <!-- Panel 1: Cloud Efficiency Saving -->
         <section class="main-panel" role="tabpanel" data-main="1">
-            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist" aria-label="视图切换">
-                <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    Profile
-                </button>
-                <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    Report
-                </button>
-            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Cloud Efficiency Saving Profile</strong> — 汇总云资源优化建议与节省金额，涵盖 Reserved Instance、Saving Plans 及 Rightsizing 推荐概览。</div>
                     <div class="card-body">
@@ -675,6 +680,16 @@
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Cloud Efficiency Saving Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag report" aria-label="Report 类型">Report</span></div></div>
                     <div class="card-desc"><strong>Cloud Efficiency Saving Report</strong> — 详细展示每项优化措施的执行状态、预估节省金额与实施优先级，跟踪成本优化进度。</div>
                     <div class="card-body">
@@ -729,18 +744,18 @@
 
         <!-- Panel 2: Cloud and Kyndryl Spend -->
         <section class="main-panel" role="tabpanel" data-main="2">
-            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist" aria-label="视图切换">
-                <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    Profile
-                </button>
-                <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    Report
-                </button>
-            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Cloud and Kyndryl Spend Profile</strong> — 展示云服务及 Kyndryl 托管服务的总支出概览，含月度趋势、服务商分布及预算对比。</div>
                     <div class="card-body">
@@ -754,6 +769,16 @@
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag report" aria-label="Report 类型">Report</span></div></div>
                     <div class="card-desc"><strong>Cloud and Kyndryl Spend Report</strong> — 按账户、服务和标签维度细化分析支出明细，识别超预算项并支持自助成本归因。</div>
                     <div class="card-body">
@@ -803,18 +828,18 @@
 
         <!-- Panel 3: Cloud Cost Management -->
         <section class="main-panel" role="tabpanel" data-main="3">
-            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist" aria-label="视图切换">
-                <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    Profile
-                </button>
-                <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    Report
-                </button>
-            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Cloud Cost Management Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag profile" aria-label="Profile 类型">Profile</span></div></div>
                     <div class="card-desc"><strong>Cloud Cost Management Profile</strong> — 提供成本管理制度的核心 KPI，包括预算达成率、异常预警数及未分配资源占比概览。</div>
                     <div class="card-body">
@@ -828,6 +853,16 @@
             </div>
             <div class="sub-panel" data-sub="report">
                 <div class="report-card">
+                    <div class="card-tabs" role="tablist" aria-label="视图切换">
+                        <button class="sub-tab" role="tab" aria-selected="false" data-sub="profile">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            Profile
+                        </button>
+                        <button class="sub-tab active" role="tab" aria-selected="true" data-sub="report">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                            Report
+                        </button>
+                    </div>
                     <div class="card-header"><h2>Cloud Cost Management Report</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button><span class="type-tag report" aria-label="Report 类型">Report</span></div></div>
                     <div class="card-desc"><strong>Cloud Cost Management Report</strong> — 管理云成本优化全流程，跟踪预算执行、资源利用率及成本分配，推动 FinOps 持续改进。</div>
                     <div class="card-body">
