@@ -57,14 +57,12 @@
         button:focus:not(:focus-visible) { outline: none; }
 
         /* ── Hero / Title ── */
-        .hero-spacer { height: 264px; }
         .hero {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            text-align: center; overflow: hidden;
+            position: sticky; top: 0; text-align: center; z-index: 100;
             padding: 56px 24px 40px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-            transition: padding .35s ease-out, box-shadow .35s ease-out;
+            transition: box-shadow .35s ease-out;
         }
         .hero.compact {
             padding: 14px 24px 12px;
@@ -280,9 +278,9 @@
             background: rgba(233,185,50,0.05);
             border: 1px solid rgba(233,185,50,0.1);
             font-size: 0.68rem; color: #998833;
-            transition: opacity .35s ease-out;
         }
         .hero .disclaimer-badge svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.6; }
+        .hero.compact .disclaimer-badge { display: none; }
 
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(12px); }
@@ -610,7 +608,6 @@
         </div>
     </div>
 </header>
-<div class="hero-spacer"></div>
 
 <div class="container section-outer">
     <nav class="section-tabs" role="tablist" aria-label="主题切换">
@@ -1194,14 +1191,11 @@
     /* ── Hero scroll shrink ── */
     (function() {
         var hero = document.querySelector('.hero');
-        var spacer = document.querySelector('.hero-spacer');
         if (!hero) return;
         function sync() {
             hero.classList.toggle('compact', window.scrollY > 80);
-            if (spacer) spacer.style.height = hero.offsetHeight + 'px';
         }
         window.addEventListener('scroll', sync, {passive: true});
-        window.addEventListener('resize', sync);
         sync();
     })();
 })();
