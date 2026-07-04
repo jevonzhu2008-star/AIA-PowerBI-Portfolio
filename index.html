@@ -275,15 +275,14 @@
 
         .container { max-width: var(--max-width-nav); margin: 0 auto; padding: 0 var(--space-lg); }
         .section-outer { margin-top: var(--space-xl); }
-        .section-tabs-outer { position: sticky; top: 110px; z-index: 99; }
-        .section-tabs {
-            display: flex; gap: var(--space-xs);
+        .section-tabs-outer { position: sticky; top: 0; z-index: 99; }
+        .section-tabs-outer .section-tabs-wrap {
             background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
             padding: var(--space-xs); border: 1px solid var(--color-border);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
         }
-        body.scrolled .section-tabs-outer .section-tabs {
-            background: rgba(10,10,18,0.85);
+        body.scrolled .section-tabs-outer .section-tabs-wrap {
+            background: rgba(10,10,18,0.95);
         }
         .section-tab {
             flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
@@ -600,8 +599,8 @@
     </div>
 </header>
 
-<div class="section-tabs-outer" style="position:sticky;top:100px;z-index:99">
-<div class="container section-tabs" style="margin:0 auto;display:flex;gap:var(--space-xs);background:rgba(255,255,255,0.03);border-radius:var(--radius-md);padding:var(--space-xs);border:1px solid var(--color-border);max-width:1100px">
+<div class="section-tabs-outer">
+<div class="section-tabs-wrap" style="max-width:var(--max-width-nav);margin:0 auto;padding:var(--space-xs) var(--space-lg);display:flex;gap:var(--space-xs)">
         <button class="section-tab active" role="tab" aria-selected="true" data-section="0">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
             Cloud Finance &amp; FinOps
@@ -611,6 +610,7 @@
             Application Data Flow Monitoring
         </button>
     </div>
+</div>
 
 <!-- ════ Section 0 ════ -->
 <div class="section-content active" data-section="0">
