@@ -751,6 +751,10 @@
         src = src.replace(/[?&]_refresh=\d+/g, '');
         var sep = src.indexOf('?') === -1 ? '?' : '&';
         iframe.src = src + sep + '_refresh=' + Date.now();
+        setTimeout(function() {
+            btn.classList.remove('spinning');
+            if (loader) loader.style.display = 'none';
+        }, 5000);
     };
 
     window.loaderHide = function(id) {
