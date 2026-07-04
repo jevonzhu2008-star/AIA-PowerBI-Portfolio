@@ -8,158 +8,169 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-            background: #0b0b16;
+            background: #0a0a12;
             color: #e0e0e0;
             min-height: 100vh;
         }
+        a { color: inherit; text-decoration: none; }
 
-        .header {
-            background: linear-gradient(135deg, #12121e 0%, #1a1a2e 50%, #0f1a30 100%);
-            padding: 36px 24px 24px;
+        /* ── Header ── */
+        .hero {
+            background: linear-gradient(135deg, #0f0f1e 0%, #16162d 40%, #0d1a2e 100%);
+            padding: 48px 24px 36px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
         }
-        .header::after {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -120px; right: -120px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(233,69,96,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
             content: '';
             position: absolute;
             bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 200px; height: 2px;
+            width: 240px; height: 2px;
             background: linear-gradient(90deg, transparent, #e94560, #f5a623, transparent);
         }
-        .header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
-        .header h1 .hl {
+        .hero h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: -0.5px; position: relative; }
+        .hero h1 .hl {
             background: linear-gradient(90deg, #e94560, #f5a623);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .header .subtitle { margin-top: 4px; font-size: 0.85rem; color: #6a7a8a; letter-spacing: 1px; }
-        .header .header-disclaimer { margin-top: 10px; font-size: 0.72rem; color: #8a8a4a; border-top: 1px solid rgba(255, 255, 255, 0.04); padding-top: 8px; }
+        .hero .tagline { margin-top: 6px; font-size: 0.88rem; color: #6a7a8a; letter-spacing: 1px; position: relative; }
+        .hero .disclaimer {
+            margin-top: 14px; font-size: 0.72rem; color: #7a7a4a;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 10px; display: inline-block; position: relative;
+        }
 
-        .section-wrapper { max-width: 600px; margin: 28px auto 0; padding: 0 16px; }
+        /* ── Navigation Container ── */
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* ── Section Tabs ── */
+        .section-outer { margin-top: 32px; }
         .section-tabs {
-            display: flex; gap: 3px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px; padding: 3px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex; gap: 4px;
+            background: rgba(255,255,255,0.035);
+            border-radius: 12px; padding: 4px;
+            border: 1px solid rgba(255,255,255,0.06);
         }
         .section-tab {
-            flex: 1; padding: 10px 16px; border: none; border-radius: 8px;
-            background: transparent; color: #6a7a8a; font-size: 0.82rem; font-weight: 600;
-            cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
-            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
+            flex: 1; padding: 12px 20px; border: none; border-radius: 9px;
+            background: transparent; color: #6a7a8a; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
         }
-        .section-tab:hover { color: #c0d0e0; background: rgba(255, 255, 255, 0.04); }
-        .section-tab.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
+        .section-tab:hover { color: #c0d0e0; background: rgba(255,255,255,0.04); }
+        .section-tab.active { color: #fff; background: rgba(255,255,255,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .section-tab .sec-icon { margin-right: 6px; }
 
-        .tabs-wrapper { max-width: 1000px; margin: 16px auto 0; padding: 0 16px; }
+        /* ── Main Tabs ── */
+        .main-tabs-outer { margin-top: 20px; }
         .main-tabs {
-            display: flex; gap: 3px;
-            background: rgba(255, 255, 255, 0.035);
-            border-radius: 12px; padding: 3px;
-            backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex; gap: 4px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px; padding: 4px;
+            border: 1px solid rgba(255,255,255,0.06);
         }
         .main-tab {
-            flex: 1; min-width: 0; padding: 11px 8px; border: none; border-radius: 10px;
-            background: transparent; color: #7a8a9a; font-size: 0.75rem; font-weight: 600;
-            cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
-            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
+            flex: 1; min-width: 0; padding: 13px 10px; border: none; border-radius: 9px;
+            background: transparent; color: #7a8a9a; font-size: 0.78rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; white-space: nowrap;
         }
-        .main-tab:hover { color: #c0d0e0; background: rgba(255, 255, 255, 0.04); }
+        .main-tab:hover { color: #c0d0e0; background: rgba(255,255,255,0.04); }
         .main-tab.active {
             color: #fff;
             background: linear-gradient(135deg, #e94560, #c23152);
-            box-shadow: 0 4px 18px rgba(233, 69, 96, 0.3);
+            box-shadow: 0 4px 18px rgba(233,69,96,0.3);
         }
-        .main-tab .tab-hint { display: block; font-size: 0.5rem; font-weight: 400; opacity: 0.45; margin-top: 1px; }
-        .main-tab.active .tab-hint { opacity: 0.7; }
+        .main-tab .tab-hint { display: block; font-size: 0.5rem; font-weight: 400; opacity: 0.45; margin-top: 2px; }
+        .main-tab.active .tab-hint { opacity: 0.75; }
 
+        /* ── Sub Tabs ── */
+        .sub-tabs-outer { max-width: 400px; margin: 16px auto 0; }
         .sub-tabs-bar {
-            display: flex; justify-content: center; gap: 4px;
-            margin: 14px auto 0; padding: 3px;
-            background: rgba(255, 255, 255, 0.025);
-            border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05);
-            max-width: 420px;
+            display: flex; gap: 4px;
+            background: rgba(255,255,255,0.025);
+            border-radius: 10px; padding: 3px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
         .main-panel:not(.active) .sub-tabs-bar { display: none; }
         .sub-tab {
-            flex: 1; padding: 9px 18px; border: none; border-radius: 8px;
+            flex: 1; padding: 10px 20px; border: none; border-radius: 8px;
             background: transparent; color: #667; font-size: 0.82rem; font-weight: 500;
             cursor: pointer; transition: all 0.25s ease; white-space: nowrap;
-            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
         }
-        .sub-tab:hover { color: #aab; background: rgba(255, 255, 255, 0.04); }
-        .sub-tab.active { color: #fff; background: rgba(233, 69, 96, 0.3); box-shadow: 0 2px 8px rgba(233, 69, 96, 0.12); }
+        .sub-tab:hover { color: #aab; background: rgba(255,255,255,0.04); }
+        .sub-tab.active { color: #fff; background: rgba(233,69,96,0.25); box-shadow: 0 2px 8px rgba(233,69,96,0.1); }
 
-        .content { max-width: 1240px; margin: 0 auto; padding: 0 24px 56px; }
+        /* ── Content ── */
+        .content-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
         .section-content { display: none; }
         .section-content.active { display: block; }
         .main-panel { display: none; }
         .main-panel.active { display: block; }
-        .sub-panel { display: none; animation: fadeUp 0.35s ease; }
+        .sub-panel { display: none; animation: fadeUp 0.4s ease; }
         .sub-panel.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
+        /* ── Report Card ── */
         .report-card {
-            background: #151525; border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            margin-top: 14px;
+            background: #14141f;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            margin-top: 18px;
+            transition: border-color 0.3s ease;
         }
+        .report-card:hover { border-color: rgba(255,255,255,0.08); }
         .report-card .card-header {
-            padding: 12px 22px;
+            padding: 14px 24px;
             display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            background: rgba(255, 255, 255, 0.015);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.012);
         }
-        .report-card .card-header h2 { font-size: 0.95rem; font-weight: 600; color: #e8ecf0; }
-        .report-card .card-header .header-actions { display: flex; align-items: center; gap: 8px; }
+        .report-card .card-header h2 { font-size: 1rem; font-weight: 600; color: #e8ecf0; }
+        .report-card .card-header .header-actions { display: flex; align-items: center; gap: 10px; }
         .refresh-btn {
-            background: none; border: none; color: #556; font-size: 1rem; line-height: 1;
-            cursor: pointer; padding: 2px 8px; border-radius: 6px;
+            background: none; border: none; color: #556; font-size: 1.05rem; line-height: 1;
+            cursor: pointer; padding: 4px 10px; border-radius: 8px;
             transition: all 0.25s ease;
-            -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
         }
-        .refresh-btn:hover { color: #e94560; background: rgba(233, 69, 96, 0.12); }
+        .refresh-btn:hover { color: #e94560; background: rgba(233,69,96,0.12); }
         .refresh-btn:active { transform: rotate(60deg); }
         .refresh-btn.spinning { animation: spin 0.6s linear infinite; color: #e94560; }
         .report-card .card-header .type-tag {
             display: inline-block; font-size: 0.65rem; font-weight: 600;
-            padding: 2px 12px; border-radius: 20px; letter-spacing: 0.5px;
+            padding: 3px 14px; border-radius: 20px; letter-spacing: 0.5px;
         }
-        .type-tag.profile { background: rgba(79, 172, 254, 0.15); color: #4facfe; }
-        .type-tag.report  { background: rgba(244, 166, 74, 0.15);  color: #f4a64a; }
-        .type-tag.dashboard { background: rgba(129, 216, 129, 0.15); color: #81d881; }
-        .refresh-btn2 {
-            background: none; border: none; color: #556; font-size: 0.9rem;
-            cursor: pointer; padding: 2px 8px; border-radius: 6px;
-            transition: all 0.25s ease;
-            -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none;
-            line-height: 1;
-        }
-        .refresh-btn2:hover { color: #e94560; background: rgba(233, 69, 96, 0.12); }
-        .refresh-btn2:active { transform: rotate(60deg); }
-        .refresh-btn2.spinning { animation: spin 0.6s linear infinite; color: #e94560; }
+        .type-tag.profile { background: rgba(79,172,254,0.15); color: #4facfe; }
+        .type-tag.report  { background: rgba(244,166,74,0.15);  color: #f4a64a; }
 
+        /* ── Card Description ── */
         .card-desc {
-            padding: 14px 22px;
-            background: rgba(255, 255, 255, 0.012);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 14px 24px;
+            background: rgba(255,255,255,0.01);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
             font-size: 0.82rem;
-            line-height: 1.6;
-            color: #8899aa;
+            line-height: 1.65;
+            color: #7a8a9a;
         }
-        .card-desc strong { color: #c0d0e0; font-weight: 600; }
+        .card-desc strong { color: #b0c0d0; font-weight: 600; }
 
+        /* ── Card Body ── */
         .report-card .card-body {
             position: relative;
             width: 100%;
             padding-top: 56.25%;
-            background: #10101a;
+            background: #0d0d18;
         }
         .report-card .card-body iframe {
             position: absolute;
@@ -180,26 +191,37 @@
             pointer-events: none;
         }
         .card-body .loader .spinner {
-            width: 32px; height: 32px;
-            border: 3px solid rgba(255, 255, 255, 0.06);
+            width: 34px; height: 34px;
+            border: 3px solid rgba(255,255,255,0.06);
             border-top-color: #e94560;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .footer { text-align: center; padding: 28px 24px; border-top: 1px solid rgba(255, 255, 255, 0.04); color: #445; font-size: 0.82rem; }
+        /* ── Footer ── */
+        .footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            color: #445;
+            font-size: 0.82rem;
+            background: #0a0a12;
+        }
+        .footer .footer-inner { max-width: 1200px; margin: 0 auto; }
     </style>
 </head>
 <body>
 
-<header class="header">
+<!-- ════ Hero / Header ════ -->
+<header class="hero">
     <h1><span class="hl">PowerBI</span> 作品集</h1>
-    <div class="subtitle">AIA Group · 数据分析与监控</div>
-    <div class="header-disclaimer">本作品集所涉及的全部数据均为模拟演示数据，不代表真实业务信息。</div>
+    <div class="tagline">AIA Group · 数据分析与监控解决方案</div>
+    <div class="disclaimer">本作品集所涉及的全部数据均为模拟演示数据，不代表真实业务信息。</div>
 </header>
 
-<div class="section-wrapper">
+<!-- ════ Section Switcher ════ -->
+<div class="nav-container section-outer">
     <nav class="section-tabs" role="tablist">
         <button class="section-tab active" role="tab" aria-selected="true" data-section="0">
             <span class="sec-icon">☁️</span> Cloud Finance &amp; FinOps
@@ -215,7 +237,7 @@
 <!-- ════════════════════════════════════════════ -->
 <div class="section-content active" data-section="0">
 
-    <div class="tabs-wrapper">
+    <div class="nav-container main-tabs-outer">
         <nav class="main-tabs" role="tablist">
             <button class="main-tab active" role="tab" aria-selected="true" data-main="0">
                 📈 Consumption <span class="tab-hint">消费分析</span>
@@ -232,14 +254,14 @@
         </nav>
     </div>
 
-    <main class="content">
+    <main class="content-wrapper">
 
         <!-- Panel 0: Consumption -->
         <section class="main-panel active" role="tabpanel" data-main="0">
-            <div class="sub-tabs-bar" role="tablist">
+            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist">
                 <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">📋 Profile</button>
                 <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">📊 Report</button>
-            </div>
+            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
                     <div class="card-header"><h2>Consumption Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
@@ -264,10 +286,10 @@
 
         <!-- Panel 1: Cloud Efficiency Saving -->
         <section class="main-panel" role="tabpanel" data-main="1">
-            <div class="sub-tabs-bar" role="tablist">
+            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist">
                 <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">📋 Profile</button>
                 <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">📊 Report</button>
-            </div>
+            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
                     <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
@@ -292,10 +314,10 @@
 
         <!-- Panel 2: Cloud and Kyndryl Spend -->
         <section class="main-panel" role="tabpanel" data-main="2">
-            <div class="sub-tabs-bar" role="tablist">
+            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist">
                 <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">📋 Profile</button>
                 <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">📊 Report</button>
-            </div>
+            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
                     <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
@@ -320,10 +342,10 @@
 
         <!-- Panel 3: Cloud Cost Management -->
         <section class="main-panel" role="tabpanel" data-main="3">
-            <div class="sub-tabs-bar" role="tablist">
+            <div class="sub-tabs-outer"><div class="sub-tabs-bar" role="tablist">
                 <button class="sub-tab active" role="tab" aria-selected="true" data-sub="profile">📋 Profile</button>
                 <button class="sub-tab" role="tab" aria-selected="false" data-sub="report">📊 Report</button>
-            </div>
+            </div></div>
             <div class="sub-panel active" data-sub="profile">
                 <div class="report-card">
                     <div class="card-header"><h2>Cloud Cost Management Profile</h2><div class="header-actions"><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表">⟳</button><span class="type-tag profile">Profile</span></div></div>
@@ -354,7 +376,7 @@
 <!-- ════════════════════════════════════════════ -->
 <div class="section-content" data-section="1">
 
-    <div class="tabs-wrapper">
+    <div class="nav-container main-tabs-outer">
         <nav class="main-tabs" role="tablist">
             <button class="main-tab active" role="tab" aria-selected="true" data-main="0">
                 📊 Group Monitoring <span class="tab-hint">应用监控</span>
@@ -362,7 +384,7 @@
         </nav>
     </div>
 
-    <main class="content">
+    <main class="content-wrapper">
         <section class="main-panel active" role="tabpanel" data-main="0">
             <div class="report-card">
                 <div class="card-header">
@@ -384,139 +406,130 @@
 </div>
 
 <footer class="footer">
-    <p>© 2026 AIA Group · 基于 Microsoft Power BI 构建 · Locale: en-US</p>
+    <div class="footer-inner">© 2026 AIA Group · 基于 Microsoft Power BI 构建 · Locale: en-US</div>
 </footer>
 
 <script>
-    (function() {
-        'use strict';
+(function() {
+    'use strict';
 
-        // Refresh an iframe by replacing its src
-        window.refreshIframe = function(btn) {
-            var card = btn.closest('.report-card');
-            if (!card) return;
-            var iframe = card.querySelector('iframe');
-            if (!iframe) return;
-            var loader = card.querySelector('.loader');
-            if (loader) loader.style.display = 'flex';
-            btn.classList.add('spinning');
-            var src = iframe.src;
-            // Strip any cache-busting param then re-add
-            src = src.replace(/[?&]_refresh=\d+/g, '');
-            var sep = src.indexOf('?') === -1 ? '?' : '&';
-            iframe.src = src + sep + '_refresh=' + Date.now();
-        };
+    window.refreshIframe = function(btn) {
+        var card = btn.closest('.report-card');
+        if (!card) return;
+        var iframe = card.querySelector('iframe');
+        if (!iframe) return;
+        var loader = card.querySelector('.loader');
+        if (loader) loader.style.display = 'flex';
+        btn.classList.add('spinning');
+        var src = iframe.src;
+        src = src.replace(/[?&]_refresh=\d+/g, '');
+        var sep = src.indexOf('?') === -1 ? '?' : '&';
+        iframe.src = src + sep + '_refresh=' + Date.now();
+    };
 
-        // Hide loader when iframe loads
-        window.loaderHide = function(id) {
-            var el = document.getElementById('loader-' + id);
-            if (el) el.style.display = 'none';
-            // Remove spinning state from refresh btn
-            var card = el ? el.closest('.report-card') : null;
-            if (card) {
-                var btn = card.querySelector('.refresh-btn');
-                if (btn) btn.classList.remove('spinning');
-            }
-        };
+    window.loaderHide = function(id) {
+        var el = document.getElementById('loader-' + id);
+        if (el) el.style.display = 'none';
+        var card = el ? el.closest('.report-card') : null;
+        if (card) {
+            var btn = card.querySelector('.refresh-btn');
+            if (btn) btn.classList.remove('spinning');
+        }
+    };
 
-        var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
-        var sectionContents = Array.from(document.querySelectorAll('.section-content'));
+    var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
+    var sectionContents = Array.from(document.querySelectorAll('.section-content'));
 
-        sectionTabs.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var idx = btn.dataset.section;
-                sectionTabs.forEach(function(b) {
-                    b.classList.toggle('active', b.dataset.section === idx);
-                    b.setAttribute('aria-selected', b.dataset.section === idx);
-                });
-                sectionContents.forEach(function(c) {
-                    c.classList.toggle('active', c.dataset.section === idx);
-                });
+    sectionTabs.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = btn.dataset.section;
+            sectionTabs.forEach(function(b) {
+                b.classList.toggle('active', b.dataset.section === idx);
+                b.setAttribute('aria-selected', b.dataset.section === idx);
+            });
+            sectionContents.forEach(function(c) {
+                c.classList.toggle('active', c.dataset.section === idx);
             });
         });
+    });
 
-        document.querySelectorAll('.main-tab').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var idx = btn.dataset.main;
-                var parentContent = btn.closest('.section-content');
-                if (!parentContent) return;
-
-                parentContent.querySelectorAll('.main-tab').forEach(function(b) {
-                    b.classList.toggle('active', b.dataset.main === idx);
-                    b.setAttribute('aria-selected', b.dataset.main === idx);
-                });
-                parentContent.querySelectorAll('.main-panel').forEach(function(p) {
-                    p.classList.toggle('active', p.dataset.main === idx);
-                });
+    document.querySelectorAll('.main-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var idx = btn.dataset.main;
+            var parentContent = btn.closest('.section-content');
+            if (!parentContent) return;
+            parentContent.querySelectorAll('.main-tab').forEach(function(b) {
+                b.classList.toggle('active', b.dataset.main === idx);
+                b.setAttribute('aria-selected', b.dataset.main === idx);
+            });
+            parentContent.querySelectorAll('.main-panel').forEach(function(p) {
+                p.classList.toggle('active', p.dataset.main === idx);
             });
         });
+    });
 
-        document.querySelectorAll('.sub-tab').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var subKey = btn.dataset.sub;
-                var parent = btn.closest('.main-panel');
-                if (!parent) return;
-
-                parent.querySelectorAll('.sub-tab').forEach(function(b) {
-                    b.classList.toggle('active', b.dataset.sub === subKey);
-                    b.setAttribute('aria-selected', b.dataset.sub === subKey);
-                });
-                parent.querySelectorAll('.sub-panel').forEach(function(p) {
-                    p.classList.toggle('active', p.dataset.sub === subKey);
-                });
+    document.querySelectorAll('.sub-tab').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var subKey = btn.dataset.sub;
+            var parent = btn.closest('.main-panel');
+            if (!parent) return;
+            parent.querySelectorAll('.sub-tab').forEach(function(b) {
+                b.classList.toggle('active', b.dataset.sub === subKey);
+                b.setAttribute('aria-selected', b.dataset.sub === subKey);
+            });
+            parent.querySelectorAll('.sub-panel').forEach(function(p) {
+                p.classList.toggle('active', p.dataset.sub === subKey);
             });
         });
+    });
 
-        function applyHash() {
-            var hash = location.hash.replace('#', '');
-            if (!hash) return;
-            var parts = hash.split('-');
-            var sIdx = parts[0], mIdx = parts[1], subKey = parts[2];
-
-            var secBtn = sectionTabs.find(function(t) { return t.dataset.section === sIdx; });
-            if (secBtn) secBtn.click();
-
-            if (mIdx) {
-                var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
-                if (content) {
-                    var mainBtn = content.querySelector('.main-tab[data-main="' + mIdx + '"]');
-                    if (mainBtn) mainBtn.click();
-
-                    if (subKey) {
-                        var panel = content.querySelector('.main-panel[data-main="' + mIdx + '"]');
-                        if (panel) {
-                            var subBtn = panel.querySelector('.sub-tab[data-sub="' + subKey + '"]');
-                            if (subBtn) subBtn.click();
-                        }
+    function applyHash() {
+        var hash = location.hash.replace('#', '');
+        if (!hash) return;
+        var parts = hash.split('-');
+        var sIdx = parts[0], mIdx = parts[1], subKey = parts[2];
+        var secBtn = sectionTabs.find(function(t) { return t.dataset.section === sIdx; });
+        if (secBtn) secBtn.click();
+        if (mIdx) {
+            var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
+            if (content) {
+                var mainBtn = content.querySelector('.main-tab[data-main="' + mIdx + '"]');
+                if (mainBtn) mainBtn.click();
+                if (subKey) {
+                    var panel = content.querySelector('.main-panel[data-main="' + mIdx + '"]');
+                    if (panel) {
+                        var subBtn = panel.querySelector('.sub-tab[data-sub="' + subKey + '"]');
+                        if (subBtn) subBtn.click();
                     }
                 }
             }
         }
+    }
 
-        function updateHash() {
-            var activeSec = sectionTabs.find(function(b) { return b.classList.contains('active'); });
-            if (!activeSec) return;
-            var sIdx = activeSec.dataset.section;
-            var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
-            if (!content) return;
-            var activeMain = content.querySelector('.main-tab.active');
-            if (!activeMain) return;
-            var mIdx = activeMain.dataset.main;
-            var panel = content.querySelector('.main-panel.active');
-            var activeSub = panel ? panel.querySelector('.sub-tab.active') : null;
-            var subKey = activeSub ? activeSub.dataset.sub : 'profile';
-            history.replaceState(null, '', '#' + sIdx + '-' + mIdx + '-' + subKey);
+    function updateHash() {
+        var activeSec = sectionTabs.find(function(b) { return b.classList.contains('active'); });
+        if (!activeSec) return;
+        var sIdx = activeSec.dataset.section;
+        var content = sectionContents.find(function(c) { return c.dataset.section === sIdx; });
+        if (!content) return;
+        var activeMain = content.querySelector('.main-tab.active');
+        if (!activeMain) return;
+        var mIdx = activeMain.dataset.main;
+        var panel = content.querySelector('.main-panel.active');
+        var activeSub = panel ? panel.querySelector('.sub-tab.active') : null;
+        var subKey = activeSub ? activeSub.dataset.sub : 'profile';
+        history.replaceState(null, '', '#' + sIdx + '-' + mIdx + '-' + subKey);
+    }
+
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.section-tab, .main-tab, .sub-tab')) {
+            setTimeout(updateHash, 10);
         }
+    });
 
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.section-tab, .main-tab, .sub-tab')) {
-                setTimeout(updateHash, 10);
-            }
-        });
-
-        window.addEventListener('load', applyHash);
-        window.addEventListener('hashchange', applyHash);
-    })();
+    window.addEventListener('load', applyHash);
+    window.addEventListener('hashchange', applyHash);
+})();
 </script>
 
 </body>
