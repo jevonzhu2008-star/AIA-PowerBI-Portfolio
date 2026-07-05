@@ -548,7 +548,7 @@
             background: #0d0d18; width: 100%; overflow: hidden;
         }
         .card-analysis iframe {
-            display: block; width: 100%; min-height: 200px; border: 0;
+            display: block; width: 100%; height: 5200px; border: 0;
         }
 
         /* ── Business Overview ── */
@@ -757,7 +757,7 @@
                 </div>
 
                 <div class="card-section card-analysis" data-card="analysis">
-                    <iframe title="Consumption Analysis Report" src="Consumption_report.html" onload="var f=this;requestAnimationFrame(function(){try{var h=f.contentWindow.document.documentElement.scrollHeight;if(h>100)f.style.height=h+'px';}catch(e){}})"></iframe>
+                    <iframe title="Consumption Analysis Report" src="Consumption_report.html"></iframe>
                 </div>
             </div>
         </section>
@@ -1168,19 +1168,13 @@
                 }
             }
 
-            /* ── Analysis iframe auto-height fallback ── */
+            /* ── Analysis iframe: try auto-height, fallback to CSS fixed height ── */
             if (cardKey === 'analysis') {
                 var iframe = card.querySelector('iframe');
-                if (iframe) {
-                    var resizeFn = function() {
-                        try {
-                            var h = iframe.contentWindow.document.documentElement.scrollHeight;
-                            if (h > 100) iframe.style.height = h + 'px';
-                        } catch(e) {}
-                    };
-                    setTimeout(resizeFn, 500);
-                    setTimeout(resizeFn, 1500);
-                }
+                if (iframe) try {
+                    var h = iframe.contentWindow.document.documentElement.scrollHeight;
+                    if (h > 100) iframe.style.height = h + 'px';
+                } catch(e) {}
             }
         });
     });
