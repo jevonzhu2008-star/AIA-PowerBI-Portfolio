@@ -60,14 +60,12 @@
         .hero {
             position: sticky; top: 0; text-align: center; z-index: 100;
             padding: 12px 24px 8px;
-            background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+            background: linear-gradient(180deg, #0b0b18 0%, #14142a 30%, #0e1a28 55%, #0a0a14 80%, #0a0a12 100%);
         }
         .hero::after {
             content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-            height: 32px;
-            background: linear-gradient(to bottom, rgba(10,10,18,1) 0%, rgba(10,10,18,0) 100%);
-            pointer-events: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(233,69,96,0.12), transparent);
         }
         .hero .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .hero .hero-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
