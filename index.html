@@ -96,6 +96,13 @@
             font-size: 0.63rem; color: #998833;
         }
         .hero .disclaimer-badge svg { width: 12px; height: 12px; opacity: 0.6; }
+        .hero .disclaimer-badge svg {
+            animation: iconBreathe 2.5s ease-in-out infinite;
+        }
+        @keyframes iconBreathe {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
         .deco-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
         .hero .glow-orb {
