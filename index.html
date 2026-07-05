@@ -59,7 +59,7 @@
         /* ── Hero / Title ── */
         .hero {
             position: sticky; top: 0; text-align: center; z-index: 100;
-            padding: 24px 24px 18px;
+            padding: 16px 24px 12px;
             background: linear-gradient(135deg, #0b0b18 0%, #14142a 30%, #0e1a28 60%, #0a0a14 100%);
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
         }
@@ -70,11 +70,6 @@
         }
         .hero .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .hero .top-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 2px; flex-wrap: wrap; }
-        .hero .top-badge {
-            display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px 4px 10px; border-radius: 20px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.65rem; color: var(--color-text-nav); letter-spacing: 0.05em;
-        }
         .hero .author-credit { display: inline-flex; align-items: center; gap: 8px; }
         .hero .author-credit .avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 1.5px solid rgba(255,255,255,0.15); animation: avatarBreathe 3s ease-in-out infinite; }
         @keyframes avatarBreathe { 0%,100% { box-shadow: 0 0 0 0 rgba(233,69,96,0); } 50% { box-shadow: 0 0 0 4px rgba(233,69,96,0.15); border-color: rgba(233,69,96,0.35); } }
@@ -179,16 +174,7 @@
         /* ── Logo badge ── */
         .hero .top-row {
             display: flex; align-items: center; justify-content: center; gap: 16px;
-            margin-bottom: 20px; flex-wrap: wrap;
             transition: margin .35s ease-out;
-        }
-        .hero .top-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 18px 6px 14px; border-radius: 20px;
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-            font-size: 0.72rem; color: var(--color-text-nav); letter-spacing: 0.05em;
-            transition: padding .35s ease-out, font-size .35s ease-out;
-            flex-shrink: 0;
         }
 
         .hero h1 {
@@ -591,9 +577,6 @@
     <div class="shine-divider"></div>
     <div class="hero-inner">
         <div class="top-row">
-            <div class="top-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-            </div>
             <div class="author-credit">
                 <img class="avatar" src="icon-red.jpg" alt="Jevon Zhu">
                 <span class="author-text">
