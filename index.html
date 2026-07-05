@@ -159,20 +159,9 @@
         /* ── Divider shine ── */
         .hero .shine-divider {
             position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 320px; height: 2px; z-index: 1;
+            width: 320px; height: 1px; z-index: 1;
             background: linear-gradient(90deg, transparent,
-                var(--color-primary), rgba(233,69,96,0.6),
-                var(--color-accent), transparent);
-        }
-        .hero .shine-divider::after {
-            content: ''; position: absolute; top: 0; left: -100%;
-            width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shineSweep 4s ease-in-out infinite;
-        }
-        @keyframes shineSweep {
-            0%   { left: -100%; }
-            100% { left: 200%; }
+                rgba(233,69,96,0.15), transparent);
         }
 
         /* ── Logo badge ── */
