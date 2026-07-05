@@ -390,14 +390,9 @@
         .card-desc strong { color: #b0c0d0; font-weight: 600; }
 
         .card-body {
-            position: relative; width: 100%; padding-top: 56.25%; background: #0d0d18;
+            position: relative; width: 100%; height: 800px; background: #0d0d18;
         }
         .card-body iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        /* Power BI 报表需要更高比例，避免切片器标题与筛选框重叠 */
-        .card-section[data-card="profile"] .card-body,
-        .card-section[data-card="report"] .card-body {
-            padding-top: 80%;
-        }
         .card-body .loader {
             position: absolute; inset: 0;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -498,7 +493,7 @@
 
         /* ── Analysis Section ── */
         .card-analysis {
-            background: #0d0d18; width: 100%; height: 5600px;
+            background: #0d0d18; width: 100%; min-height: 600px;
         }
         .card-analysis iframe {
             display: block; width: 100%; height: 100%; border: 0;
@@ -1129,8 +1124,8 @@
                         try {
                             var h = iframe.contentWindow.document.documentElement.scrollHeight;
                             if (h > 100) {
-                                iframe.style.height = (h * 10) + 'px';
-                                iframe.closest('.card-analysis').style.height = (h * 10) + 'px';
+                                iframe.style.height = h + 'px';
+                                iframe.closest('.card-analysis').style.height = h + 'px';
                             }
                         } catch(e) {}
                     };
