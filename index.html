@@ -284,17 +284,23 @@
             to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeScale {
-            from { opacity: 0; transform: scale(0.96) translateY(8px); }
-            to   { opacity: 1; transform: scale(1) translateY(0); }
+            from { opacity: 0; transform: scale(0.94) translateY(12px); filter: blur(4px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
         }
         @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-12px); }
-            to   { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateX(-20px) rotateY(3deg); }
+            to   { opacity: 1; transform: translateX(0) rotateY(0); }
         }
         @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.92) translateY(12px); }
-            60% { opacity: 1; transform: scale(1.02) translateY(-2px); }
+            0% { opacity: 0; transform: scale(0.85) translateY(20px); filter: blur(3px); }
+            50% { opacity: 1; transform: scale(1.04) translateY(-3px); filter: blur(0); }
+            75% { transform: scale(0.98) translateY(1px); }
             100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes slideUpBounce {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            60% { opacity: 1; transform: translateY(-4px) scale(1.01); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .container { max-width: var(--max-width-nav); margin: 0 auto; padding: 0 var(--space-lg); }
@@ -341,9 +347,9 @@
 
         .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
         .section-content { display: none; animation: none; }
-        .section-content.active { display: block; animation: fadeScale 0.45s var(--ease-out) both; }
+        .section-content.active { display: block; animation: slideUpBounce 0.55s var(--ease-out) both; }
         .main-panel { display: none; animation: none; }
-        .main-panel.active { display: block; animation: slideIn 0.4s var(--ease-out) both; }
+        .main-panel.active { display: block; animation: fadeScale 0.5s var(--ease-out) both; }
 
         /* ── Report Card ── */
         .report-card {
@@ -379,8 +385,15 @@
 
         /* ── Card Sections ── */
         .card-section { display: none; animation: none; }
-        .card-section.active { display: block; animation: popIn 0.5s var(--ease-out) both; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        .card-section.active { display: block; }
+        .card-section[data-card]:not(.active) { animation: none; }
+        .card-section.active[data-card] {
+            animation: popIn 0.55s var(--ease-out) both;
+        }
+        /* Intro tab gets a special stagger */
+        .card-section.active[data-card="intro"] {
+            animation: slideUpBounce 0.6s var(--ease-out) both;
+        }
 
         /* ── Report Content ── */
         .card-header {
