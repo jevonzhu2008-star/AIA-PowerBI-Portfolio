@@ -405,11 +405,11 @@
         /* ── Report Content ── */
         .card-header {
             padding: var(--space-md) var(--space-lg);
-            display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);
+            display: flex; align-items: center; gap: var(--space-sm);
             border-bottom: 1px solid var(--color-border);
             background: rgba(255,255,255,0.008);
         }
-        .card-header h2 { font-size: 1rem; font-weight: 600; color: var(--color-text-primary); line-height: 1.4; }
+        .card-header h2 { font-size: 1rem; font-weight: 600; color: var(--color-text-primary); line-height: 1.4; margin-right: auto; }
         .card-header .header-actions { display: flex; align-items: center; gap: var(--space-sm); flex-shrink: 0; }
 
         .refresh-btn {
@@ -720,7 +720,6 @@
                     <button class="card-tab" role="tab" aria-selected="false" data-card="analysis">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Analysis
                     </button>
-                    <button class="card-tab-refresh" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -732,7 +731,7 @@
                 </div>
 
                 <div class="card-section" data-card="profile">
-                    <div class="card-header"><h2>Consumption Profile</h2></div>
+                    <div class="card-header"><h2>Consumption Profile</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Consumption Profile</strong> — 展示云资源消耗概览，包含月度消费趋势、按服务分类的支出分布及 Top 消费项目排行。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-0p"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -741,7 +740,7 @@
                 </div>
 
                 <div class="card-section" data-card="report">
-                    <div class="card-header"><h2>Consumption Report</h2></div>
+                    <div class="card-header"><h2>Consumption Report</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Consumption Report</strong> — 深入分析云资源使用明细，支持按部门、项目、区域维度筛选，帮助识别消费热点与异常波动。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-0r"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -792,7 +791,6 @@
                     <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
                     </button>
-                    <button class="card-tab-refresh" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -804,7 +802,7 @@
                 </div>
 
                 <div class="card-section" data-card="profile">
-                    <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2></div>
+                    <div class="card-header"><h2>Cloud Efficiency Saving Profile</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Cloud Efficiency Saving Profile</strong> — 汇总云资源优化建议与节省金额，涵盖 Reserved Instance、Saving Plans 及 Rightsizing 推荐概览。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-1p"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -813,7 +811,7 @@
                 </div>
 
                 <div class="card-section" data-card="report">
-                    <div class="card-header"><h2>Cloud Efficiency Saving Report</h2></div>
+                    <div class="card-header"><h2>Cloud Efficiency Saving Report</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Cloud Efficiency Saving Report</strong> — 详细展示每项优化措施的执行状态、预估节省金额与实施优先级，跟踪成本优化进度。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-1r"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -860,7 +858,6 @@
                     <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
                     </button>
-                    <button class="card-tab-refresh" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -872,7 +869,7 @@
                 </div>
 
                 <div class="card-section" data-card="profile">
-                    <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2></div>
+                    <div class="card-header"><h2>Cloud and Kyndryl Spend Profile</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Cloud and Kyndryl Spend Profile</strong> — 展示云服务及 Kyndryl 托管服务的总支出概览，含月度趋势、服务商分布及预算对比。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-2p"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -881,7 +878,7 @@
                 </div>
 
                 <div class="card-section" data-card="report">
-                    <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2></div>
+                    <div class="card-header"><h2>Cloud and Kyndryl Spend Report</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Cloud and Kyndryl Spend Report</strong> — 按账户、服务和标签维度细化分析支出明细，识别超预算项并支持自助成本归因。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-2r"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -927,7 +924,6 @@
                     <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
                     </button>
-                    <button class="card-tab-refresh" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
                 </div>
 
                 <div class="card-section active" data-card="intro">
@@ -939,7 +935,7 @@
                 </div>
 
                 <div class="card-section" data-card="profile">
-                    <div class="card-header"><h2>Cloud Cost Management Profile</h2></div>
+                    <div class="card-header"><h2>Cloud Cost Management Profile</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Cloud Cost Management Profile</strong> — 提供成本管理制度的核心 KPI，包括预算达成率、异常预警数及未分配资源占比概览。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-3p"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
@@ -948,7 +944,7 @@
                 </div>
 
                 <div class="card-section" data-card="report">
-                    <div class="card-header"><h2>Cloud Cost Management Report</h2></div>
+                    <div class="card-header"><h2>Cloud Cost Management Report</h2><button class="refresh-btn" onclick="refreshIframe(this)" title="刷新报表" aria-label="刷新报表" style="flex-shrink:0;background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:6px;border-radius:var(--radius-sm);transition:color .15s,background .15s;line-height:1;min-height:32px;display:flex;align-items:center;" onmouseover="this.style.color='var(--color-primary)';this.style.background='rgba(233,69,96,0.12)'" onmouseout="this.style.color='';this.style.background=''"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
                     <div class="card-desc"><strong>Cloud Cost Management Report</strong> — 管理云成本优化全流程，跟踪预算执行、资源利用率及成本分配，推动 FinOps 持续改进。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-3r"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
