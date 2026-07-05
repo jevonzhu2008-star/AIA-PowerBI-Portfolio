@@ -283,6 +283,19 @@
             from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
         }
+        @keyframes fadeScale {
+            from { opacity: 0; transform: scale(0.96) translateY(8px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-12px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(12px); }
+            60% { opacity: 1; transform: scale(1.02) translateY(-2px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
 
         .container { max-width: var(--max-width-nav); margin: 0 auto; padding: 0 var(--space-lg); }
         .section-outer { margin-top: var(--space-xl); }
@@ -296,11 +309,12 @@
             padding: 12px 20px; border: none; border-radius: 9px;
             background: transparent; color: var(--color-text-nav);
             font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), transform 0.3s var(--ease-out);
             white-space: nowrap; min-height: 44px;
         }
-        .section-tab:hover { color: var(--color-text-nav-hover); background: rgba(255,255,255,0.04); }
-        .section-tab.active { color: #fff; background: rgba(255,255,255,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .section-tab:hover { color: var(--color-text-nav-hover); background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+        .section-tab:active { transform: translateY(0) scale(0.97); }
+        .section-tab.active { color: #fff; background: rgba(255,255,255,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.2); transform: translateY(0); }
 
         .main-tabs-outer { margin-top: var(--space-lg); }
         .main-tabs {
@@ -313,11 +327,12 @@
             padding: 13px 10px; border: none; border-radius: 9px;
             background: transparent; color: var(--color-text-nav);
             font-size: 0.78rem; font-weight: 600; cursor: pointer;
-            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), transform 0.3s var(--ease-out);
             white-space: nowrap; min-height: 48px;
         }
-        .main-tab:hover { color: var(--color-text-nav-hover); background: rgba(255,255,255,0.04); }
-        .main-tab.active { color: #fff; background: linear-gradient(135deg, var(--color-primary), #c23152); box-shadow: var(--shadow-active); }
+        .main-tab:hover { color: var(--color-text-nav-hover); background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+        .main-tab:active { transform: translateY(0) scale(0.96); }
+        .main-tab.active { color: #fff; background: linear-gradient(135deg, var(--color-primary), #c23152); box-shadow: var(--shadow-active); transform: translateY(0); }
         .main-tab .tab-hint { font-size: 0.5rem; font-weight: 400; opacity: 0.45; text-transform: uppercase; letter-spacing: 0.04em; }
         .main-tab.active .tab-hint { opacity: 0.75; }
         .icon { width: 18px; height: 18px; flex-shrink: 0; }
@@ -325,10 +340,10 @@
         .main-tab .icon { width: 16px; height: 16px; display: block; }
 
         .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
-        .section-content { display: none; }
-        .section-content.active { display: block; }
-        .main-panel { display: none; }
-        .main-panel.active { display: block; }
+        .section-content { display: none; animation: none; }
+        .section-content.active { display: block; animation: fadeScale 0.45s var(--ease-out) both; }
+        .main-panel { display: none; animation: none; }
+        .main-panel.active { display: block; animation: slideIn 0.4s var(--ease-out) both; }
 
         /* ── Report Card ── */
         .report-card {
@@ -354,16 +369,17 @@
             padding: 9px 18px; border: none; border-radius: var(--radius-sm);
             background: transparent; color: #667;
             font-size: 0.82rem; font-weight: 500; cursor: pointer;
-            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), transform 0.3s var(--ease-out);
             white-space: nowrap; min-height: 38px; min-width: 110px;
         }
-        .card-tab:hover { color: #aab; background: rgba(255,255,255,0.04); }
-        .card-tab.active { color: #fff; background: rgba(233,69,96,0.25); box-shadow: 0 2px 8px rgba(233,69,96,0.1); }
+        .card-tab:hover { color: #aab; background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+        .card-tab:active { transform: translateY(0) scale(0.96); }
+        .card-tab.active { color: #fff; background: rgba(233,69,96,0.25); box-shadow: 0 2px 8px rgba(233,69,96,0.1); transform: translateY(0); }
         .card-tab svg { width: 16px; height: 16px; flex-shrink: 0; }
 
         /* ── Card Sections ── */
-        .card-section { display: none; }
-        .card-section.active { display: block; animation: fadeUp var(--duration-slow) var(--ease-out); }
+        .card-section { display: none; animation: none; }
+        .card-section.active { display: block; animation: popIn 0.5s var(--ease-out) both; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ── Report Content ── */
