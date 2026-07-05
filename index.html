@@ -64,9 +64,10 @@
             box-shadow: 0 4px 30px rgba(0,0,0,0.4);
         }
         .hero::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 280px; height: 1.5px;
-            background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent), transparent);
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 32px;
+            background: linear-gradient(to bottom, rgba(10,10,18,1) 0%, rgba(10,10,18,0) 100%);
+            pointer-events: none;
         }
         .hero .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
         .hero .hero-row { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
