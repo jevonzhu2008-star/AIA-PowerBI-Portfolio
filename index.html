@@ -1289,17 +1289,22 @@
         function fmtDur(s) { var m=Math.floor(s/60); return m+':'+(s%60+'').padStart(2,'0'); }
         window.playVideo = function(bvid) {
             var overlay = document.getElementById('video-overlay');
-            var player = document.getElementById('bilibili-player');
-            if (overlay && player) {
-                overlay.style.display = 'flex';
-                player.src = 'https://player.bilibili.com/player.html?bvid=' + bvid + '&autoplay=1&high_quality=1&danmaku=0';
-            }
+            if (!overlay) return;
+            overlay.style.display = 'flex';
+            overlay.innerHTML =
+                '<div style="position:relative;width:100%;max-width:var(--max-width,1100px);margin:auto;background:#000;border-radius:var(--radius-md);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6);animation:fadeScale 0.3s var(--ease-out);">' +
+                    '<button onclick="window.closePlayer()" style="position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,0.55);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;backdrop-filter:blur(4px);" title="关闭" onmouseover="this.style.background=\'#e94560\'" onmouseout="this.style.background=\'rgba(0,0,0,0.55)\'">&times;</button>' +
+                    '<div style="position:relative;padding-top:56.25%;">' +
+                        '<iframe id="bilibili-player" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" src="https://player.bilibili.com/player.html?bvid=' + bvid + '&autoplay=1&high_quality=1&danmaku=0" allowfullscreen allow="autoplay;encrypted-media"></iframe>' +
+                    '</div>' +
+                '</div>';
         }
         window.closePlayer = function() {
             var overlay = document.getElementById('video-overlay');
-            var player = document.getElementById('bilibili-player');
-            if (player) player.src = '';
-            if (overlay) overlay.style.display = 'none';
+            if (overlay) {
+                overlay.style.display = 'none';
+                overlay.innerHTML = '';
+            }
         }
         var groups = [
             {name:'PowerBI技巧', videos:[0,1,2,3,4,5,6]},
@@ -1331,15 +1336,14 @@
             html += '</div>';
         });
         html += '<style>.play-btn{transition:transform .25s ease-out,background .25s ease-out}div:hover>.play-btn{transform:translate(-50%,-50%) scale(1.1)!important;background:#e94560!important}</style>';
-        html += '<div id="video-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;" onclick="if(event.target===this)window.closePlayer()">' +
-            '<button onclick="window.closePlayer()" style="position:absolute;top:16px;right:20px;z-index:10000;background:none;border:none;color:#fff;font-size:36px;width:48px;height:48px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0.8;">&times;</button>' +
-            '<div style="position:relative;width:min(92vw,1100px);max-width:1100px;border-radius:12px;overflow:hidden;">' +
-                '<div style="position:relative;padding-top:56.25%;">' +
-                    '<iframe id="bilibili-player" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="autoplay;encrypted-media"></iframe>' +
-                '</div>' +
-            '</div>' +
-        '</div>';
         container.innerHTML = html;
+
+        // Append overlay directly to body (overcomes ancestor transform containment)
+        var overlay = document.createElement('div');
+        overlay.id = 'video-overlay';
+        overlay.onclick = function(e) { if (e.target === this) window.closePlayer(); };
+        overlay.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;';
+        document.body.appendChild(overlay);
     })();
 })();
 </script>
