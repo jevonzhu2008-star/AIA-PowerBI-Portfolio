@@ -1298,11 +1298,11 @@
             if (g.name) html += '<h3 style="font-size:0.9rem;font-weight:600;color:var(--color-text-nav);letter-spacing:0.04em;margin:28px 0 14px 4px;padding-left:10px;border-left:3px solid var(--color-primary);">' + g.name + '</h3>';
             html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:8px;">';
             g.videos.forEach(function(idx) {
-                var v = allVideos[idx];
+                var v = videos[idx];
                 html +=
                 '<div style="position:relative;background:var(--color-card);border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;cursor:pointer;transition:transform .25s ease-out,box-shadow .25s ease-out,border-color .25s;color:inherit;" onclick="playVideo(\'' + v.bvid + '\')" onmouseover="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 12px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(233,69,96,0.15)\';this.style.borderColor=\'rgba(233,69,96,0.2)\'" onmouseout="this.style.transform=\'\';this.style.boxShadow=\'\';this.style.borderColor=\'\'">' +
                     '<div style="position:relative;width:100%;padding-top:56%;background:#12121e;">' +
-                        '<img src="' + v.pic + '" alt="" loading="lazy" referrerpolicy="no-referrer" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">' +
+                        '<img src="' + v.pic + '" alt="" loading="lazy" crossorigin='anonymous' referrerpolicy='no-referrer' style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;">' +
                         '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 50%);"></div>' +
                         '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:rgba(233,69,96,0.85);display:flex;align-items:center;justify-content:center;transition:transform .2s,background .2s;box-shadow:0 2px 12px rgba(233,69,96,0.3);" class="play-btn">' +
                             '<svg viewBox="0 0 24 24" fill="#fff" width="18" height="18"><polygon points="8 5 19 12 8 19 8 5"/></svg>' +
@@ -1332,6 +1332,8 @@
 
 </body>
 </html>
+
+
 
 
 
