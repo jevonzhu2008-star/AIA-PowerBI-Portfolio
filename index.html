@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerBI 作品集 | AIA Group</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --color-bg: #0a0a12;
@@ -81,8 +81,9 @@
         .hero .author-credit:hover .author-text .name { color: var(--color-primary); }
         .hero h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
         .hero h1 .hl {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
             font-weight: 900;
+            letter-spacing: 0.03em;
             background: linear-gradient(135deg, var(--color-primary) 0%, #f06a80 30%, var(--color-accent) 70%, #f8c14a 100%);
             background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             animation: gradShift 4s ease-in-out infinite alternate;
@@ -159,9 +160,20 @@
         /* ── Divider shine ── */
         .hero .shine-divider {
             position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 320px; height: 1px; z-index: 1;
+            width: 320px; height: 2px; z-index: 1;
             background: linear-gradient(90deg, transparent,
-                rgba(233,69,96,0.15), transparent);
+                var(--color-primary), rgba(233,69,96,0.6),
+                var(--color-accent), transparent);
+        }
+        .hero .shine-divider::after {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shineSweep 4s ease-in-out infinite;
+        }
+        @keyframes shineSweep {
+            0%   { left: -100%; }
+            100% { left: 200%; }
         }
 
         /* ── Logo badge ── */
@@ -180,8 +192,9 @@
         }
         .hero h1:hover { transform: scale(1.02); }
         .hero h1 .hl {
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
             font-weight: 900;
+            letter-spacing: 0.03em;
             background: linear-gradient(135deg, var(--color-primary) 0%, #f06a80 30%, var(--color-accent) 70%, #f8c14a 100%);
             background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             animation: gradShift 4s ease-in-out infinite alternate;
