@@ -1254,28 +1254,34 @@
         var container = document.getElementById('tutorial-container');
         if (!container) return;
         var videos = [
-            {title:'万物皆有关系_DAX_第一番', bvid:'BV1hS4y1N762', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:683},
-            {title:'上下文的镣铐_DAX_第二番', bvid:'BV1PP4y1M7Ej', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:517},
-            {title:'上下文转换_DAX_第三番', bvid:'BV1Ua411x7k9', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:1345},
-            {title:'无双组合calculate+all_DAX_第四番', bvid:'BV1BT4y1e7Ri', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:1267},
-            {title:'计算列和度量值_DAX_第五番', bvid:'BV1g3411W7dr', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:1065},
-            {title:'关系的钥匙related函数_DAX_第六番', bvid:'BV1fS4y127Lg', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:911},
-            {title:'你好呀，Calculate_DAX_第七番', bvid:'BV1u5411D7x6', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:535},
-            {title:'理解Filter_第八番', bvid:'BV1GY4y1i78P', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:667},
-            {title:'似All非All_DAX_第九番', bvid:'BV1p94y1Z7BQ', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:1017},
-            {title:'深刻理解All_DAX_第十番', bvid:'BV11r4y1p7yq', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:1222},
-            {title:'Keepfilter_DAX_第11番', bvid:'BV1k44y137Ti', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:598},
-            {title:'揭秘SUMMARIZE+ADDCOLUMNS_DAX_第12番', bvid:'BV1pi4y1U7h7', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:536},
-            {title:'一看就会的RANKX函数_DAX_第13番', bvid:'BV1w44y1u73p', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:599},
-            {title:'第一课_powerbi介绍', bvid:'BV16a411M7ZM', pic:'http://i2.hdslb.com/bfs/archive/eae303a70c9b862a38630a8b806772db65f76f43.jpg', dur:925},
-            {title:'PowerBI视觉对象之记分卡', bvid:'BV1Pe4y1b7uM', pic:'http://i1.hdslb.com/bfs/archive/48b62b784f3772edbdb7c2e0576135620c66c416.jpg', dur:1163}
+            {title:'万物皆有关系_DAX_第一番', bvid:'BV1hS4y1N762', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:683, sec:'DAX框架基础'},
+            {title:'上下文的镣铐_DAX_第二番', bvid:'BV1PP4y1M7Ej', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:517, sec:'DAX不得不看'},
+            {title:'上下文转换_DAX_第三番', bvid:'BV1Ua411x7k9', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:1345, sec:'DAX不得不看'},
+            {title:'无双组合calculate+all_DAX_第四番', bvid:'BV1BT4y1e7Ri', pic:'http://i0.hdslb.com/bfs/archive/05a3c928c7f9efa90d50d5bc9e0956f4808da543.jpg', dur:1267, sec:'DAX不得不看'},
+            {title:'计算列和度量值_DAX_第五番', bvid:'BV1g3411W7dr', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:1065, sec:'DAX不得不看'},
+            {title:'关系的钥匙related函数_DAX_第六番', bvid:'BV1fS4y127Lg', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:911, sec:'DAX框架基础'},
+            {title:'你好呀，Calculate_DAX_第七番', bvid:'BV1u5411D7x6', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:535, sec:'DAX不得不看'},
+            {title:'理解Filter_第八番', bvid:'BV1GY4y1i78P', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:667, sec:'DAX不得不看'},
+            {title:'似All非All_DAX_第九番', bvid:'BV1p94y1Z7BQ', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:1017, sec:'DAX不得不看'},
+            {title:'深刻理解All_DAX_第十番', bvid:'BV11r4y1p7yq', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:1222, sec:'DAX不得不看'},
+            {title:'Keepfilter_DAX_第11番', bvid:'BV1k44y137Ti', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:598, sec:'DAX不得不看'},
+            {title:'揭秘SUMMARIZE+ADDCOLUMNS_DAX_第12番', bvid:'BV1pi4y1U7h7', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:536, sec:'DAX不得不看'},
+            {title:'一看就会的RANKX函数_DAX_第13番', bvid:'BV1w44y1u73p', pic:'http://i1.hdslb.com/bfs/archive/311c59e86e665a3f7b95bfb9eb80e678787e9d33.jpg', dur:599, sec:'DAX不得不看'},
+            {title:'第一课_powerbi介绍', bvid:'BV16a411M7ZM', pic:'http://i2.hdslb.com/bfs/archive/eae303a70c9b862a38630a8b806772db65f76f43.jpg', dur:925, sec:'PBI可视化'},
+            {title:'PowerBI视觉对象之记分卡', bvid:'BV1Pe4y1b7uM', pic:'http://i1.hdslb.com/bfs/archive/48b62b784f3772edbdb7c2e0576135620c66c416.jpg', dur:1163, sec:'PBI可视化'},
+            {title:'power BI 可视化之字段参数', bvid:'BV1Gg411m79P', pic:'http://i0.hdslb.com/bfs/archive/bd6bed1920887f21a8d0d4e62cd1c1ea7328cd6d.jpg', dur:626, sec:'PBI可视化'},
+            {title:'power BI可视化之迷你图', bvid:'BV14Y4y1N7dy', pic:'http://i2.hdslb.com/bfs/archive/515534819ac58ff0a1a3101f52d5f25e4852d883.jpg', dur:451, sec:'PBI可视化'}
         ];
         function fmtDur(s) { var m=Math.floor(s/60); return m+':'+(s%60+'').padStart(2,'0'); }
+        var sections = {};
+        videos.forEach(function(v) { if (!sections[v.sec]) sections[v.sec] = []; sections[v.sec].push(v); });
         var html = '<div style="max-width:1000px;margin:0 auto;">' +
             '<h2 style="font-size:1.3rem;font-weight:700;margin-bottom:20px;color:#e8ecf0;letter-spacing:-0.01em;">📺 PowerBI 教程 · 白话DAX 系列</h2>' +
-            '<p style="font-size:0.85rem;color:var(--color-text-nav);margin-bottom:28px;">UP主：人人都爱PowerBI · ' + videos.length + ' 集</p>' +
+            '<p style="font-size:0.85rem;color:var(--color-text-nav);margin-bottom:28px;">UP主：人人都爱PowerBI · ' + videos.length + ' 集</p>';
+        Object.keys(sections).forEach(function(sec) {
+            html += '<h3 style="font-size:0.95rem;font-weight:600;color:var(--color-text-primary);margin-bottom:12px;margin-top:24px;">' + sec + '</h3>' +
             '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">';
-        videos.forEach(function(v) {
+            sections[sec].forEach(function(v) {
             html += '<a href="https://www.bilibili.com/video/' + v.bvid + '" target="_blank" rel="noopener" style="display:flex;gap:12px;background:var(--color-card);border:1px solid var(--color-border);border-radius:var(--radius-md);overflow:hidden;text-decoration:none;transition:border-color .2s,transform .2s;color:inherit;" onmouseover="this.style.borderColor=\'rgba(233,69,96,0.3)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.borderColor=\'\';this.style.transform=\'\'">' +
                 '<img src="' + v.pic + '" alt="" loading="lazy" style="width:120px;height:75px;object-fit:cover;flex-shrink:0;background:#1a1a2a;">' +
                 '<div style="padding:8px 8px 8px 0;display:flex;flex-direction:column;justify-content:center;min-width:0;">' +
@@ -1283,7 +1289,9 @@
                     '<span style="font-size:0.7rem;color:var(--color-text-muted);margin-top:4px;">⏱ ' + fmtDur(v.dur) + '</span>' +
                 '</div></a>';
         });
-        html += '</div></div>';
+            html += '</div>';
+        });
+        html += '</div>';
         container.innerHTML = html;
     })();
 })();
