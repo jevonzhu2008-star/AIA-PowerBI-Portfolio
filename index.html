@@ -1815,7 +1815,7 @@
                 timers[key] = setInterval(function() {
                     if (document.hidden) return;
                     nextItem();
-                }, 5000);
+                }, 10000);
             }
             restartAuto();
 
@@ -1887,7 +1887,7 @@
                             var c = w.querySelector('.carousel-counter');
                             if (c) c.textContent = (nxt + 1) + ' / ' + allItems.length;
                             tr.querySelectorAll('video').forEach(function(v) { v.pause(); });
-                        }, 5000);
+                        }, 10000);
                     });
                 }, 200);
             });
