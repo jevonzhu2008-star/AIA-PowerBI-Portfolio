@@ -1415,8 +1415,6 @@
                     offset = Math.max(-((items.length - 1) * step) + (viewW - viewW * 0.5) / 2, Math.min((viewW - viewW * 0.5) / 2, offset));
                     track.style.transform = 'translateX(' + offset + 'px)';
                     items.forEach(function(item, i) {
-                    track.style.transform = 'translateX(' + offset + 'px)';
-                    items.forEach(function(item, i) {
                         var dist = i - currentIdx;
                         var cls = 'carousel-item';
                         if (dist === 0) cls += ' active';
