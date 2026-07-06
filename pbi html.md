@@ -37,17 +37,45 @@
 <iframe title="CostManagementConnector Profile" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMmE3M2VjNDAtOTEyYi00NmVmLThhZjctMTMzMWExOGZiM2NhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=f48ca4704a02d62b1053" frameborder="0" allowFullScreen="true"></iframe>
 
 ### Cloud Cost Management Report
-<iframe title="Consumption" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+<iframe title="Cloud Cost Management" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiOTEwMWEwZjItMDMwYi00YjI3LTk3NmQtYmZhMWQ0ZTNiM2RmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=73fe0a6a28ff6e4829a0" frameborder="0" allowFullScreen="true"></iframe>
 
 
-# Application Data Flow Monitoring
+# Others
 
-## Group Applications Monitoring Dashboard
+## IT Operations Monitoring
 
-<iframe title="Group Applications Monitoring Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+### Group Applications Monitoring Dashboard
+<iframe title="Group Applications Monitoring Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection48e0148969a7a9e57dbf" frameborder="0" allowFullScreen="true"></iframe>
 
-# Application Data Flow Monitoring
+### Platforms Monitoring
+<iframe title="Platforms Monitoring" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiY2MwMGJmNGMtYjVmZS00ODA4LWI5MDUtYTgxZGZjZmVkMjBhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection9e126a67e2067650023d" frameborder="0" allowFullScreen="true"></iframe>
 
-## Group Applications Monitoring Dashboard
-<iframe title="Group Applications Monitoring Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+### System Stability
+<iframe title="System Stability Report" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZDMyMmYxYTktMDI1Ny00ODg4LWFiMTMtYjk3Yjk1YTM3YzY0IiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
 
+### Service Management 
+<iframe title="Service Management -CLARITY_SMT" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMzUzMTgzMzctOGEzMy00ZTNjLWE5NTMtMTA5MzAxYWNlNDQyIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection8daf68e46eaf5d2c7a97" frameborder="0" allowFullScreen="true"></iframe>
+
+### Cloud Services CCoE
+<iframe title="Cloud Services CCoE" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTdhODk3YWUtODhiYS00Y2VlLWI0NDktYWVlYmU2ODUzMzZlIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection1e2615bedc24029c8ac5" frameborder="0" allowFullScreen="true"></iframe>
+
+## Operational Analytics
+
+### Access Control
+<iframe title="Access Control Admin" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYWM1YTk0MjEtMmQ5Mi00NjZiLWEwZjctM2M3M2QzZTYxYTdjIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+
+
+### Actimize Alert
+<iframe title="Actimize Alert Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiN2RjZGYwNzMtYzMxMy00MTU5LTgxZTItMTI2MDU4YmMxMzQ5IiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+
+
+### AIA Tech Academy
+<iframe title="AIA Tech Academy Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZGE3OGY3NzgtMjhkYi00MDg1LWFmNDAtMDRjNGVmMDE2OTdmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+
+
+### Banca
+<iframe title="Banca" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNGRmMjNmZWQtMmE0Mi00NmZmLWE3NjgtMTQ1ZmZlM2ZhMzkzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+
+
+### Policy
+<iframe title="BU summary" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMjZiMmNkNGMtNWYxOC00YjgxLWI4N2EtYzJmOWRhMDRiMDMxIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>

@@ -624,6 +624,157 @@
         .footer .footer-inner { max-width: var(--max-width); margin: 0 auto; }
         .footer .footer-brand { display: inline-flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-xs); }
         .footer .footer-brand svg { width: 18px; height: 18px; opacity: 0.4; }
+
+        /* ── Carousel (Coverflow) ── */
+        .carousel-wrapper {
+            position: relative;
+            overflow: visible;
+            padding: 0;
+            width: 100%;
+        }
+        .carousel-wrapper::before,
+        .carousel-wrapper::after {
+            content: '';
+            display: block;
+            height: 80px;
+            pointer-events: none;
+        }
+        .carousel-viewport {
+            position: relative;
+            overflow: visible;
+            width: 100%;
+        }
+        .carousel-track {
+            display: flex;
+            align-items: center;
+            transition: transform 0.5s var(--ease-out);
+            will-change: transform;
+            gap: 4px;
+        }
+        .carousel-item {
+            flex: 0 0 50%;
+            min-width: 0;
+            opacity: 0;
+            transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), filter 0.5s var(--ease-out);
+            will-change: transform, opacity;
+            pointer-events: none;
+            position: relative;
+        }
+        .carousel-item.active {
+            z-index: 3;
+            opacity: 1;
+            transform: scale(1.3);
+            filter: none;
+            pointer-events: auto;
+        }
+        .carousel-item.dim {
+            z-index: 2;
+            opacity: 0.28;
+            transform: scale(0.85);
+            filter: grayscale(0.3) brightness(0.6);
+            pointer-events: none;
+        }
+        .carousel-item.hidden {
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0.7);
+            filter: grayscale(0.5) brightness(0.5);
+        }
+        .carousel-item .report-card {
+            margin-top: 0;
+        }
+        .carousel-item .card-header { padding: 5px 10px; }
+        .carousel-item .card-header h2 { font-size: 0.64rem; }
+        .carousel-item .card-desc { font-size: 0.53rem; padding: 6px 10px; line-height: 1.5; }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--color-border);
+            background: rgba(18,18,30,0.85);
+            color: var(--color-text-nav);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background var(--duration-fast) var(--ease-out),
+                        color var(--duration-fast) var(--ease-out),
+                        border-color var(--duration-fast) var(--ease-out),
+                        transform var(--duration-fast) var(--ease-out);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+        }
+        .carousel-btn svg { width: 20px; height: 20px; }
+        .carousel-btn:hover {
+            background: rgba(233,69,96,0.2);
+            color: var(--color-primary);
+            border-color: rgba(233,69,96,0.3);
+            transform: translateY(-50%) scale(1.08);
+        }
+        .carousel-btn:active { transform: translateY(-50%) scale(0.95); }
+        .carousel-prev { left: 12px; }
+        .carousel-next { right: 12px; }
+        .carousel-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 32px;
+            min-height: 28px;
+            position: relative;
+            z-index: 5;
+        }
+        .carousel-dots {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-text-muted);
+            opacity: 0.3;
+            cursor: pointer;
+            transition: opacity var(--duration-fast) var(--ease-out),
+                        background var(--duration-fast) var(--ease-out),
+                        transform var(--duration-fast) var(--ease-out);
+            border: none;
+            padding: 0;
+        }
+        .carousel-dot:hover { opacity: 0.6; transform: scale(1.2); }
+        .carousel-dot.active {
+            opacity: 1;
+            background: var(--color-primary);
+            box-shadow: 0 0 10px var(--color-primary-glow);
+            transform: scale(1.15);
+        }
+        .carousel-dot.active:hover { opacity: 1; }
+        .carousel-counter {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+            min-width: 36px;
+            text-align: center;
+        }
+        @media (max-width: 900px) {
+            .carousel-wrapper::before,
+            .carousel-wrapper::after { height: 50px; }
+            .carousel-item { flex: 0 0 65%; }
+            .carousel-item.active { transform: scale(1.2); }
+            .carousel-item.dim { transform: scale(0.85); }
+            .carousel-track { gap: 3px; }
+            .carousel-btn { width: 34px; height: 34px; }
+            .carousel-btn svg { width: 16px; height: 16px; }
+            .carousel-prev { left: 4px; }
+            .carousel-next { right: 4px; }
+            .carousel-viewport { margin: 0 -30px; }
+        }
     </style>
 </head>
 <body>
@@ -663,8 +814,8 @@
             Cloud Finance &amp; FinOps
         </button>
         <button class="section-tab" role="tab" aria-selected="false" data-section="1">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-            Application Data Flow Monitoring
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+            Others
         </button>
         <button class="section-tab" role="tab" aria-selected="false" data-section="2">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
@@ -948,7 +1099,7 @@
                     <div class="card-desc"><strong>Cloud Cost Management Report</strong> — 管理云成本优化全流程，跟踪预算执行、资源利用率及成本分配，推动 FinOps 持续改进。</div>
                     <div class="card-body">
                         <div class="loader" id="loader-3r"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
-                        <iframe id="iframe-3r" title="Consumption" src="https://app.powerbi.com/view?r=eyJrIjoiNjM4MmFlODAtNzg2OS00OWEwLTkzYzUtYzdkMmZkNzVjMmNmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('3r')"></iframe>
+                        <iframe id="iframe-3r" title="Cloud Cost Management" src="https://app.powerbi.com/view?r=eyJrIjoiOTEwMWEwZjItMDMwYi00YjI3LTk3NmQtYmZhMWQ0ZTNiM2RmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=73fe0a6a28ff6e4829a0&amp;language=en-US" allowFullScreen="true" onload="loaderHide('3r')"></iframe>
                     </div>
                 </div>
 
@@ -975,31 +1126,187 @@
     </main>
 </div>
 
-<!-- ════ Section 1 ════ -->
+<!-- ════ Section 1: Others ════ -->
 <div class="section-content" data-section="1">
     <div class="container main-tabs-outer">
         <nav class="main-tabs" role="tablist" aria-label="报表分类">
             <button class="main-tab active" role="tab" aria-selected="true" data-main="0">
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                Group Monitoring <span class="tab-hint">应用监控</span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                IT Operations Monitoring <span class="tab-hint">运维监控</span>
+            </button>
+            <button class="main-tab" role="tab" aria-selected="false" data-main="1">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/><path d="M21 3v6h-6"/><path d="M9 12l3 3 6-6"/></svg>
+                Operational Analytics <span class="tab-hint">运营分析</span>
             </button>
         </nav>
     </div>
+
     <main class="content-wrapper">
+
+        <!-- ══ IT Operations Monitoring ══ -->
         <section class="main-panel active" role="tabpanel" data-main="0">
-            <div class="report-card">
-                <div class="card-header">
-                    <h2>Group Applications Monitoring Dashboard</h2>
+
+            <div class="carousel-wrapper" data-carousel="s1">
+
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+
+                    <div class="carousel-item active">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Group Applications Monitoring Dashboard</h2></div>
+                            <div class="card-desc"><strong>Group Applications Monitoring Dashboard</strong> — 全面监控各组应用系统的运行状态，包括服务可用性、响应时间、错误率及应用健康评分等关键指标。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-0"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-0" title="Group Applications Monitoring Dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSection48e0148969a7a9e57dbf&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-0')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Platforms Monitoring</h2></div>
+                            <div class="card-desc"><strong>Platforms Monitoring</strong> — 集中监控各平台基础设施的运行健康度，涵盖计算、存储、网络等核心组件的性能与可用性。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-1"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-1" title="Platforms Monitoring" src="https://app.powerbi.com/view?r=eyJrIjoiY2MwMGJmNGMtYjVmZS00ODA4LWI5MDUtYTgxZGZjZmVkMjBhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSection9e126a67e2067650023d&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-1')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>System Stability Report</h2></div>
+                            <div class="card-desc"><strong>System Stability Report</strong> — 系统稳定性分析报告，跟踪服务 SLA 达标率、故障恢复时间（MTTR）及历史事件趋势。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-2"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-2" title="System Stability Report" src="https://app.powerbi.com/view?r=eyJrIjoiZDMyMmYxYTktMDI1Ny00ODg4LWFiMTMtYjk3Yjk1YTM3YzY0IiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSectiondc571cd8e3aa7b673240&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-2')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Service Management - CLARITY_SMT</h2></div>
+                            <div class="card-desc"><strong>Service Management - CLARITY_SMT</strong> — IT 服务管理仪表板，跟踪工单处理效率、服务台绩效及事件解决时效。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-3"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-3" title="Service Management -CLARITY_SMT" src="https://app.powerbi.com/view?r=eyJrIjoiMzUzMTgzMzctOGEzMy00ZTNjLWE5NTMtMTA5MzAxYWNlNDQyIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSection8daf68e46eaf5d2c7a97&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-3')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Cloud Services CCoE</h2></div>
+                            <div class="card-desc"><strong>Cloud Services CCoE</strong> — 云服务卓越中心管理看板，跟踪云采用进度、合规状态及云服务目录使用情况。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-4"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-4" title="Cloud Services CCoE" src="https://app.powerbi.com/view?r=eyJrIjoiZTdhODk3YWUtODhiYS00Y2VlLWI0NDktYWVlYmU2ODUzMzZlIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSection1e2615bedc24029c8ac5&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-4')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="card-desc"><strong>Group Applications Monitoring Dashboard</strong> — 全面监控各组应用系统的运行状态，包括服务可用性、响应时间、错误率及应用健康评分等关键指标。</div>
-                <div class="card-body">
-                    <div class="loader" id="loader-s1-0"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
-                    <iframe id="iframe-s1-0" title="Group Applications Monitoring Dashboard"
-                        src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US"
-                        allowFullScreen="true" onload="loaderHide('s1-0')"></iframe>
+                </div> <!-- /carousel-track /carousel-viewport -->
+
+                <button class="carousel-btn carousel-prev" aria-label="上一个报告" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-btn carousel-next" aria-label="下一个报告" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+
+                <div class="carousel-indicator">
+                    <div class="carousel-dots"></div>
+                    <span class="carousel-counter"></span>
                 </div>
+
             </div>
+
         </section>
+
+        <!-- ══ Operational Analytics ══ -->
+        <section class="main-panel" role="tabpanel" data-main="1">
+
+            <div class="carousel-wrapper" data-carousel="s2">
+
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+
+                    <div class="carousel-item active">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Access Control Admin</h2></div>
+                            <div class="card-desc"><strong>Access Control Admin</strong> — 访问控制管理仪表板，监控用户权限分配、访问审计及合规状态。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-5"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-5" title="Access Control Admin" src="https://app.powerbi.com/view?r=eyJrIjoiYWM1YTk0MjEtMmQ5Mi00NjZiLWEwZjctM2M3M2QzZTYxYTdjIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-5')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Actimize Alert Dashboard</h2></div>
+                            <div class="card-desc"><strong>Actimize Alert Dashboard</strong> — 风控预警分析仪表板，监控可疑交易告警、案例处理效率及合规风险指标。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-6"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-6" title="Actimize Alert Dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiN2RjZGYwNzMtYzMxMy00MTU5LTgxZTItMTI2MDU4YmMxMzQ5IiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-6')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>AIA Tech Academy Dashboard</h2></div>
+                            <div class="card-desc"><strong>AIA Tech Academy Dashboard</strong> — 技术学院学习管理看板，追踪培训完成率、技能发展及课程参与度。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-7"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-7" title="AIA Tech Academy Dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiZGE3OGY3NzgtMjhkYi00MDg1LWFmNDAtMDRjNGVmMDE2OTdmIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-7')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Banca</h2></div>
+                            <div class="card-desc"><strong>Banca</strong> — 文件上传分析看板，跟踪文件上传量、处理状态及异常监控。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-8"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-8" title="Banca" src="https://app.powerbi.com/view?r=eyJrIjoiNGRmMjNmZWQtMmE0Mi00NmZmLWE3NjgtMTQ1ZmZlM2ZhMzkzIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-8')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <div class="report-card">
+                            <div class="card-header"><h2>Policy Summary</h2></div>
+                            <div class="card-desc"><strong>Policy Summary</strong> — 云平台合规性分析仪表板，展示合规状态、风险评估及策略执行情况。</div>
+                            <div class="card-body">
+                                <div class="loader" id="loader-s1-9"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
+                                <iframe id="iframe-s1-9" title="BU summary" src="https://app.powerbi.com/view?r=eyJrIjoiMjZiMmNkNGMtNWYxOC00YjgxLWI4N2EtYzJmOWRhMDRiMDMxIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-9')"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                </div> <!-- /carousel-track /carousel-viewport -->
+
+                <button class="carousel-btn carousel-prev" aria-label="上一个报告" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button class="carousel-btn carousel-next" aria-label="下一个报告" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+
+                <div class="carousel-indicator">
+                    <div class="carousel-dots"></div>
+                    <span class="carousel-counter"></span>
+                </div>
+
+            </div>
+
+        </section>
+
     </main>
 </div>
 
@@ -1087,6 +1394,38 @@
             document.querySelectorAll('.card-video video').forEach(function(v) {
                 v.pause();
             });
+
+            /* ── Relayout carousels in newly visible section ── */
+            setTimeout(function() {
+                var activeContent = sectionContents.find(function(c) { return c.dataset.section === idx; });
+                if (!activeContent) return;
+                activeContent.querySelectorAll('.carousel-wrapper').forEach(function(w) {
+                    var track = w.querySelector('.carousel-track');
+                    var items = track.querySelectorAll('.carousel-item');
+                    if (!items.length) return;
+                    var viewport = w.querySelector('.carousel-viewport');
+                    var viewW = viewport.offsetWidth;
+                    if (viewW <= 0) { viewW = w.offsetWidth; }
+                    var itemW = viewW * 0.5;
+                    var step = itemW + 4;
+                    var currentIdx = -1;
+                    items.forEach(function(item, i) { if (item.classList.contains('active')) currentIdx = i; });
+                    if (currentIdx === -1) currentIdx = 0;
+                    var offset = -(currentIdx * step) + (viewW - itemW) / 2;
+                    offset = Math.max(-((items.length - 1) * step) + (viewW - viewW * 0.5) / 2, Math.min((viewW - viewW * 0.5) / 2, offset));
+                    track.style.transform = 'translateX(' + offset + 'px)';
+                    items.forEach(function(item, i) {
+                    track.style.transform = 'translateX(' + offset + 'px)';
+                    items.forEach(function(item, i) {
+                        var dist = i - currentIdx;
+                        var cls = 'carousel-item';
+                        if (dist === 0) cls += ' active';
+                        else if (Math.abs(dist) === 1) cls += ' dim';
+                        else cls += ' hidden';
+                        item.className = cls;
+                    });
+                });
+            }, 50);
         });
     });
 
@@ -1104,19 +1443,36 @@
                 p.classList.toggle('active', p.dataset.main === idx);
             });
 
-            /* ── Pause all videos, then play active panel's intro if selected ── */
-            parentContent.querySelectorAll('.card-video video').forEach(function(v) {
-                v.pause();
-            });
-            var activePanel = parentContent.querySelector('.main-panel.active');
-            if (activePanel) {
+            /* ── Relayout carousels in active panel ── */
+            setTimeout(function() {
+                var activePanel = parentContent.querySelector('.main-panel.active');
+                if (!activePanel) return;
+                var carousel = activePanel.querySelector('.carousel-wrapper');
+                if (!carousel) return;
+                var track = carousel.querySelector('.carousel-track');
+                var items = track.querySelectorAll('.carousel-item');
+                if (!items.length) return;
+                var currentIdx = -1;
+                items.forEach(function(item, i) {
+                    if (item.classList.contains('active')) currentIdx = i;
+                });
+                if (currentIdx === -1) currentIdx = 0;
+                var viewport = carousel.querySelector('.carousel-viewport');
+                var viewW = viewport.offsetWidth;
+                if (viewW <= 0) { viewW = carousel.offsetWidth; }
+                var itemW = viewW * 0.5;
+                var step = itemW + 4;
+                var offset = -(currentIdx * step) + (viewW - itemW) / 2;
+                offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
+                track.style.transform = 'translateX(' + offset + 'px)';
+
                 var introTab = activePanel.querySelector('.card-tab[data-card="intro"]');
                 var activeTab = activePanel.querySelector('.card-tab.active');
                 if (introTab && activeTab && activeTab.dataset.card === 'intro') {
                     var video = activePanel.querySelector('.card-video video');
                     if (video) video.play().catch(function(){});
                 }
-            }
+            }, 50);
         });
     });
 
@@ -1353,6 +1709,183 @@
         overlay.onclick = function(e) { if (e.target === this) window.closePlayer(); };
         overlay.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;';
         document.body.appendChild(overlay);
+    })();
+
+    /* ── Carousels for Others section ── */
+    (function() {
+        var timers = {};
+        var carousels = document.querySelectorAll('.carousel-wrapper');
+        carousels.forEach(function(wrapper) {
+            var key = wrapper.dataset.carousel;
+            var track = wrapper.querySelector('.carousel-track');
+            var items = track.querySelectorAll('.carousel-item');
+            var dotsContainer = wrapper.querySelector('.carousel-dots');
+            var counter = wrapper.querySelector('.carousel-counter');
+            var prevBtn = wrapper.querySelector('.carousel-prev');
+            var nextBtn = wrapper.querySelector('.carousel-next');
+            if (!items.length) return;
+
+            var current = 0;
+            var total = items.length;
+
+            // Build dots
+            items.forEach(function(item, i) {
+                var dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', '切换到报告 ' + (i + 1));
+                dot.addEventListener('click', function() { goTo(i); });
+                dotsContainer.appendChild(dot);
+            });
+            var dots = dotsContainer.querySelectorAll('.carousel-dot');
+            updateCounter();
+
+            function getViewport() {
+                return wrapper.querySelector('.carousel-viewport');
+            }
+
+            function layoutItems() {
+                if (total < 2) {
+                    items[0].className = 'carousel-item active';
+                    track.style.transform = '';
+                    return;
+                }
+                var viewport = getViewport();
+                var viewW = viewport.offsetWidth;
+                var itemW = viewW * 0.5;
+                var step = itemW + 4;
+                var offset = -(current * step) + (viewW - itemW) / 2;
+                // Clamp: allow positive (center first) to negative (center last)
+                var minOffset = -((total - 1) * step) + (viewW - itemW) / 2;
+                var maxOffset = (viewW - itemW) / 2;
+                offset = Math.max(minOffset, Math.min(maxOffset, offset));
+                track.style.transform = 'translateX(' + offset + 'px)';
+                items.forEach(function(item, i) {
+                    var dist = i - current;
+                    var cls = 'carousel-item';
+                    if (dist === 0) cls += ' active';
+                    else if (Math.abs(dist) === 1) cls += ' dim';
+                    else cls += ' hidden';
+                    item.className = cls;
+                });
+            }
+
+            function updateCounter() {
+                if (counter) counter.textContent = (current + 1) + ' / ' + total;
+            }
+
+            function goTo(idx) {
+                if (idx === current) return;
+                dots[current].classList.remove('active');
+                current = idx;
+                dots[current].classList.add('active');
+                updateCounter();
+                layoutItems();
+                track.querySelectorAll('video').forEach(function(v) { v.pause(); });
+                restartAuto();
+            }
+
+            function nextItem() { goTo((current + 1) % total); }
+            function prevItem() { goTo((current - 1 + total) % total); }
+
+            if (prevBtn) prevBtn.addEventListener('click', function() { prevItem(); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { nextItem(); });
+
+            // Relayout on resize using requestAnimationFrame for smooth updates
+            var resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    layoutItems();
+                }, 80);
+            });
+
+            function restartAuto() {
+                if (timers[key]) { clearInterval(timers[key]); delete timers[key]; }
+                if (total < 2) return;
+                timers[key] = setInterval(function() {
+                    if (document.hidden) return;
+                    nextItem();
+                }, 5000);
+            }
+            restartAuto();
+
+            wrapper.addEventListener('mouseenter', function() {
+                if (timers[key]) { clearInterval(timers[key]); delete timers[key]; }
+            });
+            wrapper.addEventListener('mouseleave', function() {
+                restartAuto();
+            });
+
+            wrapper.addEventListener('focusin', function(e) {
+                if (e.target.tagName === 'IFRAME') {
+                    if (timers[key]) { clearInterval(timers[key]); delete timers[key]; }
+                }
+            });
+        });
+
+        // When switching sections, restart auto-advance for visible carousels
+        document.querySelectorAll('.section-tab').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                setTimeout(function() {
+                    var activeSection = document.querySelector('.section-content.active');
+                    if (!activeSection) return;
+                    activeSection.querySelectorAll('.carousel-wrapper').forEach(function(w) {
+                        var k = w.dataset.carousel;
+                        if (timers[k]) { clearInterval(timers[k]); delete timers[k]; }
+                        var track = w.querySelector('.carousel-track');
+                        var items = track.querySelectorAll('.carousel-item');
+                        if (items.length < 2) return;
+                        void w.offsetWidth;
+                        var curIdx = -1;
+                        items.forEach(function(item, i) {
+                            if (item.classList.contains('active')) curIdx = i;
+                        });
+                        if (curIdx === -1) curIdx = 0;
+                        var viewport = w.querySelector('.carousel-viewport');
+                        var viewW = viewport.offsetWidth;
+                        var itemW = viewW * 0.5;
+                        var step = itemW + 4;
+                        var offset = -(curIdx * step) + (viewW - itemW) / 2;
+                        offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
+                        track.style.transform = 'translateX(' + offset + 'px)';
+                        timers[k] = setInterval(function() {
+                            if (document.hidden) return;
+                            var tr = w.querySelector('.carousel-track');
+                            var allItems = tr.querySelectorAll('.carousel-item');
+                            var dots = w.querySelectorAll('.carousel-dot');
+                            var ci = -1;
+                            allItems.forEach(function(item, i) {
+                                if (item.classList.contains('active')) ci = i;
+                            });
+                            if (ci === -1) ci = 0;
+                            var nxt = (ci + 1) % allItems.length;
+                            dots[ci].classList.remove('active');
+                            dots[nxt].classList.add('active');
+                            var vp = w.querySelector('.carousel-viewport');
+                            var vw = vp.offsetWidth;
+                            var iw = vw * 0.5;
+                            var st = iw + 4;
+                            var off = -(nxt * st) + (vw - iw) / 2;
+                            off = Math.max(-((allItems.length - 1) * st) + (vw - iw) / 2, Math.min((vw - iw) / 2, off));
+                            tr.style.transform = 'translateX(' + off + 'px)';
+                            allItems.forEach(function(item, i) {
+                                var dist = i - nxt;
+                                if (dist === 0) item.className = 'carousel-item active';
+                                else if (Math.abs(dist) === 1) item.className = 'carousel-item dim';
+                                else item.className = 'carousel-item hidden';
+                            });
+                            var c = w.querySelector('.carousel-counter');
+                            if (c) c.textContent = (nxt + 1) + ' / ' + allItems.length;
+                            tr.querySelectorAll('video').forEach(function(v) { v.pause(); });
+                        }, 5000);
+                    });
+                }, 200);
+            });
+        });
+
+        window.addEventListener('beforeunload', function() {
+            Object.keys(timers).forEach(function(k) { clearInterval(timers[k]); });
+        });
     })();
 })();
 </script>
