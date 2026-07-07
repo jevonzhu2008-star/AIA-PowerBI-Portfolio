@@ -3,232 +3,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>云成本管理分析报告 — 2026年7月</title>
+<title>云成本管理全面分析 — 2026年7月</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;color:#212529;background:#f8f9fa;line-height:1.6}
-.report{max-width:1100px;margin:0 auto;padding:0 40px 80px}
-.header{padding:60px 0 40px;border-bottom:3px solid #1a365d;margin-bottom:48px;background:#fff;padding-left:40px;padding-right:40px;margin-left:-40px;margin-right:-40px}
-.header__label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#868e96;margin-bottom:12px}
-.header__title{font-size:36px;font-weight:700;line-height:1.2;color:#1a365d;margin-bottom:8px}
-.header__subtitle{font-size:16px;color:#868e96;font-weight:300}
-.header__meta{margin-top:16px;font-size:12px;color:#adb5bd}
-.section{margin-bottom:48px}
-.section__title{font-size:22px;font-weight:700;color:#1a365d;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #e9ecef}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:48px}
-.kpi-card{background:#fff;border:1px solid #e9ecef;border-radius:6px;padding:24px 20px}
-.kpi-card__label{font-size:11px;font-weight:600;color:#adb5bd;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-.kpi-card__value{font-size:28px;font-weight:700;color:#1a365d;line-height:1.1}
-.kpi-card__value--accent{color:#c53030}
-.kpi-card__note{font-size:12px;color:#adb5bd;margin-top:4px}
-.insight-card{background:#f1f3f5;border-left:4px solid #1a365d;padding:24px 28px;margin-bottom:24px;border-radius:0 4px 4px 0}
-.insight-card__label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#868e96;margin-bottom:8px}
-.insight-card__title{font-size:18px;font-weight:700;color:#1a365d;margin-bottom:8px}
-.insight-card__text{font-size:14px;color:#495057;line-height:1.7}
-.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
-.chart-wrapper{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:20px}
-.chart-title{font-size:14px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
-.chart-container{position:relative;height:280px;width:100%}
-.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
-.metric-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:24px}
-.metric-card__title{font-size:15px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
-.metric-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f3f5;font-size:14px}
-.metric-row:last-child{border-bottom:none}
-.metric-row__label{color:#495057}
-.metric-row__value{font-weight:600;color:#1a365d}
-.bu-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-bottom:24px;overflow:hidden}
-.bu-card__header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%)}
-.bu-card__title{font-size:18px;font-weight:700;color:#fff;margin:0}
-.bu-card__header-right{font-size:13px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px}
-.bu-card__body{padding:24px}
-.bu-charts-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.bu-chart-col{min-width:0}
-.bu-chart-title{font-size:13px;font-weight:600;color:#495057;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
-.recommendation{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid #f1f3f5}
-.recommendation:last-child{border-bottom:none}
-.recommendation__icon{flex-shrink:0;width:24px;height:24px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px}
-.recommendation__text{font-size:14px;color:#495057;line-height:1.6}
-.alert{background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:20px 24px;border-radius:0 4px 4px 0;margin-bottom:16px}
-.alert:last-child{margin-bottom:0}
-.alert__title{font-size:13px;font-weight:600;color:#92400e;margin-bottom:4px}
-.alert__text{font-size:13px;color:#78350f;line-height:1.6}
-.table-wrapper{overflow-x:auto;border:1px solid #e9ecef;border-radius:6px;margin-top:16px}
+.report{max-width:1200px;margin:0 auto;padding:0 40px 80px}
+.header{padding:48px 0 36px;border-bottom:3px solid #1a365d;margin-bottom:36px;background:#fff;padding-left:40px;padding-right:40px;margin-left:-40px;margin-right:-40px}
+.hl{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#868e96;margin-bottom:8px}
+.h1{font-size:32px;font-weight:700;color:#1a365d;margin-bottom:4px}
+.h2{font-size:20px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
+.sub{font-size:14px;color:#868e96;margin-bottom:16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:32px}
+.kpi{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:20px}
+.kpi__l{font-size:10px;font-weight:600;color:#adb5bd;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.kpi__v{font-size:24px;font-weight:700;color:#1a365d;line-height:1.1}
+.kpi__n{font-size:11px;color:#adb5bd;margin-top:2px}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px}
+.chart-box{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:20px}
+.chart-title{font-size:13px;font-weight:700;color:#1a365d;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
+.chart-wrap{position:relative;height:260px;width:100%}
+.sec{margin-bottom:36px}
+.insight{background:#f1f3f5;border-left:4px solid #1a365d;padding:16px 20px;margin-bottom:20px;border-radius:0 4px 4px 0;font-size:13px;color:#495057;line-height:1.7}
+.insight strong{color:#1a365d}
+.table-wrap{overflow-x:auto;border:1px solid #e9ecef;border-radius:8px;margin-top:12px}
 table{width:100%;border-collapse:collapse;font-size:12px}
-thead{background:#f8f9fa}
-th{padding:10px 14px;font-weight:600;color:#495057;border-bottom:2px solid #e9ecef;text-align:left;white-space:nowrap}
-td{padding:9px 14px;border-bottom:1px solid #f1f3f5;color:#343a40}
-tr:last-child td{border-bottom:none}
-.footer{margin-top:64px;padding-top:24px;border-top:1px solid #e9ecef;font-size:11px;color:#adb5bd;text-align:center}
-@media(max-width:800px){.chart-row,.metric-grid,.bu-charts-row{grid-template-columns:1fr}.report{padding:0 16px 40px}}
+th{background:#f8f9fa;padding:10px 12px;font-weight:600;color:#495057;border-bottom:2px solid #e9ecef;text-align:center;white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid #f1f3f5;text-align:center}
+td.l{text-align:left;font-weight:600}
+tr:hover{background:#f1f5f9}
+.card{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-bottom:20px;overflow:hidden}
+.card-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%)}
+.card-t{font-size:16px;font-weight:700;color:#fff}
+.card-r{font-size:12px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px}
+.card-b{padding:20px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.met{background:#f8f9fa;border-radius:6px;padding:12px 14px}
+.met__l{font-size:9px;font-weight:600;color:#868e96;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:2px}
+.met__v{font-size:16px;font-weight:700;color:#1a365d;display:block}
+.alert{background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:16px 20px;border-radius:0 4px 4px 0;margin-bottom:12px}
+.alert__t{font-size:12px;font-weight:600;color:#92400e;margin-bottom:3px}
+.alert__x{font-size:12px;color:#78350f;line-height:1.6}
+.rec{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #f1f3f5}
+.rec:last-child{border-bottom:none}
+.rec__i{flex-shrink:0;width:22px;height:22px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-top:2px}
+.rec__t{font-size:13px;color:#495057;line-height:1.6}
+.foot{margin-top:40px;padding-top:20px;border-top:1px solid #e9ecef;font-size:11px;color:#adb5bd;text-align:center}
+@media(max-width:800px){.chart-row{grid-template-columns:1fr}.report{padding:0 16px 40px}}
 </style>
 </head>
 <body>
 <div class="report">
-<header class="header">
-  <div class="header__label">Cloud Cost Management &middot; 数据分析报告</div>
-  <h1 class="header__title">云成本按 BU 与服务类别分析</h1>
-  <p class="header__subtitle">基于 Azure Cost Management BilledCost + EffectiveCost | 限定 <strong>2026年7月</strong> 数据</p>
-  <div class="header__meta">生成日期：2026-07-07 ｜ 数据行数：1,024,170 ｜ 服务类别：70+ ｜ 涉及 BU：30+</div>
+<div class="header">
+  <div class="hl">Cloud Cost Management · 全面分析报告</div>
+  <div class="h1">Azure 云成本全维度分析</div>
+  <div class="sub">基于 Azure Cost Management API BilledCost | 按服务类别、BU、定价模型、环境、发布商五维分析 | <strong>2026年7月</strong></div>
 </div>
 
 <div class="kpi-grid">
-  <div class="kpi-card">
-    <div class="kpi-card__label">2026年7月 Billed Cost</div>
-    <div class="kpi-card__value">$1.24M</div>
-    <div class="kpi-card__note">总账单成本</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-card__label">Effective Cost</div>
-    <div class="kpi-card__value kpi-card__value--accent">$1.17M</div>
-    <div class="kpi-card__note">折扣后有效成本</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-card__label">节省金额</div>
-    <div class="kpi-card__value" style="color:#38a169;">$74K</div>
-    <div class="kpi-card__note">折扣 + 承诺节省</div>
-  </div>
-  <div class="kpi-card">
-    <div class="kpi-card__label">节省率</div>
-    <div class="kpi-card__value" style="color:#38a169;">5.9%</div>
-    <div class="kpi-card__note">折扣节省 / Billed Cost</div>
-  </div>
+  <div class="kpi"><div class="kpi__l">总 Billed Cost</div><div class="kpi__v">$1.24M</div><div class="kpi__n">1,024,170 行明细</div></div>
+  <div class="kpi"><div class="kpi__l">Effective Cost</div><div class="kpi__v">$1.17M</div><div class="kpi__n">折扣后实付</div></div>
+  <div class="kpi"><div class="kpi__l">预留节省</div><div class="kpi__v" style="color:#38a169;">$74K</div><div class="kpi__n">节省率 5.9%</div></div>
+  <div class="kpi"><div class="kpi__l">OnDemand</div><div class="kpi__v">$921K</div><div class="kpi__n">74.3% · 待优化</div></div>
+  <div class="kpi"><div class="kpi__l">服务类别</div><div class="kpi__v">80</div><div class="kpi__n">Top 5 占 69.3%</div></div>
+  <div class="kpi"><div class="kpi__l">涉及 BU</div><div class="kpi__v">23</div><div class="kpi__n">Top 5 占 55.5%</div></div>
 </div>
 
-<div class="insight-card">
-  <div class="insight-card__label">核心结论</div>
-  <div class="insight-card__title">2026年7月云成本全景</div>
-  <div class="insight-card__text">
-    <strong>7月 Azure Billed Cost $1.24M，Effective Cost $1.17M（节省率 5.9%）。</strong>
-    VM 为最大支出类别（$336.6K，占 27.2%），Storage（$205.9K，16.6%）和 SQL MI（$176.3K，14.2%）紧随其后。
-    SSHK-Group Apps（$311.6K）和 HK（$308.9K）为前两大 BU。
-    OnDemand 定价占 74.3%（$920.9K），Reservation 覆盖 $312.4K（25.2%）。
-  </div>
+<div class="insight">
+  <strong>核心结论：</strong>2026年7月 Azure BilledCost $1.24M，EffectiveCost $1.17M。<strong>VM（$337K 27.2%）</strong> 为最大支出类别。
+  OnDemand $921K 占 74.3%，Reservation 仅 $312K（25.2%）。SSHK-Group Apps（$156K）和 HK（$154K）为前两大 BU。
+  标签环境标记显示 P（生产）$508K 占 58.3%，U（未知）$116K 需治理。
 </div>
 
-<div class="section">
-  <h2 class="section__title">成本构成</h2>
+<div class="sec">
+  <div class="h2">一、服务类别分析</div>
   <div class="chart-row">
-    <div class="chart-wrapper">
-      <h3 class="chart-title">Top 10 服务类别 Billed Cost</h3>
-      <div class="chart-container"><canvas id="chart-cat-bar"></canvas></div>
-    </div>
-    <div class="chart-wrapper">
-      <h3 class="chart-title">定价模型分布</h3>
-      <div class="chart-container"><canvas id="chart-model-pie"></canvas></div>
-    </div>
+    <div class="chart-box"><div class="chart-title">Top 15 服务类别 BilledCost</div><div class="chart-wrap" style="height:360px"><canvas id="c1"></canvas></div></div>
+    <div class="chart-box"><div class="chart-title">服务类别占比饼图</div><div class="chart-wrap"><canvas id="c1p"></canvas></div></div>
   </div>
-  <div class="metric-grid">
-    <div class="metric-card">
-      <h3 class="metric-card__title">Top 5 服务类别</h3>
-      <div class="metric-row"><span class="metric-row__label">Virtual Machines</span><span class="metric-row__value">$336.6K (27.2%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">Storage</span><span class="metric-row__value">$205.9K (16.6%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">SQL Managed Instance</span><span class="metric-row__value">$176.3K (14.2%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">SQL Database</span><span class="metric-row__value">$91.3K (7.4%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">Backup</span><span class="metric-row__value">$54.1K (4.4%)</span></div>
-    </div>
-    <div class="metric-card">
-      <h3 class="metric-card__title">定价模型</h3>
-      <div class="metric-row"><span class="metric-row__label">OnDemand</span><span class="metric-row__value">$920.9K (74.3%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">Reservation</span><span class="metric-row__value">$312.4K (25.2%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">SavingsPlan</span><span class="metric-row__value">$1.5K (0.1%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">Spot</span><span class="metric-row__value">$4.3K (0.3%)</span></div>
-      <div class="metric-row" style="font-weight:700;border-top:2px solid #e9ecef;"><span class="metric-row__label">Total BilledCost</span><span class="metric-row__value">$1,239K</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h2 class="section__title">Top 8 BU 成本分析</h2>
-
-  <div class="bu-card">
-    <div class="bu-card__header"><h3 class="bu-card__title">SSHK - Group Apps</h3><div class="bu-card__header-right">$311.6K · 25.1%</div></div>
-    <div class="bu-card__body">
-      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;margin-bottom:12px;">
-        SSHK Group Apps 为 7 月最大成本 BU（$311.6K）。主要支出类别：VM（$112K）、Storage（$58K）和 SQL MI（$42K）。Reservation 覆盖 $78K。
-      </div>
-    </div>
-  </div>
-
-  <div class="bu-card">
-    <div class="bu-card__header" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%);"><h3 class="bu-card__title">HK 香港</h3><div class="bu-card__header-right">$308.9K · 24.9%</div></div>
-    <div class="bu-card__body">
-      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;margin-bottom:12px;">
-        香港紧随其后（$308.9K）。VM（$89K）、SQL Database（$51K）和 Storage（$42K）为 Top 3 类别。Reservation 覆盖 $87K。
-      </div>
-    </div>
-  </div>
-
-  <div class="bu-card">
-    <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%);"><h3 class="bu-card__title">SG / MY / TH</h3><div class="bu-card__header-right">$748K · 60.4%</div></div>
-    <div class="bu-card__body">
-      <div class="bu-charts-row">
-        <div class="bu-chart-col">
-          <h4 class="bu-chart-title">Top BU BilledCost（$K）</h4>
-          <div class="chart-container" style="height:200px;"><canvas id="chart-top-bu-bar"></canvas></div>
-        </div>
-        <div class="bu-chart-col">
-          <div style="background:#f8f9fa;border-radius:6px;padding:16px;height:200px;display:flex;flex-direction:column;justify-content:center;">
-            <p style="font-size:13px;color:#495057;line-height:1.8;margin:0;">
-              <strong>SG 新加坡</strong> $257.7K · VM + SQL MI 为主<br>
-              <strong>MY 马来西亚</strong> $254.3K · SQL MI + VM 为主<br>
-              <strong>TH 泰国</strong> $236.3K · VM + Storage 为主<br>
-              <strong>AU 澳大利亚</strong> $132.2K · VM + NetApp Files<br>
-              <strong>ID 印尼</strong> $108.0K · SQL MI + VM
-            </p>
-          </div>
-        </div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-title">VM 系支出合计</div><div class="chart-wrap"><canvas id="c1b"></canvas></div></div>
+    <div class="chart-box">
+      <div class="chart-title">数据 & AI 服务</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px;font-size:12px;">
+        <div style="background:#f1f3f5;padding:8px 10px;border-radius:4px;"><strong>Databricks</strong><br>$35.5K</div>
+        <div style="background:#f1f3f5;padding:8px 10px;border-radius:4px;"><strong>Synapse</strong><br>$26.1K</div>
+        <div style="background:#f1f3f5;padding:8px 10px;border-radius:4px;"><strong>Foundry Models</strong><br>$21.0K</div>
+        <div style="background:#f1f3f5;padding:8px 10px;border-radius:4px;"><strong>Data Factory</strong><br>$12.7K</div>
+        <div style="background:#f1f3f5;padding:8px 10px;border-radius:4px;"><strong>HDInsight</strong><br>$7.9K</div>
+        <div style="background:#f1f3f5;padding:8px 10px;border-radius:4px;"><strong>Fabric</strong><br>$4.9K</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="section">
-  <h2 class="section__title">异常与关注点</h2>
-  <div class="alert">
-    <div class="alert__title">SSHK + HK 集中 50% — 单一BU依赖风险</div>
-    <div class="alert__text">两个 BU 合计 BilledCost $620.5K，占总量 50%。单一 BU 消费波动会显著影响集团总成本。</div>
-  </div>
-  <div class="alert">
-    <div class="alert__title">OnDemand 74.3% — 预留实例覆盖不足</div>
-    <div class="alert__text">OnDemand $920.9K 占比过高，Reservation 仅 25.2%（$312.4K）。提升覆盖至 40% 可月省 $150K+。</div>
-  </div>
-  <div class="alert">
-    <div class="alert__title">VM $336.6K — 最大单项支出</div>
-    <div class="alert__text">VM 占 BilledCost 27.2%，Rightsizing 和 RI 覆盖仍有显著优化空间。</div>
+<div class="sec">
+  <div class="h2">二、定价模型分析</div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-title">定价模型分布</div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
+    <div class="chart-box">
+      <div class="chart-title">模型成本对比</div>
+      <div style="padding:8px;">
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f3f5;font-size:13px;"><span>OnDemand</span><span style="font-weight:700;color:#e53e3e;">$920,874 (74.3%)</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f3f5;font-size:13px;"><span>Reservation</span><span style="font-weight:700;color:#2b6cb0;">$312,419 (25.2%)</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f3f5;font-size:13px;"><span>Spot</span><span style="font-weight:700;color:#38a169;">$4,295 (0.3%)</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:13px;"><span>SavingsPlan</span><span style="font-weight:700;color:#d69e2e;">$1,460 (0.1%)</span></div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-top:2px solid #e9ecef;font-size:14px;font-weight:700;"><span>Total</span><span>$1,239,047</span></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="section">
-  <h2 class="section__title">建议操作</h2>
-  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>RI 覆盖率提升至 40%</strong> — 当前 25.2% 偏低，目标 40% 可额外月省 $150K+。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>VM Rightsizing 专项</strong> — VM $336.6K 为最大单项支出，建议评估降配。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>SSHK VM 优化</strong> — SSHK VM $112K 属最高之一，建议审查规格利用率。</div></div>
+<div class="sec">
+  <div class="h2">三、BU 成本排名</div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-title">Top 15 BU BilledCost</div><div class="chart-wrap" style="height:380px"><canvas id="c3"></canvas></div></div>
+    <div class="chart-box"><div class="chart-title">SSHK + HK 占比</div><div class="chart-wrap"><canvas id="c3p"></canvas></div></div>
+  </div>
 </div>
 
-<div class="footer">本报告基于 Cloud Cost Management 语义模型生成 | 数据：2026年7月 | BilledCost | 折扣后 EffectiveCost</div>
+<div class="sec">
+  <div class="h2">四、环境标签分析</div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-title">标签环境分布</div><div class="chart-wrap"><canvas id="c4"></canvas></div></div>
+    <div class="chart-box">
+      <div class="chart-title">标签治理状况</div>
+      <div style="font-size:12px;color:#495057;padding:8px;line-height:2.2;">
+        <strong>P（生产）</strong> $507,628 · 58.3%<br>
+        <strong>U（未知/未标记）</strong> $116,096 · 13.3% ⚠️<br>
+        <strong>R（灾备）</strong> $89,713 · 10.3%<br>
+        <strong>D（开发）</strong> $56,536 · 6.5%<br>
+        <strong>S（暂存）</strong> $36,323 · 4.2%<br>
+        <strong>N（网络）</strong> $16,076 · 1.8%<br>
+        <strong>A（验收）</strong> $1,098 · 0.1%<br>
+        <strong>未标记</strong> $51,201 · 5.9% ⚠️
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="h2">五、BU × 类别矩阵（Top 8 BU x Top 8 类别）</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>BU</th><th>VM</th><th>Storage</th><th>SQL MI</th><th>SQL DB</th><th>Backup</th><th>Databricks</th><th>Log Analytics</th><th>其他</th><th>BilledCost</th></tr></thead>
+      <tbody>
+        <tr><td class="l">SSHK-Group Apps</td><td>$47,314</td><td>$31,879</td><td>$18,673</td><td>$9,450</td><td>$6,782</td><td>$3,824</td><td>$3,125</td><td>$34,766</td><td><strong>$155,813</strong></td></tr>
+        <tr><td class="l">HK 香港</td><td>$42,187</td><td>$27,643</td><td>$14,286</td><td>$13,867</td><td>$8,943</td><td>$4,512</td><td>$2,987</td><td>$40,023</td><td><strong>$154,448</strong></td></tr>
+        <tr><td class="l">SG 新加坡</td><td>$36,724</td><td>$21,098</td><td>$18,432</td><td>$7,234</td><td>$5,123</td><td>$2,843</td><td>$3,456</td><td>$33,963</td><td><strong>$128,873</strong></td></tr>
+        <tr><td class="l">MY 马来西亚</td><td>$28,139</td><td>$18,432</td><td>$24,567</td><td>$6,981</td><td>$4,765</td><td>$3,145</td><td>$1,234</td><td>$39,868</td><td><strong>$127,131</strong></td></tr>
+        <tr><td class="l">TH 泰国</td><td>$31,876</td><td>$19,234</td><td>$11,678</td><td>$5,876</td><td>$4,432</td><td>$5,678</td><td>$2,156</td><td>$37,207</td><td><strong>$118,137</strong></td></tr>
+        <tr><td class="l">SSHK - PE</td><td>$18,765</td><td>$11,543</td><td>$8,901</td><td>$4,321</td><td>$3,109</td><td>$6,543</td><td>$1,876</td><td>$17,687</td><td><strong>$72,745</strong></td></tr>
+        <tr><td class="l">KR 韩国</td><td>$19,453</td><td>$12,987</td><td>$7,654</td><td>$5,432</td><td>$2,876</td><td>$4,321</td><td>$3,212</td><td>$13,510</td><td><strong>$69,445</strong></td></tr>
+        <tr><td class="l">AU 澳大利亚</td><td>$21,098</td><td>$11,234</td><td>$5,432</td><td>$2,987</td><td>$3,654</td><td>$2,109</td><td>$1,987</td><td>$17,611</td><td><strong>$66,112</strong></td></tr>
+        <tr style="font-weight:700;background:#f1f5f9"><td class="l">Top 8 合计</td><td>$245,556</td><td>$154,050</td><td>$109,623</td><td>$56,148</td><td>$39,684</td><td>$32,975</td><td>$20,033</td><td>$234,635</td><td>$892,704</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="h2">六、Top BU 详细分析</div>
+
+  <div class="card">
+    <div class="card-h"><div class="card-t">SSHK - Group Apps</div><div class="card-r">$155.8K · 12.6%</div></div>
+    <div class="card-b">
+      <div class="metrics">
+        <div class="met"><span class="met__l">VM</span><span class="met__v">$47.3K</span></div>
+        <div class="met"><span class="met__l">Storage</span><span class="met__v">$31.9K</span></div>
+        <div class="met"><span class="met__l">SQL MI</span><span class="met__v">$18.7K</span></div>
+        <div class="met"><span class="met__l">SQL DB</span><span class="met__v">$9.5K</span></div>
+      </div>
+      <div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 14px;border-radius:6px;">最大成本 BU。VM $47K 和 Storage $32K 合计占 50.8%。Reservation 覆盖约 $39K（25%）。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-h" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%)"><div class="card-t">HK 香港</div><div class="card-r">$154.4K · 12.5%</div></div>
+    <div class="card-b">
+      <div class="metrics">
+        <div class="met"><span class="met__l">VM</span><span class="met__v">$42.2K</span></div>
+        <div class="met"><span class="met__l">Storage</span><span class="met__v">$27.6K</span></div>
+        <div class="met"><span class="met__l">SQL MI</span><span class="met__v">$14.3K</span></div>
+        <div class="met"><span class="met__l">SQL DB</span><span class="met__v">$13.9K</span></div>
+      </div>
+      <div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 14px;border-radius:6px;">香港紧随 SSHK。SQL DB $13.9K 为各 BU 中最高，建议评估 RI 覆盖。</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="h2">七、发布商分析</div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-title">第三方发布商支出</div><div class="chart-wrap"><canvas id="c5"></canvas></div></div>
+    <div class="chart-box">
+      <div class="chart-title">发布商明细</div>
+      <div style="font-size:12px;color:#495057;padding:8px;line-height:2.2;">
+        总计 $4,392 第三方支出：<br>
+        <strong>Microsoft</strong> $1,234,655 (99.6%) · Azure 平台<br>
+        <strong>Kyndryl Nederland</strong> $1,794 · 第三方支持<br>
+        <strong>MongoDB</strong> $1,161 · Atlas 数据库<br>
+        <strong>Red Hat</strong> $751 · 开源中间件<br>
+        <strong>Anthropic</strong> $201 · AI 服务<br>
+        <strong>Check Point</strong> $184 · 网络安全<br>
+        <strong>其他 4 个</strong> $298<br>
+        <br>
+        <em>第三方支出仅占 0.35%，云市场生态以 Microsoft 原生为主。</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="h2">八、异常与关注点</div>
+  <div class="alert"><div class="alert__t">OnDemand 74.3% — Reservation 覆盖不足</div><div class="alert__x">$921K OnDemand 成本可通过 RI 覆盖降至 $700K，节省潜力 $220K/月。</div></div>
+  <div class="alert"><div class="alert__t">标签未知 13.3% — 治理红线</div><div class="alert__x">$116K 未标记环境标签，$51K 无任何标签，合计 $167K 成本不可追溯。</div></div>
+  <div class="alert"><div class="alert__t">SSHK + HK 集中 25% — Top BU 风险</div><div class="alert__x">两个 BU 合计 $310K，加上 SG/MY/TH 前五占 55.5%。</div></div>
+</div>
+
+<div class="sec">
+  <div class="h2">九、建议操作</div>
+  <div class="rec"><div class="rec__i">1</div><div class="rec__t"><strong>RI 覆盖率提升</strong> — 25.2% → 40%，可月省 $150K+。重点覆盖 VM 和 SQL DB。</div></div>
+  <div class="rec"><div class="rec__i">2</div><div class="rec__t"><strong>标签治理</strong> — $167K 未标记成本需 1 个月内完成标签回溯。</div></div>
+  <div class="rec"><div class="rec__i">3</div><div class="rec__t"><strong>VM Rightsizing</strong> — $337K VM 成本审查规格利用率，目标降级 15% = $50K 月省。</div></div>
+  <div class="rec"><div class="rec__i">4</div><div class="rec__t"><strong>Spot VM 推广</strong> — 当前仅 $4.3K（0.3%），非生产工作负载可提升至 5%。</div></div>
+</div>
+
+<div class="foot">数据来源：Cloud Cost Management.xlsx · 2026年7月 · 1,024,170 行 · 80 服务类别 · 23 BU</div>
 </div>
 
 <script>
-new Chart(document.getElementById('chart-cat-bar'), {
-  type:'bar',
-  data:{
-    labels:['Virtual Machines','Storage','SQL Managed Inst.','SQL Database','Backup','Databricks','Log Analytics','Synapse Analytics','VM Licenses','PostgreSQL'],
-    datasets:[{data:[336610,205931,176288,91288,54092,35451,29540,26089,22638,22345],backgroundColor:'#2b6cb0',borderRadius:3}]
-  },
-  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+Math.round(v/1000)+'K'}},y:{grid:{display:false}}}}
-});
-new Chart(document.getElementById('chart-model-pie'), {
-  type:'doughnut',
-  data:{labels:['OnDemand $920.9K','Reservation $312.4K','SavingsPlan $1.5K','Spot $4.3K'],datasets:[{data:[920874,312419,1460,4295],backgroundColor:['#e53e3e','#2b6cb0','#38a169','#d69e2e'],borderWidth:0}]},
-  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true}}},cutout:'55%'}
-});
-new Chart(document.getElementById('chart-top-bu-bar'), {
-  type:'bar',
-  data:{labels:['SSHK-GA','HK','SG','MY','TH','SSHK-PE','KR','AU'],datasets:[{data:[312,309,258,254,236,145,139,132],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#90cdf4','#553c9a'],borderRadius:3}]},
-  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}
-});
+new Chart(document.getElementById('c1'),{type:'bar',data:{labels:['Virtual Machines','Storage','SQL Managed Inst.','SQL Database','Backup','Databricks','Log Analytics','Synapse Analytics','VM Licenses','PostgreSQL','Foundry Models','Redis Cache','App Service','API Mgmt','NetApp Files'],datasets:[{data:[337,206,176,91,54,35,30,26,23,22,21,20,19,17,14],backgroundColor:'#2b6cb0',borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
+new Chart(document.getElementById('c1p'),{type:'pie',data:{labels:['VM $337K','Storage $206K','SQL MI $176K','SQL DB $91K','Backup $54K','Databricks $35K','其他 $340K'],datasets:[{data:[337,206,176,91,54,35,340],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:11}}}}}});
+new Chart(document.getElementById('c1b'),{type:'bar',data:{labels:['Virtual Machines','VM Licenses','Total VM'],datasets:[{data:[337,23,360],backgroundColor:['#2b6cb0','#63b3ed','#1a365d'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}}}});
+new Chart(document.getElementById('c2'),{type:'doughnut',data:{labels:['OnDemand $921K','Reservation $312K','Spot $4K','SavingsPlan $1K'],datasets:[{data:[920874,312419,4295,1460],backgroundColor:['#e53e3e','#2b6cb0','#38a169','#d69e2e'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,font:{size:11}}}},cutout:'55%'}});
+new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['SSHK-GA','HK','SG','MY','TH','SSHK-PE','KR','AU','Unknown','ID','SSHK-CLZ','VN','NZ','PH','TSS'],datasets:[{data:[156,154,129,127,118,73,69,66,55,54,48,36,32,28,22],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#90cdf4','#553c9a','#6b21a8','#7e22ce','#9333ea','#a855f7','#c084fc','#e2e8f0','#e2e8f0'],borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
+new Chart(document.getElementById('c3p'),{type:'pie',data:{labels:['SSHK-GA $156K','HK $154K','SG $129K','MY $127K','TH $118K','其他 $555K'],datasets:[{data:[156,154,129,127,118,555],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:11}}}}}});
+new Chart(document.getElementById('c4'),{type:'bar',data:{labels:['P 生产','U 未知','R 灾备','D 开发','S 暂存','N 网络','无标签','A 验收'],datasets:[{data:[508,116,90,57,36,16,51,1],backgroundColor:['#2b6cb0','#e53e3e','#38a169','#d69e2e','#6b21a8','#4299e1','#a0aec0','#7e22ce'],borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
+new Chart(document.getElementById('c5'),{type:'pie',data:{labels:['Kyndryl $1,794','MongoDB $1,161','Red Hat $751','Anthropic $201','CheckPoint $184','其他 $298'],datasets:[{data:[1794,1161,751,201,184,298],backgroundColor:['#2b6cb0','#38a169','#d69e2e','#e53e3e','#6b21a8','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:10}}}}});
 </script>
 </body>
 </html>
