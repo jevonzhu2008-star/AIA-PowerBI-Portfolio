@@ -680,6 +680,10 @@
             will-change: transform, opacity;
             pointer-events: none;
             position: relative;
+            margin-right: -22%;
+        }
+        .carousel-item:last-child {
+            margin-right: 0;
         }
         .carousel-item.active {
             z-index: 5;
@@ -690,7 +694,7 @@
         }
         .carousel-item.dim {
             z-index: 3;
-            opacity: 0.3;
+            opacity: 0.25;
             transform: scale(0.82);
             filter: grayscale(0.3) brightness(0.55);
             pointer-events: none;
@@ -783,7 +787,7 @@
         @media (max-width: 900px) {
             .carousel-wrapper::before,
             .carousel-wrapper::after { height: 40px; }
-            .carousel-item { flex: 0 0 92%; }
+            .carousel-item { flex: 0 0 92%; margin-right: -18%; }
             .carousel-item.dim { transform: scale(0.85); }
             .carousel-track { gap: 0; }
             .carousel-btn { width: 36px; height: 36px; }
@@ -1492,7 +1496,7 @@
                     var viewW = viewport.offsetWidth;
                     if (viewW <= 0) { viewW = w.offsetWidth; }
                     var itemW = viewW * 0.88;
-                    var step = viewW * 0.68;
+                    var step = viewW * 0.88;
                     var currentIdx = -1;
                     items.forEach(function(item, i) { if (item.classList.contains('active')) currentIdx = i; });
                     if (currentIdx === -1) currentIdx = 0;
@@ -1544,7 +1548,7 @@
                 var viewW = viewport.offsetWidth;
                 if (viewW <= 0) { viewW = carousel.offsetWidth; }
                 var itemW = viewW * 0.88;
-                var step = viewW * 0.68;
+                var step = viewW * 0.88;
                 var offset = -(currentIdx * step) + (viewW - itemW) / 2;
                 offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                 track.style.transform = 'translateX(' + offset + 'px)';
@@ -1835,7 +1839,7 @@
                 var viewport = getViewport();
                 var viewW = viewport.offsetWidth;
                 var itemW = viewW * 0.88;
-                var step = viewW * 0.68;
+                var step = viewW * 0.88;
                 var offset = -(current * step) + (viewW - itemW) / 2;
                 // Clamp: allow positive (center first) to negative (center last)
                 var minOffset = -((total - 1) * step) + (viewW - itemW) / 2;
@@ -1927,7 +1931,7 @@
                         var viewport = w.querySelector('.carousel-viewport');
                         var viewW = viewport.offsetWidth;
                         var itemW = viewW * 0.88;
-                        var step = viewW * 0.68;
+                        var step = viewW * 0.88;
                         var offset = -(curIdx * step) + (viewW - itemW) / 2;
                         offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                         track.style.transform = 'translateX(' + offset + 'px)';
@@ -1947,7 +1951,7 @@
                             var vp = w.querySelector('.carousel-viewport');
                             var vw = vp.offsetWidth;
                             var iw = vw * 0.88;
-                            var st = vw * 0.68;
+                            var st = vw * 0.88;
                             var off = -(nxt * st) + (vw - iw) / 2;
                             off = Math.max(-((allItems.length - 1) * st) + (vw - iw) / 2, Math.min((vw - iw) / 2, off));
                             tr.style.transform = 'translateX(' + off + 'px)';
