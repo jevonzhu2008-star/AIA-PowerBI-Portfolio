@@ -4,179 +4,139 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>云效率节省全面分析 — 2026年5月</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;color:#212529;background:#f8f9fa;line-height:1.6}
-.report{max-width:1200px;margin:0 auto;padding:0 40px 80px}
-.header{padding:48px 0 36px;border-bottom:3px solid #1a365d;margin-bottom:36px;background:#fff;padding-left:40px;padding-right:40px;margin-left:-40px;margin-right:-40px}
+.report{max-width:1100px;margin:0 auto;padding:0 40px 60px}
+.header{padding:40px 0 32px;border-bottom:3px solid #1a365d;margin-bottom:32px;background:#fff;padding-left:40px;padding-right:40px;margin-left:-40px;margin-right:-40px}
 .hl{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#868e96;margin-bottom:8px}
-.h1{font-size:32px;font-weight:700;color:#1a365d;margin-bottom:4px}
-.h2{font-size:20px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
-.sub{font-size:14px;color:#868e96;margin-bottom:16px}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:32px}
-.kpi{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:20px}
-.kpi__l{font-size:10px;font-weight:600;color:#adb5bd;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
-.kpi__v{font-size:24px;font-weight:700;color:#1a365d;line-height:1.1}
-.kpi__n{font-size:11px;color:#adb5bd;margin-top:2px}
-.kpi__g{color:#38a169}.kpi__r{color:#c53030}.kpi__y{color:#d69e2e}
-.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px}
-.chart-box{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:20px}
-.chart-title{font-size:13px;font-weight:700;color:#1a365d;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e9ecef}
-.chart-wrap{position:relative;height:260px;width:100%}
-.sec{margin-bottom:36px}
-.table-wrap{overflow-x:auto;border:1px solid #e9ecef;border-radius:8px}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{background:#f8f9fa;padding:10px 12px;font-weight:600;color:#495057;border-bottom:2px solid #e9ecef;text-align:center;white-space:nowrap}
-td{padding:8px 12px;border-bottom:1px solid #f1f3f5;text-align:center}
+.h1{font-size:28px;font-weight:700;color:#1a365d;margin-bottom:4px}
+.h2{font-size:18px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
+.sub{font-size:13px;color:#868e96;margin-bottom:16px}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:28px}
+.kpi{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:16px}
+.kpi__l{font-size:9px;font-weight:600;color:#adb5bd;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.kpi__v{font-size:20px;font-weight:700;color:#1a365d}
+.kpi__n{font-size:10px;color:#adb5bd;margin-top:2px}
+.sec{margin-bottom:32px}
+.bars{display:flex;align-items:flex-end;gap:8px;height:200px;padding:10px 0}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;height:100%}
+.bi{flex:1;width:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.b{border-radius:4px 4px 0 0;min-height:2px}
+.bl{font-size:10px;color:#495057;margin-top:5px;text-align:center;font-weight:600}
+.bv{font-size:9px;color:#868e96;margin-bottom:2px;text-align:center}
+.insight{background:#f1f3f5;border-left:4px solid #1a365d;padding:14px 18px;margin-bottom:20px;border-radius:0 4px 4px 0;font-size:13px;color:#495057;line-height:1.7}
+.insight strong{color:#1a365d}
+.tw{overflow-x:auto;border:1px solid #e9ecef;border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{background:#f8f9fa;padding:8px 10px;font-weight:600;color:#495057;border-bottom:2px solid #e9ecef;text-align:center;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #f1f3f5;text-align:center}
 td.l{text-align:left;font-weight:600}
 tr:hover{background:#f1f5f9}
-.card{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-bottom:20px;overflow:hidden}
-.card-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%)}
-.card-t{font-size:16px;font-weight:700;color:#fff}
-.card-r{font-size:12px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px}
-.card-b{padding:20px}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
-.met{background:#f8f9fa;border-radius:6px;padding:12px 14px}
-.met__l{font-size:9px;font-weight:600;color:#868e96;text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:2px}
-.met__v{font-size:16px;font-weight:700;color:#1a365d;display:block}
-.insight{background:#f1f3f5;border-left:4px solid #1a365d;padding:16px 20px;margin-bottom:20px;border-radius:0 4px 4px 0;font-size:13px;color:#495057;line-height:1.7}
-.insight strong{color:#1a365d}
-.alert{background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:16px 20px;border-radius:0 4px 4px 0;margin-bottom:12px}
-.alert__t{font-size:12px;font-weight:600;color:#92400e;margin-bottom:3px}
-.alert__x{font-size:12px;color:#78350f;line-height:1.6}
-.rec{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #f1f3f5}
+.card{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-bottom:16px;overflow:hidden}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:12px 18px}
+.ct{font-size:15px;font-weight:700;color:#fff}
+.cr{font-size:11px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:2px 8px;border-radius:20px}
+.cb{padding:16px 18px}
+.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.mt{background:#f8f9fa;border-radius:6px;padding:10px 12px}
+.ml{font-size:9px;font-weight:600;color:#868e96;text-transform:uppercase;display:block;margin-bottom:2px}
+.mv{font-size:15px;font-weight:700;color:#1a365d;display:block}
+.alert{background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:14px 16px;border-radius:0 4px 4px 0;margin-bottom:10px}
+.alert__t{font-size:11px;font-weight:600;color:#92400e;margin-bottom:2px}
+.alert__x{font-size:11px;color:#78350f;line-height:1.6}
+.rec{display:flex;gap:8px;padding:10px 0;border-bottom:1px solid #f1f3f5}
 .rec:last-child{border-bottom:none}
-.rec__i{flex-shrink:0;width:22px;height:22px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-top:2px}
-.rec__t{font-size:13px;color:#495057;line-height:1.6}
-.foot{margin-top:40px;padding-top:20px;border-top:1px solid #e9ecef;font-size:11px;color:#adb5bd;text-align:center}
-@media(max-width:800px){.chart-row{grid-template-columns:1fr}.report{padding:0 16px 40px}}
+.rec__i{flex-shrink:0;width:20px;height:20px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-top:1px}
+.rec__t{font-size:12px;color:#495057;line-height:1.6}
+.foot{margin-top:32px;padding-top:16px;border-top:1px solid #e9ecef;font-size:10px;color:#adb5bd;text-align:center}
+@media(max-width:800px){.kpi-grid{grid-template-columns:repeat(3,1fr)}.report{padding:0 16px 40px}}
 </style>
 </head>
 <body>
 <div class="report">
-<div class="header">
-  <div class="hl">Cloud Efficiency Saving · 全面分析报告</div>
-  <div class="h1">云效率节省全维度分析</div>
-  <div class="sub">基于 DAX 度量值 · Reservation · Architecture · Reselection · Rightsizing 四类分析 | <strong>2026年5月</strong></div>
-</div>
+<div class="header"><div class="hl">Cloud Efficiency Saving · 全面分析报告</div><div class="h1">云效率节省全维度分析</div><div class="sub">Reservation · Architecture · Reselection · Rightsizing | <strong>2026年5月</strong></div></div>
 
 <div class="kpi-grid">
-  <div class="kpi"><div class="kpi__l">总节省金额</div><div class="kpi__v kpi__g">$2,418K</div><div class="kpi__n">四类节省合计</div></div>
-  <div class="kpi"><div class="kpi__l">Reservation</div><div class="kpi__v">$1,057K</div><div class="kpi__n">43.7% · RI/SP 覆盖</div></div>
-  <div class="kpi"><div class="kpi__l">Architecture Opt.</div><div class="kpi__v kpi__y">$679K</div><div class="kpi__n">28.1% · 架构优化</div></div>
-  <div class="kpi"><div class="kpi__l">Top50 Reselection</div><div class="kpi__v">$470K</div><div class="kpi__n">19.4% · 资源重选</div></div>
-  <div class="kpi"><div class="kpi__l">Rightsizing</div><div class="kpi__v kpi__r">$212K</div><div class="kpi__n">8.8% · 降配优化</div></div>
-  <div class="kpi"><div class="kpi__l">参与 BU</div><div class="kpi__v">23</div><div class="kpi__n">4197 条数据</div></div>
+<div class="kpi"><div class="kpi__l">总节省金额</div><div class="kpi__v" style="color:#38a169;">$2,418K</div><div class="kpi__n">四类合计</div></div>
+<div class="kpi"><div class="kpi__l">Reservation</div><div class="kpi__v">$1,057K</div><div class="kpi__n">43.7%</div></div>
+<div class="kpi"><div class="kpi__l">Architecture</div><div class="kpi__v" style="color:#d69e2e;">$679K</div><div class="kpi__n">28.1%</div></div>
+<div class="kpi"><div class="kpi__l">Reselection</div><div class="kpi__v">$470K</div><div class="kpi__n">19.4%</div></div>
+<div class="kpi"><div class="kpi__l">Rightsizing</div><div class="kpi__v" style="color:#e53e3e;">$212K</div><div class="kpi__n">8.8%</div></div>
+<div class="kpi"><div class="kpi__l">涉及 BU</div><div class="kpi__v">23</div><div class="kpi__n">4,197 行</div></div>
 </div>
 
-<div class="insight">
-  <strong>核心结论：</strong>2026年5月集团云效率节省 $2,418K。<strong>Reservation（$1,057K）</strong> 为最大节省支柱，占比 43.7%。HK（$664K）和 SSHK-Group Apps（$433K）合计贡献 45.4%。Rightsizing 仅占 8.8%（$212K），仍有显著提升空间。
+<div class="insight"><strong>核心结论：</strong>2026年5月集团云效率节省 <strong>$2,418K</strong>。Reservation（$1,057K）为最大节省支柱。HK（$664K）和 SSHK-Group Apps（$433K）合计占 45.4%。Rightsizing 仅 8.8%，仍有显著提升空间。</div>
+
+<div class="sec"><div class="h2">一、节省类型分布</div><div class="bars">
+<div class="bc"><div class="bi"><div class="bv">$1,058K</div><div class="b" style="height:180px;background:#2b6cb0"></div></div><div class="bl">Reservation<br>43.7%</div></div>
+<div class="bc"><div class="bi"><div class="bv">$679K</div><div class="b" style="height:116px;background:#38a169"></div></div><div class="bl">Architecture<br>28.1%</div></div>
+<div class="bc"><div class="bi"><div class="bv">$470K</div><div class="b" style="height:80px;background:#d69e2e"></div></div><div class="bl">Reselection<br>19.4%</div></div>
+<div class="bc"><div class="bi"><div class="bv">$212K</div><div class="b" style="height:36px;background:#e53e3e"></div></div><div class="bl">Rightsizing<br>8.8%</div></div>
+</div></div>
+
+<div class="sec"><div class="h2">二、Top BU 节省排名</div><div class="bars" style="height:220px">
+<div class="bc"><div class="bi"><div class="bv">$664K</div><div class="b" style="height:180px;background:#1a365d"></div></div><div class="bl">HK</div></div>
+<div class="bc"><div class="bi"><div class="bv">$433K</div><div class="b" style="height:117px;background:#2b6cb0"></div></div><div class="bl">SSHK-GA</div></div>
+<div class="bc"><div class="bi"><div class="bv">$229K</div><div class="b" style="height:62px;background:#2c5282"></div></div><div class="bl">CN</div></div>
+<div class="bc"><div class="bi"><div class="bv">$150K</div><div class="b" style="height:41px;background:#3182ce"></div></div><div class="bl">KR</div></div>
+<div class="bc"><div class="bi"><div class="bv">$127K</div><div class="b" style="height:34px;background:#4299e1"></div></div><div class="bl">TH</div></div>
+<div class="bc"><div class="bi"><div class="bv">$115K</div><div class="b" style="height:31px;background:#63b3ed"></div></div><div class="bl">MY</div></div>
+<div class="bc"><div class="bi"><div class="bv">$111K</div><div class="b" style="height:30px;background:#90cdf4"></div></div><div class="bl">SG</div></div>
+<div class="bc"><div class="bi"><div class="bv">$91K</div><div class="b" style="height:25px;background:#553c9a"></div></div><div class="bl">AU</div></div>
+<div class="bc"><div class="bi"><div class="bv">$73K</div><div class="b" style="height:20px;background:#6b21a8"></div></div><div class="bl">VN</div></div>
+<div class="bc"><div class="bi"><div class="bv">$67K</div><div class="b" style="height:18px;background:#7e22ce"></div></div><div class="bl">ID</div></div>
+</div></div>
+
+<div class="sec"><div class="h2">三、BU × 节省类型矩阵</div><div class="tw"><table><thead><tr><th>BU</th><th>Reservation</th><th>Architecture</th><th>Reselection</th><th>Rightsizing</th><th>总节省</th><th>占比</th></tr></thead><tbody>
+<tr><td class="l">HK 香港</td><td>$241,881</td><td>$294,333</td><td>$109,143</td><td>$18,371</td><td><strong>$663,727</strong></td><td>27.4%</td></tr>
+<tr><td class="l">SSHK-Group Apps</td><td>$347,740</td><td>$55,432</td><td>$29,776</td><td>—</td><td><strong>$432,947</strong></td><td>17.9%</td></tr>
+<tr><td class="l">CN 中国</td><td>—</td><td>—</td><td>$150,000</td><td>$79,401</td><td><strong>$229,401</strong></td><td>9.5%</td></tr>
+<tr><td class="l">KR 韩国</td><td>$81,972</td><td>$15,360</td><td>—</td><td>$53,039</td><td><strong>$149,816</strong></td><td>6.2%</td></tr>
+<tr><td class="l">TH 泰国</td><td>$67,590</td><td>$49,131</td><td>$7,354</td><td>$2,599</td><td><strong>$126,674</strong></td><td>5.2%</td></tr>
+<tr><td class="l">MY 马来西亚</td><td>$24,142</td><td>$30,383</td><td>$32,124</td><td>$28,551</td><td><strong>$115,200</strong></td><td>4.8%</td></tr>
+<tr><td class="l">SG 新加坡</td><td>$38,277</td><td>$39,902</td><td>$32,982</td><td>—</td><td><strong>$111,161</strong></td><td>4.6%</td></tr>
+<tr><td class="l">AU 澳大利亚</td><td>$39,923</td><td>$28,099</td><td>$12,081</td><td>$11,066</td><td><strong>$91,170</strong></td><td>3.8%</td></tr>
+<tr style="font-weight:700;background:#f1f5f9"><td class="l">Top 8 合计</td><td>$841,525</td><td>$512,640</td><td>$373,460</td><td>$193,027</td><td>$1,920,094</td><td>79.4%</td></tr>
+</tbody></table></div></div>
+
+<div class="sec"><div class="h2">四、Top BU 详细分析</div>
+
+<div class="card"><div class="ch" style="background:linear-gradient(135deg,#1a365d,#2b6cb0)"><div class="ct">HK 香港</div><div class="cr">$663,727 · 27.4%</div></div><div class="cb"><div class="mg">
+<div class="mt"><span class="ml">Reservation</span><span class="mv">$241,881</span></div>
+<div class="mt"><span class="ml">Architecture</span><span class="mv">$294,333</span></div>
+<div class="mt"><span class="ml">Reselection</span><span class="mv">$109,143</span></div>
+<div class="mt"><span class="ml">Rightsizing</span><span class="mv">$18,371</span></div>
+</div><div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 12px;border-radius:6px;">香港以 Architecture Optimisation（$294K）为最大节省手段，四类均衡发展最佳。</div></div></div>
+
+<div class="card"><div class="ch" style="background:linear-gradient(135deg,#2b6cb0,#4299e1)"><div class="ct">SSHK-Group Apps</div><div class="cr">$432,947 · 17.9%</div></div><div class="cb"><div class="mg">
+<div class="mt"><span class="ml">Reservation</span><span class="mv">$347,740</span></div>
+<div class="mt"><span class="ml">Architecture</span><span class="mv">$55,432</span></div>
+<div class="mt"><span class="ml">Reselection</span><span class="mv">$29,776</span></div>
+<div class="mt"><span class="ml">Rightsizing</span><span class="mv">$0</span></div>
+</div><div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 12px;border-radius:6px;">Reservation $348K 占 80.3%。无 Rightsizing 记录，建议评估降配机会。</div></div></div>
+
+<div class="card"><div class="ch" style="background:linear-gradient(135deg,#2c5282,#3182ce)"><div class="ct">CN 中国</div><div class="cr">$229,401 · 9.5%</div></div><div class="cb"><div class="mg">
+<div class="mt"><span class="ml">Reservation</span><span class="mv">—</span></div>
+<div class="mt"><span class="ml">Architecture</span><span class="mv">—</span></div>
+<div class="mt"><span class="ml">Reselection</span><span class="mv">$150,000</span></div>
+<div class="mt"><span class="ml">Rightsizing</span><span class="mv">$79,401</span></div>
+</div><div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 12px;border-radius:6px;">Reselection $150K 占 65.4% 为最大手段，但属一次性节省。Rightsizing $79K 显著。</div></div></div>
 </div>
 
-<div class="sec">
-  <div class="h2">一、节省类型分布</div>
-  <div class="chart-row">
-    <div class="chart-box"><div class="chart-title">节省类型占比</div><div class="chart-wrap"><canvas id="c1"></canvas></div></div>
-    <div class="chart-box"><div class="chart-title">各类型节省金额</div><div class="chart-wrap"><canvas id="c2"></canvas></div></div>
-  </div>
+<div class="sec"><div class="h2">五、异常与关注点</div>
+<div class="alert"><div class="alert__t">HK + SSHK 集中 45.4% — 依赖风险</div><div class="alert__x">两个 BU 合计 $1,096K，RI/SP 到期续约将显著影响集团总节省。</div></div>
+<div class="alert"><div class="alert__t">Rightsizing 仅 8.8% — 最大潜力洼地</div><div class="alert__x">$212K 远低于 Reservation $1,057K。VM 降配评估可挖掘 $150K+/月。</div></div>
+<div class="alert"><div class="alert__t">CN 依赖 Reselection $150K — 可持续性存疑</div><div class="alert__x">中国 65.4% 节省来自一次性资源重选，非持续性节省手段。</div></div>
 </div>
 
-<div class="sec">
-  <div class="h2">二、按 BU 节省排名</div>
-  <div class="chart-row">
-    <div class="chart-box"><div class="chart-title">Top 12 BU 节省排名</div><div class="chart-wrap" style="height:340px"><canvas id="c3"></canvas></div></div>
-    <div class="chart-box"><div class="chart-title">HK & SSHK 节省占比</div><div class="chart-wrap"><canvas id="c4"></canvas></div></div>
-  </div>
+<div class="sec"><div class="h2">六、建议操作</div>
+<div class="rec"><div class="rec__i">1</div><div class="rec__t"><strong>HK Architecture 方法推广</strong> — $294K 架构优化为最佳实践，建议提炼推广。</div></div>
+<div class="rec"><div class="rec__i">2</div><div class="rec__t"><strong>Rightsizing 专项提升</strong> — 目标 8.8% → 15%，预计月省 $150K+。</div></div>
+<div class="rec"><div class="rec__i">3</div><div class="rec__t"><strong>SSHK Rightsizing 机会</strong> — 当前 $0，评估 VM 降配可挖掘 $30K+/月。</div></div>
 </div>
 
-<div class="sec">
-  <div class="h2">三、BU × 节省类型矩阵</div>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>BU</th><th>Reservation</th><th>Architecture</th><th>Reselection</th><th>Rightsizing</th><th>总节省</th><th>占比</th></tr></thead>
-      <tbody>
-        <tr><td class="l">HK 香港</td><td>$241,881</td><td>$294,333</td><td>$109,143</td><td>$18,371</td><td><strong>$663,727</strong></td><td>27.4%</td></tr>
-        <tr><td class="l">SSHK - Group Apps</td><td>$347,740</td><td>$55,432</td><td>$29,776</td><td>—</td><td><strong>$432,947</strong></td><td>17.9%</td></tr>
-        <tr><td class="l">CN 中国</td><td>—</td><td>—</td><td>$150,000</td><td>$79,401</td><td><strong>$229,401</strong></td><td>9.5%</td></tr>
-        <tr><td class="l">KR 韩国</td><td>$81,972</td><td>$15,360</td><td>—</td><td>$53,039</td><td><strong>$149,816</strong></td><td>6.2%</td></tr>
-        <tr><td class="l">TH 泰国</td><td>$67,590</td><td>$49,131</td><td>$7,354</td><td>$2,599</td><td><strong>$126,674</strong></td><td>5.2%</td></tr>
-        <tr><td class="l">MY 马来西亚</td><td>$24,142</td><td>$30,383</td><td>$32,124</td><td>$28,551</td><td><strong>$115,200</strong></td><td>4.8%</td></tr>
-        <tr><td class="l">SG 新加坡</td><td>$38,277</td><td>$39,902</td><td>$32,982</td><td>—</td><td><strong>$111,161</strong></td><td>4.6%</td></tr>
-        <tr><td class="l">AU 澳大利亚</td><td>$39,923</td><td>$28,099</td><td>$12,081</td><td>$11,066</td><td><strong>$91,170</strong></td><td>3.8%</td></tr>
-        <tr><td class="l">VN 越南</td><td>$49,163</td><td>$7,297</td><td>$14,493</td><td>$2,043</td><td><strong>$72,995</strong></td><td>3.0%</td></tr>
-        <tr><td class="l">ID 印尼</td><td>$53,015</td><td>$12,016</td><td>$885</td><td>$711</td><td><strong>$66,627</strong></td><td>2.8%</td></tr>
-        <tr><td class="l">SSHK - PE</td><td>$18,851</td><td>$26,782</td><td>$11,818</td><td>$6,194</td><td><strong>$63,645</strong></td><td>2.6%</td></tr>
-        <tr><td class="l">AH-SG Amplify H.</td><td>$41,237</td><td>$10,694</td><td>$10,775</td><td>—</td><td><strong>$62,706</strong></td><td>2.6%</td></tr>
-        <tr><td class="l">其他 11 BU</td><td>$54,185</td><td>$109,356</td><td>$67,933</td><td>$10,480</td><td><strong>$241,954</strong></td><td>10.0%</td></tr>
-        <tr style="font-weight:700;background:#f1f5f9;"><td class="l">合计</td><td>$1,056,978</td><td>$678,786</td><td>$470,366</td><td>$212,232</td><td>$2,418,362</td><td>100%</td></tr>
-      </tbody>
-    </table>
-  </div>
+<div class="foot">数据来源：Cloud Efficiency Saving.xlsx · 2026年5月 · 4,197 行 · 23 BU</div>
 </div>
-
-<div class="sec">
-  <div class="h2">四、Top BU 详细分析</div>
-
-  <div class="card">
-    <div class="card-h"><div class="card-t">HK 香港</div><div class="card-r">$663,727 · 27.4%</div></div>
-    <div class="card-b">
-      <div class="metrics">
-        <div class="met"><span class="met__l">Reservation</span><span class="met__v">$241,881</span></div>
-        <div class="met"><span class="met__l">Architecture</span><span class="met__v">$294,333</span></div>
-        <div class="met"><span class="met__l">Top50 Reselection</span><span class="met__v">$109,143</span></div>
-        <div class="met"><span class="met__l">Rightsizing</span><span class="met__v">$18,371</span></div>
-      </div>
-      <div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 14px;border-radius:6px;">香港以 Architecture Optimisation 为主要节省手段（$294K），Reservation 贡献 $242K，Top50 资源重选 $109K。三大手段均衡发展最佳 BU。</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-h" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%)"><div class="card-t">SSHK - Group Apps</div><div class="card-r">$432,947 · 17.9%</div></div>
-    <div class="card-b">
-      <div class="metrics">
-        <div class="met"><span class="met__l">Reservation</span><span class="met__v">$347,740</span></div>
-        <div class="met"><span class="met__l">Architecture</span><span class="met__v">$55,432</span></div>
-        <div class="met"><span class="met__l">Top50 Reselection</span><span class="met__v">$29,776</span></div>
-        <div class="met"><span class="met__l">Rightsizing</span><span class="met__v">$0</span></div>
-      </div>
-      <div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 14px;border-radius:6px;">Reservation（$348K）占 SSHK 总节省的 80.3%，RI 覆盖率极高。无 Rightsizing 记录，建议评估降配机会。</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-h" style="background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%)"><div class="card-t">CN 中国 / KR 韩国 / TH 泰国</div><div class="card-r">$505,891 · 20.9%</div></div>
-    <div class="card-b">
-      <div style="font-size:12px;color:#495057;background:#f8f9fa;padding:10px 14px;border-radius:6px;margin-bottom:8px;"><strong>CN</strong> $229K — Top50 Reselection $150K（65.4%）占比最高，Rightsizing $79K 显著。<br><strong>KR</strong> $150K — Reservation $82K（54.7%）主导，Rightsizing $53K 次之。<br><strong>TH</strong> $127K — Reservation $68K（53.4%）为主，Architecture $49K 次之。</div>
-    </div>
-  </div>
-</div>
-
-<div class="sec">
-  <div class="h2">五、异常与关注点</div>
-  <div class="alert"><div class="alert__t">HK + SSHK 集中 45.4% — 依赖风险</div><div class="alert__x">两个 BU 合计 $1,096K，RI/SP 到期续约将显著影响集团总节省。</div></div>
-  <div class="alert"><div class="alert__t">Rightsizing 仅 8.8% — 最大潜力洼地</div><div class="alert__x">$212K 远低于 Reservation $1,057K。VM 降配评估可挖掘 $150K+/月。</div></div>
-  <div class="alert"><div class="alert__t">CN 依赖 Reselection $150K — 可持续性存疑</div><div class="alert__x">中国 65.4% 节省来自一次性资源重选，非持续性节省手段。</div></div>
-</div>
-
-<div class="sec">
-  <div class="h2">六、建议操作</div>
-  <div class="rec"><div class="rec__i">1</div><div class="rec__t"><strong>HK Architecture 方法推广</strong> — $294K 架构优化为最佳实践，建议提炼推广。</div></div>
-  <div class="rec"><div class="rec__i">2</div><div class="rec__t"><strong>Rightsizing 专项提升</strong> — 目标 8.8% → 15%，预计月省 $150K+。</div></div>
-  <div class="rec"><div class="rec__i">3</div><div class="rec__t"><strong>SSHK Rightsizing 机会</strong> — 当前 $0，评估 VM 降配可挖掘 $30K+/月。</div></div>
-  <div class="rec"><div class="rec__i">4</div><div class="rec__t"><strong>KR/TH RI 续约管理</strong> — Reservation $150K 到期需提前规划续约。</div></div>
-</div>
-
-<div class="foot">数据来源：Cloud Efficiency Saving.xlsx · 2026年5月 · 4,197 行 · 23 BU | 分析维度：节省类型 × BU 矩阵</div>
-</div>
-
-<script>
-(function(){function i(){if(typeof Chart==='undefined')return void setTimeout(i,50);
-new Chart(document.getElementById('c1'),{type:'doughnut',data:{labels:['Reservation $1,057K','Architecture $679K','Reselection $470K','Rightsizing $212K'],datasets:[{data:[1056978,678786,470366,212232],backgroundColor:['#2b6cb0','#38a169','#d69e2e','#e53e3e'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,font:{size:11}}}},cutout:'58%'}});
-new Chart(document.getElementById('c2'),{type:'bar',data:{labels:['Reservation','Architecture','Reselection','Rightsizing'],datasets:[{data:[1057,679,470,212],backgroundColor:['#2b6cb0','#38a169','#d69e2e','#e53e3e'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}}}});
-new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['HK','SSHK-GA','CN','KR','TH','MY','SG','AU','VN','ID','SSHK-PE','AH-SG'],datasets:[{data:[664,433,229,150,127,115,111,91,73,67,64,63],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#90cdf4','#553c9a','#6b21a8','#7e22ce','#9333ea','#a855f7'],borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
-new Chart(document.getElementById('c4'),{type:'pie',data:{labels:['HK $664K','SSHK-GA $433K','CN $229K','KR $150K','其他 $942K'],datasets:[{data:[664,433,229,150,942],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:11}}}}}});
-}i();})();
-</script>
 </body>
 </html>
