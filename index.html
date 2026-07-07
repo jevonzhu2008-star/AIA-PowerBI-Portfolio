@@ -1454,6 +1454,10 @@
             });
 
             /* ── Relayout carousels in active panel ── */
+            /* ── Pause all videos, then auto-play intro if active ── */
+            document.querySelectorAll('.card-video video').forEach(function(v) {
+                v.pause();
+            });
             setTimeout(function() {
                 var activePanel = parentContent.querySelector('.main-panel.active');
                 if (!activePanel) return;
