@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>云成本管理分析报告 — 2026年5月</title>
+<title>云成本管理分析报告 — 2026年7月</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
@@ -27,6 +27,10 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;color:#212529;b
 .insight-card__label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#868e96;margin-bottom:8px}
 .insight-card__title{font-size:18px;font-weight:700;color:#1a365d;margin-bottom:8px}
 .insight-card__text{font-size:14px;color:#495057;line-height:1.7}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+.chart-wrapper{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:20px}
+.chart-title{font-size:14px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
+.chart-container{position:relative;height:280px;width:100%}
 .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
 .metric-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:24px}
 .metric-card__title{font-size:15px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
@@ -39,13 +43,9 @@ body{font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;color:#212529;b
 .bu-card__title{font-size:18px;font-weight:700;color:#fff;margin:0}
 .bu-card__header-right{font-size:13px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px}
 .bu-card__body{padding:24px}
-.bu-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-.bu-metric{background:#f8f9fa;border-radius:6px;padding:14px 16px}
-.bu-metric__label{font-size:10px;font-weight:600;color:#868e96;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px}
-.bu-metric__value{font-size:18px;font-weight:700;color:#1a365d;display:block}
-.bu-metric__value--good{color:#38a169}
-.bu-metric__value--warn{color:#d69e2e}
-.chart-container{position:relative;height:240px;width:100%;margin-bottom:24px}
+.bu-charts-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.bu-chart-col{min-width:0}
+.bu-chart-title{font-size:13px;font-weight:600;color:#495057;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
 .recommendation{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid #f1f3f5}
 .recommendation:last-child{border-bottom:none}
 .recommendation__icon{flex-shrink:0;width:24px;height:24px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px}
@@ -61,128 +61,124 @@ th{padding:10px 14px;font-weight:600;color:#495057;border-bottom:2px solid #e9ec
 td{padding:9px 14px;border-bottom:1px solid #f1f3f5;color:#343a40}
 tr:last-child td{border-bottom:none}
 .footer{margin-top:64px;padding-top:24px;border-top:1px solid #e9ecef;font-size:11px;color:#adb5bd;text-align:center}
-@media(max-width:800px){.metric-grid{grid-template-columns:1fr}.report{padding:0 16px 40px}}
+@media(max-width:800px){.chart-row,.metric-grid,.bu-charts-row{grid-template-columns:1fr}.report{padding:0 16px 40px}}
 </style>
 </head>
 <body>
 <div class="report">
 <header class="header">
-  <div class="header__label">Cloud Cost Management &middot; 分析报告</div>
-  <h1 class="header__title">云成本管理端到端分析</h1>
-  <p class="header__subtitle">基于 Azure Cost Management API 的成本透明化与优化分析 | 限定 <strong>2026年5月</strong> 数据</p>
-  <div class="header__meta">生成日期：2026-07-07 ｜ 数据来源：Power BI 语义模型 · Cloud Cost Management</div>
-</header>
+  <div class="header__label">Cloud Cost Management &middot; 数据分析报告</div>
+  <h1 class="header__title">云成本按 BU 与服务类别分析</h1>
+  <p class="header__subtitle">基于 Azure Cost Management BilledCost + EffectiveCost | 限定 <strong>2026年7月</strong> 数据</p>
+  <div class="header__meta">生成日期：2026-07-07 ｜ 数据行数：1,024,170 ｜ 服务类别：70+ ｜ 涉及 BU：30+</div>
+</div>
 
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-card__label">2026年5月净成本</div>
-    <div class="kpi-card__value">$2,421K</div>
-    <div class="kpi-card__note">After 折扣与承诺节省</div>
+    <div class="kpi-card__label">2026年7月 Billed Cost</div>
+    <div class="kpi-card__value">$1.24M</div>
+    <div class="kpi-card__note">总账单成本</div>
   </div>
   <div class="kpi-card">
-    <div class="kpi-card__label">目录原价</div>
-    <div class="kpi-card__value kpi-card__value--accent">$3,186K</div>
-    <div class="kpi-card__note">未折扣定价</div>
+    <div class="kpi-card__label">Effective Cost</div>
+    <div class="kpi-card__value kpi-card__value--accent">$1.17M</div>
+    <div class="kpi-card__note">折扣后有效成本</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-card__label">节省金额</div>
-    <div class="kpi-card__value" style="color:#38a169;">$765K</div>
-    <div class="kpi-card__note">折扣 + 承诺节省合计</div>
+    <div class="kpi-card__value" style="color:#38a169;">$74K</div>
+    <div class="kpi-card__note">折扣 + 承诺节省</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-card__label">节省率</div>
-    <div class="kpi-card__value" style="color:#38a169;">24.0%</div>
-    <div class="kpi-card__note">节省金额 / 目录原价</div>
+    <div class="kpi-card__value" style="color:#38a169;">5.9%</div>
+    <div class="kpi-card__note">折扣节省 / Billed Cost</div>
   </div>
 </div>
 
 <div class="insight-card">
   <div class="insight-card__label">核心结论</div>
-  <div class="insight-card__title">2026年5月云成本管理全景</div>
+  <div class="insight-card__title">2026年7月云成本全景</div>
   <div class="insight-card__text">
-    <strong>5月 Azure 净成本 $2,421K，节省 $765K（节省率 24.0%）。</strong>
-    企业折扣贡献最大节省（$512K），RI/SP 承诺节省 $253K。
-    TH（泰国）和 HK（香港）合计占净成本的 56.4%，VM 和 SQL DB 是前两大服务类型。
-    未分配资源（Unallocated）占比 8.2%，需推进标签治理。
+    <strong>7月 Azure Billed Cost $1.24M，Effective Cost $1.17M（节省率 5.9%）。</strong>
+    VM 为最大支出类别（$336.6K，占 27.2%），Storage（$205.9K，16.6%）和 SQL MI（$176.3K，14.2%）紧随其后。
+    SSHK-Group Apps（$311.6K）和 HK（$308.9K）为前两大 BU。
+    OnDemand 定价占 74.3%（$920.9K），Reservation 覆盖 $312.4K（25.2%）。
   </div>
 </div>
 
 <div class="section">
-  <h2 class="section__title">成本与节省概览</h2>
+  <h2 class="section__title">成本构成</h2>
+  <div class="chart-row">
+    <div class="chart-wrapper">
+      <h3 class="chart-title">Top 10 服务类别 Billed Cost</h3>
+      <div class="chart-container"><canvas id="chart-cat-bar"></canvas></div>
+    </div>
+    <div class="chart-wrapper">
+      <h3 class="chart-title">定价模型分布</h3>
+      <div class="chart-container"><canvas id="chart-model-pie"></canvas></div>
+    </div>
+  </div>
   <div class="metric-grid">
     <div class="metric-card">
-      <h3 class="metric-card__title">节省来源</h3>
-      <div class="metric-row"><span class="metric-row__label">企业折扣（EA）</span><span class="metric-row__value">$512K (66.9%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">RI 节省</span><span class="metric-row__value">$163K (21.3%)</span></div>
-      <div class="metric-row"><span class="metric-row__label">Saving Plans 节省</span><span class="metric-row__value">$90K (11.8%)</span></div>
-      <div class="metric-row" style="font-weight:700;border-top:2px solid #e9ecef;"><span class="metric-row__label">总节省</span><span class="metric-row__value" style="color:#38a169;">$765K</span></div>
+      <h3 class="metric-card__title">Top 5 服务类别</h3>
+      <div class="metric-row"><span class="metric-row__label">Virtual Machines</span><span class="metric-row__value">$336.6K (27.2%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Storage</span><span class="metric-row__value">$205.9K (16.6%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">SQL Managed Instance</span><span class="metric-row__value">$176.3K (14.2%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">SQL Database</span><span class="metric-row__value">$91.3K (7.4%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Backup</span><span class="metric-row__value">$54.1K (4.4%)</span></div>
     </div>
     <div class="metric-card">
-      <h3 class="metric-card__title">Top 服务类型支出</h3>
-      <div class="metric-row"><span class="metric-row__label">Compute Virtual Machines</span><span class="metric-row__value">$893K</span></div>
-      <div class="metric-row"><span class="metric-row__label">Database - SQL</span><span class="metric-row__value">$476K</span></div>
-      <div class="metric-row"><span class="metric-row__label">Storage</span><span class="metric-row__value">$289K</span></div>
-      <div class="metric-row"><span class="metric-row__label">SQL Managed Instance</span><span class="metric-row__value">$195K</span></div>
-      <div class="metric-row"><span class="metric-row__label">AKS / Kubernetes</span><span class="metric-row__value">$148K</span></div>
+      <h3 class="metric-card__title">定价模型</h3>
+      <div class="metric-row"><span class="metric-row__label">OnDemand</span><span class="metric-row__value">$920.9K (74.3%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Reservation</span><span class="metric-row__value">$312.4K (25.2%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">SavingsPlan</span><span class="metric-row__value">$1.5K (0.1%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Spot</span><span class="metric-row__value">$4.3K (0.3%)</span></div>
+      <div class="metric-row" style="font-weight:700;border-top:2px solid #e9ecef;"><span class="metric-row__label">Total BilledCost</span><span class="metric-row__value">$1,239K</span></div>
     </div>
   </div>
 </div>
 
 <div class="section">
-  <h2 class="section__title">按 BU 成本分析</h2>
+  <h2 class="section__title">Top 8 BU 成本分析</h2>
 
   <div class="bu-card">
-    <div class="bu-card__header"><h3 class="bu-card__title">TH 泰国</h3><div class="bu-card__header-right">$724K · 29.9%</div></div>
+    <div class="bu-card__header"><h3 class="bu-card__title">SSHK - Group Apps</h3><div class="bu-card__header-right">$311.6K · 25.1%</div></div>
     <div class="bu-card__body">
-      <div class="bu-metrics">
-        <div class="bu-metric"><span class="bu-metric__label">净成本</span><span class="bu-metric__value" style="color:#c53030;">$724K</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">节省金额</span><span class="bu-metric__value bu-metric__value--good">$218K</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">节省率</span><span class="bu-metric__value bu-metric__value--good">23.1%</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">主要服务</span><span class="bu-metric__value" style="font-size:12px;">VM · SQL DB · Storage</span></div>
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;margin-bottom:12px;">
+        SSHK Group Apps 为 7 月最大成本 BU（$311.6K）。主要支出类别：VM（$112K）、Storage（$58K）和 SQL MI（$42K）。Reservation 覆盖 $78K。
       </div>
     </div>
   </div>
 
   <div class="bu-card">
-    <div class="bu-card__header" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%);"><h3 class="bu-card__title">HK 香港</h3><div class="bu-card__header-right">$642K · 26.5%</div></div>
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%);"><h3 class="bu-card__title">HK 香港</h3><div class="bu-card__header-right">$308.9K · 24.9%</div></div>
     <div class="bu-card__body">
-      <div class="bu-metrics">
-        <div class="bu-metric"><span class="bu-metric__label">净成本</span><span class="bu-metric__value" style="color:#c53030;">$642K</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">节省金额</span><span class="bu-metric__value bu-metric__value--good">$206K</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">节省率</span><span class="bu-metric__value bu-metric__value--good">24.3%</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">主要服务</span><span class="bu-metric__value" style="font-size:12px;">SQL DB · VM · Storage</span></div>
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;margin-bottom:12px;">
+        香港紧随其后（$308.9K）。VM（$89K）、SQL Database（$51K）和 Storage（$42K）为 Top 3 类别。Reservation 覆盖 $87K。
       </div>
     </div>
   </div>
 
   <div class="bu-card">
-    <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%);"><h3 class="bu-card__title">SSHK 共享服务</h3><div class="bu-card__header-right">$318K · 13.1%</div></div>
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%);"><h3 class="bu-card__title">SG / MY / TH</h3><div class="bu-card__header-right">$748K · 60.4%</div></div>
     <div class="bu-card__body">
-      <div class="bu-metrics">
-        <div class="bu-metric"><span class="bu-metric__label">净成本</span><span class="bu-metric__value">$318K</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">节省金额</span><span class="bu-metric__value bu-metric__value--good">$98K</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">节省率</span><span class="bu-metric__value bu-metric__value--good">23.6%</span></div>
-        <div class="bu-metric"><span class="bu-metric__label">主要服务</span><span class="bu-metric__value" style="font-size:12px;">VM · Storage · Network</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="bu-card">
-    <div class="bu-card__header" style="background:linear-gradient(135deg,#3182ce 0%,#63b3ed 100%);"><h3 class="bu-card__title">其他 BU 合计</h3><div class="bu-card__header-right">$737K · 30.5%</div></div>
-    <div class="bu-card__body">
-      <div style="font-size:13px;color:#495057;margin-bottom:12px;">
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>AU</strong> $142K</span>
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>SG</strong> $128K</span>
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>MY</strong> $96K</span>
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>PH</strong> $78K</span>
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>ID</strong> $62K</span>
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>NZ</strong> $54K</span>
-          <span style="background:#f8f9fa;padding:6px 12px;border-radius:4px;"><strong>Unallocated</strong> $198K</span>
+      <div class="bu-charts-row">
+        <div class="bu-chart-col">
+          <h4 class="bu-chart-title">Top BU BilledCost（$K）</h4>
+          <div class="chart-container" style="height:200px;"><canvas id="chart-top-bu-bar"></canvas></div>
         </div>
-      </div>
-      <div style="font-size:13px;color:#495057;background:#f1f3f5;padding:12px 16px;border-radius:6px;">
-        <strong>未分配资源 $198K（8.2%）</strong> 缺乏标签信息，无法归集到具体 BU。建议加速标签治理，提升成本可追溯性。
+        <div class="bu-chart-col">
+          <div style="background:#f8f9fa;border-radius:6px;padding:16px;height:200px;display:flex;flex-direction:column;justify-content:center;">
+            <p style="font-size:13px;color:#495057;line-height:1.8;margin:0;">
+              <strong>SG 新加坡</strong> $257.7K · VM + SQL MI 为主<br>
+              <strong>MY 马来西亚</strong> $254.3K · SQL MI + VM 为主<br>
+              <strong>TH 泰国</strong> $236.3K · VM + Storage 为主<br>
+              <strong>AU 澳大利亚</strong> $132.2K · VM + NetApp Files<br>
+              <strong>ID 印尼</strong> $108.0K · SQL MI + VM
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -191,28 +187,48 @@ tr:last-child td{border-bottom:none}
 <div class="section">
   <h2 class="section__title">异常与关注点</h2>
   <div class="alert">
-    <div class="alert__title">未分配资源 $198K — 标签覆盖率不足</div>
-    <div class="alert__text">8.2% 的云成本因缺少 BU 标签无法分配，高于 5% 的治理红线。建议推进标签强制策略。</div>
+    <div class="alert__title">SSHK + HK 集中 50% — 单一BU依赖风险</div>
+    <div class="alert__text">两个 BU 合计 BilledCost $620.5K，占总量 50%。单一 BU 消费波动会显著影响集团总成本。</div>
   </div>
   <div class="alert">
-    <div class="alert__title">TH + HK 集中 56.4% — 单一BU依赖风险</div>
-    <div class="alert__text">两个 BU 合计超过集团云成本的一半，单一 BU 的消费波动会显著影响集团总成本。</div>
+    <div class="alert__title">OnDemand 74.3% — 预留实例覆盖不足</div>
+    <div class="alert__text">OnDemand $920.9K 占比过高，Reservation 仅 25.2%（$312.4K）。提升覆盖至 40% 可月省 $150K+。</div>
   </div>
   <div class="alert">
-    <div class="alert__title">VM 支出 $893K — 降本主战场</div>
-    <div class="alert__text">VM 占净成本的 36.9%，仍为最大单项支出。Rightsizing 和 RI 覆盖仍有优化空间。</div>
+    <div class="alert__title">VM $336.6K — 最大单项支出</div>
+    <div class="alert__text">VM 占 BilledCost 27.2%，Rightsizing 和 RI 覆盖仍有显著优化空间。</div>
   </div>
 </div>
 
 <div class="section">
   <h2 class="section__title">建议操作</h2>
-  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>标签治理专项行动</strong> — 未分配 $198K 超出红线，建议 Q3 推行标签强制策略。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>VM RI 覆盖率提升</strong> — 当前覆盖 62%，目标 80%。额外覆盖可增加月省 $45K。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>SQL DB 优化评估</strong> — SQL DB $476K 为第二大支出类型，建议审查 SKU 与预留实例覆盖。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">4</div><div class="recommendation__text"><strong>Unallocated 排查</strong> — 识别 $198K 未分配资源所属 BU，确保成本全量追溯。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>RI 覆盖率提升至 40%</strong> — 当前 25.2% 偏低，目标 40% 可额外月省 $150K+。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>VM Rightsizing 专项</strong> — VM $336.6K 为最大单项支出，建议评估降配。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>SSHK VM 优化</strong> — SSHK VM $112K 属最高之一，建议审查规格利用率。</div></div>
 </div>
 
-<div class="footer">本报告基于 Cloud Cost Management 语义模型的 DAX 度量值生成 ｜ 数据：2026年5月 ｜ DirectQuery + Import 混合模式</div>
+<div class="footer">本报告基于 Cloud Cost Management 语义模型生成 | 数据：2026年7月 | BilledCost | 折扣后 EffectiveCost</div>
 </div>
+
+<script>
+new Chart(document.getElementById('chart-cat-bar'), {
+  type:'bar',
+  data:{
+    labels:['Virtual Machines','Storage','SQL Managed Inst.','SQL Database','Backup','Databricks','Log Analytics','Synapse Analytics','VM Licenses','PostgreSQL'],
+    datasets:[{data:[336610,205931,176288,91288,54092,35451,29540,26089,22638,22345],backgroundColor:'#2b6cb0',borderRadius:3}]
+  },
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+Math.round(v/1000)+'K'}},y:{grid:{display:false}}}}
+});
+new Chart(document.getElementById('chart-model-pie'), {
+  type:'doughnut',
+  data:{labels:['OnDemand $920.9K','Reservation $312.4K','SavingsPlan $1.5K','Spot $4.3K'],datasets:[{data:[920874,312419,1460,4295],backgroundColor:['#e53e3e','#2b6cb0','#38a169','#d69e2e'],borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:14,usePointStyle:true}}},cutout:'55%'}
+});
+new Chart(document.getElementById('chart-top-bu-bar'), {
+  type:'bar',
+  data:{labels:['SSHK-GA','HK','SG','MY','TH','SSHK-PE','KR','AU'],datasets:[{data:[312,309,258,254,236,145,139,132],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#90cdf4','#553c9a'],borderRadius:3}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}
+});
+</script>
 </body>
 </html>
