@@ -1,28 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e94560"/>
+      <stop offset="40%" stop-color="#ef5777"/>
+      <stop offset="70%" stop-color="#f06a80"/>
+      <stop offset="100%" stop-color="#f5a623"/>
+    </linearGradient>
+    <linearGradient id="lg2" x1="0" y1="1" x2="0" y2="0">
       <stop offset="0%" stop-color="#e94560"/>
       <stop offset="100%" stop-color="#f5a623"/>
     </linearGradient>
-    <clipPath id="avatarClip">
-      <circle cx="12" cy="12" r="7.5"/>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d1a"/>
+      <stop offset="100%" stop-color="#0a0a12"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowSoft">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="cardClip">
+      <rect x="10" y="10" width="180" height="180" rx="40"/>
     </clipPath>
   </defs>
-  <!-- Dark rounded square background -->
-  <rect width="32" height="32" rx="6" fill="#0d0d1a"/>
 
-  <!-- Avatar photo (left side) -->
-  <image href="icon-red.jpg" x="3.5" y="3.5" width="17" height="17" clip-path="url(#avatarClip)" preserveAspectRatio="xMidYMid slice"/>
+  <!-- Background -->
+  <rect width="200" height="200" rx="48" fill="url(#bgGrad)"/>
 
-  <!-- Avatar ring -->
-  <circle cx="12" cy="12" r="7.5" fill="none" stroke="url(#g)" stroke-width="0.8" opacity="0.6"/>
+  <!-- Outer glow ring -->
+  <rect x="6" y="6" width="188" height="188" rx="44" fill="none" stroke="url(#lg)" stroke-width="1.5" opacity="0.15"/>
 
-  <!-- Data bars (right side) -->
-  <rect x="21" y="19" width="3.5" height="8" rx="1" fill="url(#g)" opacity="0.5"/>
-  <rect x="25.5" y="14" width="3.5" height="13" rx="1" fill="url(#g)" opacity="0.75"/>
-  <rect x="30" y="8" width="3.5" height="19" rx="1" fill="url(#g)"/>
+  <!-- Inner card -->
+  <rect x="12" y="12" width="176" height="176" rx="38" fill="none" stroke="rgba(233,69,96,0.12)" stroke-width="1"/>
+  <rect x="18" y="18" width="164" height="164" rx="34" fill="rgba(233,69,96,0.03)"/>
 
-  <!-- Trend line on bars -->
-  <path d="M23 18 L27 13 L31 8" fill="none" stroke="#f5a623" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
-  <circle cx="31" cy="8" r="1.2" fill="#f5a623"/>
+  <!-- Subtle grid lines -->
+  <g opacity="0.08" clip-path="url(#cardClip)">
+    <line x1="10" y1="60" x2="190" y2="60" stroke="#e94560" stroke-width="0.5"/>
+    <line x1="10" y1="100" x2="190" y2="100" stroke="#e94560" stroke-width="0.5"/>
+    <line x1="10" y1="140" x2="190" y2="140" stroke="#e94560" stroke-width="0.5"/>
+    <line x1="60" y1="10" x2="60" y2="190" stroke="#e94560" stroke-width="0.5"/>
+    <line x1="100" y1="10" x2="100" y2="190" stroke="#e94560" stroke-width="0.5"/>
+    <line x1="140" y1="10" x2="140" y2="190" stroke="#e94560" stroke-width="0.5"/>
+  </g>
+
+  <!-- Main Data Visualization Mark -->
+  <g transform="translate(100, 92)">
+    <!-- Grid baseline -->
+    <line x1="-45" y1="35" x2="45" y2="35" stroke="rgba(233,69,96,0.2)" stroke-width="1"/>
+
+    <!-- Horizontal reference lines -->
+    <line x1="-45" y1="5" x2="45" y2="5" stroke="rgba(233,69,96,0.1)" stroke-width="0.5" stroke-dasharray="3,4"/>
+    <line x1="-45" y1="-25" x2="45" y2="-25" stroke="rgba(233,69,96,0.08)" stroke-width="0.5" stroke-dasharray="3,4"/>
+
+    <!-- Bar 1 (small) -->
+    <rect x="-40" y="15" width="22" height="20" rx="4" fill="url(#lg2)" opacity="0.5"
+      transform="skewX(-4)"/>
+    <rect x="-40" y="15" width="22" height="20" rx="4" fill="none" stroke="url(#lg)" stroke-width="0.5" opacity="0.3"
+      transform="skewX(-4)"/>
+
+    <!-- Bar 2 (medium) -->
+    <rect x="-12" y="-5" width="22" height="40" rx="4" fill="url(#lg2)" opacity="0.7"
+      transform="skewX(-4)"/>
+    <rect x="-12" y="-5" width="22" height="40" rx="4" fill="none" stroke="url(#lg)" stroke-width="0.5" opacity="0.3"
+      transform="skewX(-4)"/>
+
+    <!-- Bar 3 (tall) -->
+    <rect x="16" y="-25" width="22" height="60" rx="4" fill="url(#lg2)"
+      transform="skewX(-4)"/>
+    <rect x="16" y="-25" width="22" height="60" rx="4" fill="none" stroke="url(#lg)" stroke-width="0.5" opacity="0.3"
+      transform="skewX(-4)"/>
+  </g>
+
+  <!-- Trend line -->
+  <g transform="translate(100, 92)">
+    <path d="M-29,17 L1,-5 L27,-27" fill="none" stroke="url(#lg)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowSoft)" opacity="0.9"/>
+
+    <!-- Data dots on trend line -->
+    <circle cx="-29" cy="17" r="4" fill="#fff" opacity="0.75"/>
+    <circle cx="1" cy="-5" r="4" fill="#fff" opacity="0.85" filter="url(#glowSoft)"/>
+    <circle cx="27" cy="-27" r="4.5" fill="#f5a623" filter="url(#glow)"/>
+  </g>
+
+  <!-- Decorative corner accents -->
+  <path d="M22 22 L22 38 L38 38" fill="none" stroke="url(#lg)" stroke-width="1.5" opacity="0.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M178 22 L178 38 L162 38" fill="none" stroke="url(#lg)" stroke-width="1.5" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 178 L22 162 L38 162" fill="none" stroke="url(#lg)" stroke-width="1.5" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M178 178 L178 162 L162 162" fill="none" stroke="url(#lg)" stroke-width="1.5" opacity="0.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Small decorative dots -->
+  <circle cx="30" cy="30" r="1.5" fill="#e94560" opacity="0.5"/>
+  <circle cx="170" cy="30" r="1.5" fill="#f06a80" opacity="0.3"/>
+  <circle cx="30" cy="170" r="1.5" fill="#f06a80" opacity="0.3"/>
+  <circle cx="170" cy="170" r="1.5" fill="#f5a623" opacity="0.5"/>
+
+  <!-- Tiny data dots scatter -->
+  <circle cx="48" cy="52" r="1.5" fill="#e94560" opacity="0.2"/>
+  <circle cx="152" cy="48" r="1" fill="#f5a623" opacity="0.2"/>
+  <circle cx="45" cy="148" r="1" fill="#e94560" opacity="0.15"/>
+  <circle cx="155" cy="155" r="1.5" fill="#f5a623" opacity="0.2"/>
 </svg>
