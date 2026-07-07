@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerBI 作品集 | AIA Group</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="apple-touch-icon" href="favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -192,23 +191,6 @@
             transition: margin .35s ease-out;
         }
 
-        /* ── Logo Badge ── */
-        .hero .logo-badge {
-            flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-            animation: fadeUp 0.8s var(--ease-out) 0.1s both;
-            transition: transform 0.35s var(--ease-out), opacity .35s ease-out;
-        }
-        .hero .logo-badge:hover {
-            transform: scale(1.06) rotate(-2deg);
-        }
-        .hero .logo-badge .logo-svg {
-            display: block;
-            width: 52px;
-            height: 52px;
-            transition: width .35s ease-out, height .35s ease-out;
-        }
 
         .hero h1 {
             font-size: 2rem; font-weight: 800; letter-spacing: -0.03em;
@@ -673,17 +655,16 @@
             gap: 0;
         }
         .carousel-item {
-            flex: 0 0 88%;
+            flex: 0 0 100%;
             min-width: 0;
             opacity: 0;
             transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), filter 0.5s var(--ease-out);
             will-change: transform, opacity;
             pointer-events: none;
             position: relative;
-            margin-right: -22%;
         }
-        .carousel-item:last-child {
-            margin-right: 0;
+        .carousel-item:not(:last-child) {
+            margin-right: -34%;
         }
         .carousel-item.active {
             z-index: 5;
@@ -802,9 +783,6 @@
             .carousel-next { right: 2px; }
             .carousel-viewport { margin: 0; overflow: visible; }
         }
-        @media (max-width: 640px) {
-            .hero .logo-badge .logo-svg { width: 40px; height: 40px; }
-        }
         @media (max-width: 480px) {
             .hero .logo-badge .logo-svg { width: 34px; height: 34px; }
         }
@@ -825,77 +803,6 @@
     <div class="shine-divider"></div>
     <div class="hero-inner">
         <div class="hero-row">
-            <div class="logo-badge">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
-                    <defs>
-                        <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stop-color="#e94560"/>
-                            <stop offset="40%" stop-color="#ef5777"/>
-                            <stop offset="70%" stop-color="#f06a80"/>
-                            <stop offset="100%" stop-color="#f5a623"/>
-                        </linearGradient>
-                        <linearGradient id="logoGradV" x1="0" y1="1" x2="0" y2="0">
-                            <stop offset="0%" stop-color="#e94560"/>
-                            <stop offset="100%" stop-color="#f5a623"/>
-                        </linearGradient>
-                        <linearGradient id="diamondGrad" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stop-color="#f5a623"/>
-                            <stop offset="50%" stop-color="#e8a230"/>
-                            <stop offset="100%" stop-color="#e94560"/>
-                        </linearGradient>
-                        <filter id="logoGlow">
-                            <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                            <feMerge>
-                                <feMergeNode in="blur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <!-- Background card -->
-                    <rect x="2" y="2" width="196" height="196" rx="46" fill="none" stroke="url(#logoGrad)" stroke-width="1" opacity="0.12"/>
-                    <rect x="8" y="8" width="184" height="184" rx="40" fill="none" stroke="rgba(233,69,96,0.06)" stroke-width="0.6"/>
-                    <rect x="14" y="14" width="172" height="172" rx="34" fill="rgba(233,69,96,0.03)"/>
-                    <!-- PowerBI Diamond (rotated square) -->
-                    <g transform="translate(100,80)">
-                        <!-- Diamond shape -->
-                        <polygon points="0,-48 48,0 0,48 -48,0" fill="url(#diamondGrad)" opacity="0.9" filter="url(#logoGlow)"/>
-                        <polygon points="0,-48 48,0 0,48 -48,0" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-                        <!-- Inner highlight -->
-                        <polygon points="0,-36 36,0 0,36 -36,0" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-                        <!-- Chart bars inside diamond -->
-                        <rect x="-24" y="-28" width="10" height="22" rx="2" fill="#fff" opacity="0.85"/>
-                        <rect x="-10" y="-38" width="10" height="32" rx="2" fill="#fff" opacity="0.85"/>
-                        <rect x="4" y="-18" width="10" height="12" rx="2" fill="#fff" opacity="0.85"/>
-                        <rect x="18" y="-34" width="10" height="28" rx="2" fill="#fff" opacity="0.85"/>
-                        <!-- Baseline -->
-                        <line x1="-28" y1="-6" x2="32" y2="-6" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
-                    </g>
-                    <!-- Floating chart bars around diamond (decoration) -->
-                    <g transform="translate(62,145)">
-                        <rect x="0" y="-18" width="12" height="18" rx="2" fill="url(#logoGradV)" opacity="0.3"/>
-                        <rect x="14" y="-28" width="12" height="28" rx="2" fill="url(#logoGradV)" opacity="0.45"/>
-                        <rect x="28" y="-10" width="12" height="10" rx="2" fill="url(#logoGradV)" opacity="0.2"/>
-                    </g>
-                    <g transform="translate(126,145)">
-                        <rect x="0" y="-24" width="10" height="24" rx="2" fill="url(#logoGradV)" opacity="0.25"/>
-                        <rect x="12" y="-14" width="10" height="14" rx="2" fill="url(#logoGradV)" opacity="0.4"/>
-                    </g>
-                    <!-- KPI-style small badges -->
-                    <g transform="translate(66,48)">
-                        <rect x="-18" y="-10" width="36" height="14" rx="7" fill="rgba(245,166,35,0.08)" stroke="rgba(245,166,35,0.06)" stroke-width="0.5"/>
-                        <text x="0" y="1" text-anchor="middle" fill="#f5a623" font-size="7" font-weight="700" font-family="'Segoe UI',sans-serif">98%</text>
-                    </g>
-                    <g transform="translate(134,52)">
-                        <rect x="-18" y="-10" width="36" height="14" rx="7" fill="rgba(233,69,96,0.08)" stroke="rgba(233,69,96,0.06)" stroke-width="0.5"/>
-                        <text x="0" y="1" text-anchor="middle" fill="#e94560" font-size="7" font-weight="700" font-family="'Segoe UI',sans-serif">+12%</text>
-                    </g>
-                    <!-- Grid dots -->
-                    <circle cx="28" cy="28" r="1.5" fill="#e94560" opacity="0.35"/>
-                    <circle cx="172" cy="28" r="1.5" fill="#f5a623" opacity="0.25"/>
-                    <circle cx="28" cy="172" r="1.5" fill="#f06a80" opacity="0.25"/>
-                    <circle cx="172" cy="172" r="1.5" fill="#f5a623" opacity="0.35"/>
-                </svg>
-            </div>
             <h1><span class="hl">PowerBI</span> 作品集</h1>
             <div class="author-credit">
                 <img class="avatar" src="icon-red.jpg" alt="Jevon Zhu">
@@ -1511,7 +1418,7 @@
                     var viewport = w.querySelector('.carousel-viewport');
                     var viewW = viewport.offsetWidth;
                     if (viewW <= 0) { viewW = w.offsetWidth; }
-                    var itemW = viewW * 0.88;
+                    var itemW = viewW * 1.0;
                     var step = viewW * 0.66;
                     var currentIdx = -1;
                     items.forEach(function(item, i) { if (item.classList.contains('active')) currentIdx = i; });
@@ -1563,7 +1470,7 @@
                 var viewport = carousel.querySelector('.carousel-viewport');
                 var viewW = viewport.offsetWidth;
                 if (viewW <= 0) { viewW = carousel.offsetWidth; }
-                var itemW = viewW * 0.88;
+                var itemW = viewW * 1.0;
                 var step = viewW * 0.66;
                 var offset = -(currentIdx * step) + (viewW - itemW) / 2;
                 offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
@@ -1854,7 +1761,7 @@
                 }
                 var viewport = getViewport();
                 var viewW = viewport.offsetWidth;
-                var itemW = viewW * 0.88;
+                var itemW = viewW * 1.0;
                 var step = viewW * 0.66;
                 var offset = -(current * step) + (viewW - itemW) / 2;
                 // Clamp: allow positive (center first) to negative (center last)
@@ -1946,7 +1853,7 @@
                         if (curIdx === -1) curIdx = 0;
                         var viewport = w.querySelector('.carousel-viewport');
                         var viewW = viewport.offsetWidth;
-                        var itemW = viewW * 0.88;
+                        var itemW = viewW * 1.0;
                         var step = viewW * 0.66;
                         var offset = -(curIdx * step) + (viewW - itemW) / 2;
                         offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
