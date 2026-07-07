@@ -673,7 +673,7 @@
             gap: 8px;
         }
         .carousel-item {
-            flex: 0 0 60%;
+            flex: 0 0 78%;
             min-width: 0;
             opacity: 0;
             transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), filter 0.5s var(--ease-out);
@@ -684,21 +684,21 @@
         .carousel-item.active {
             z-index: 5;
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1.28);
             filter: none;
             pointer-events: auto;
         }
         .carousel-item.dim {
             z-index: 3;
-            opacity: 0.3;
-            transform: scale(0.78);
+            opacity: 0.2;
+            transform: scale(0.72);
             filter: grayscale(0.3) brightness(0.55);
             pointer-events: none;
         }
         .carousel-item.hidden {
             z-index: 1;
             opacity: 0;
-            transform: scale(0.65);
+            transform: scale(0.55);
             filter: grayscale(0.5) brightness(0.4);
         }
         .carousel-item .report-card {
@@ -783,9 +783,9 @@
         @media (max-width: 900px) {
             .carousel-wrapper::before,
             .carousel-wrapper::after { height: 40px; }
-            .carousel-item { flex: 0 0 70%; }
-            .carousel-item.active { transform: scale(1); }
-            .carousel-item.dim { transform: scale(0.8); }
+            .carousel-item { flex: 0 0 85%; }
+            .carousel-item.active { transform: scale(1.17); }
+            .carousel-item.dim { transform: scale(0.75); }
             .carousel-track { gap: 6px; }
             .carousel-btn { width: 36px; height: 36px; }
             .carousel-btn svg { width: 18px; height: 18px; }
@@ -1493,7 +1493,7 @@
                     var viewport = w.querySelector('.carousel-viewport');
                     var viewW = viewport.offsetWidth;
                     if (viewW <= 0) { viewW = w.offsetWidth; }
-                    var itemW = viewW * 0.6;
+                    var itemW = viewW * 0.78;
                     var step = itemW;
                     var gap = 8;
                     var currentIdx = -1;
@@ -1546,7 +1546,7 @@
                 var viewport = carousel.querySelector('.carousel-viewport');
                 var viewW = viewport.offsetWidth;
                 if (viewW <= 0) { viewW = carousel.offsetWidth; }
-                var itemW = viewW * 0.6;
+                var itemW = viewW * 0.78;
                 var step = itemW;
                 var gap = 8;
                 var offset = -(currentIdx * step + gap * currentIdx) + (viewW - itemW) / 2;
@@ -1838,7 +1838,7 @@
                 }
                 var viewport = getViewport();
                 var viewW = viewport.offsetWidth;
-                var itemW = viewW * 0.6;
+                var itemW = viewW * 0.78;
                 var gap = 8;
                 var step = itemW + gap;
                 var offset = -(current * step) + (viewW - itemW) / 2;
@@ -1931,7 +1931,7 @@
                         if (curIdx === -1) curIdx = 0;
                         var viewport = w.querySelector('.carousel-viewport');
                         var viewW = viewport.offsetWidth;
-                        var itemW = viewW * 0.6;
+                        var itemW = viewW * 0.78;
                         var gap = 8;
                         var step = itemW + gap;
                         var offset = -(curIdx * step) + (viewW - itemW) / 2;
@@ -1952,7 +1952,7 @@
                             dots[nxt].classList.add('active');
                             var vp = w.querySelector('.carousel-viewport');
                             var vw = vp.offsetWidth;
-                            var iw = vw * 0.6;
+                            var iw = vw * 0.78;
                             var st = iw + 8;
                             var off = -(nxt * st) + (vw - iw) / 2;
                             off = Math.max(-((allItems.length - 1) * st) + (vw - iw) / 2, Math.min((vw - iw) / 2, off));
