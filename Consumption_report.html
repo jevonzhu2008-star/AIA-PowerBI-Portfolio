@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>云消费数据分析报告 — 2025年6月 · 按BU分页</title>
+<title>云消费数据分析报告 — 2026年5月 · 按BU分页</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
@@ -75,40 +75,40 @@ tr:last-child td{border-bottom:none}
 <header class="header">
   <div class="header__label">Cloud Consumption &middot; 数据分析报告</div>
   <h1 class="header__title">云消费数据按 BU 分页分析</h1>
-  <p class="header__subtitle">基于 DAX 度量值的加权资源消耗分析 | 限定 <strong>2025年6月</strong> 数据</p>
-  <div class="header__meta">生成日期：2026-06-28 ｜ 数据月份：2025年6月 ｜ Included: 5,167 行 ｜ 7 个主要BU</div>
+  <p class="header__subtitle">基于 DAX 度量值的加权资源消耗分析 | 限定 <strong>2026年5月</strong> 数据</p>
+  <div class="header__meta">生成日期：2026-07-07 ｜ 数据月份：2026年5月 ｜ Included: 6,921 行 ｜ 18 个 BU + 共享服务</div>
 </header>
 
 <div class="executive-summary">
   <div class="executive-summary__label">核心结论</div>
   <p class="executive-summary__text">
-    <strong>2025年6月，泰国（TH）和香港（HK）是云消费主力，</strong>两者合计占加权资源（Multiplied）的 <strong>86.9%</strong>。
-    泰国以 AIA THAILAND DATA PLATFORM 为核心驱动（VM 消耗占 BU 加权 98%），香港以 Operational Data Store 为主。
-    香港的 Complex 占比 <strong>89.9%</strong> 异常偏高，建议审查分类标准。
-    全量 Instance Count 中 <strong>78.8% 被标记为 Excluded</strong>，未纳入分配。
+    <strong>2026年5月，SSHK（共享服务）取代泰国成为最大的云消费方，</strong>占加权资源的 <strong>19.7%</strong>，
+    香港（15.4%）和马来西亚（10.0%）紧随其后。泰国（TH）因大量资源被标记为 Excluded，
+    加权占比降至 9.0%，位列第四。全量 Instance Count 中 <strong>96.9% 被标记为 Excluded</strong>，
+    未纳入分配（691,531），Excluded 比例较以往大幅上升。
   </p>
 </div>
 
 <div class="kpi-grid">
   <div class="kpi-card">
-    <div class="kpi-card__label">2025年6月总 Instance Count</div>
-    <div class="kpi-card__value">557,144</div>
+    <div class="kpi-card__label">2026年5月总 Instance Count</div>
+    <div class="kpi-card__value">713,837</div>
     <div class="kpi-card__note">全量数据</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-card__label">Included（分配范围内）</div>
-    <div class="kpi-card__value kpi-card__value--accent">118,037</div>
+    <div class="kpi-card__value kpi-card__value--accent">21,923</div>
     <div class="kpi-card__note">计入分配的原始计数</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-card__label">Multiplied（加权总量）</div>
-    <div class="kpi-card__value" style="color:#c53030;">157,766</div>
-    <div class="kpi-card__note">S&times;0.5 + M&times;1.0 + C&times;1.5</div>
+    <div class="kpi-card__value" style="color:#c53030;">24,400</div>
+    <div class="kpi-card__note">S×0.5 + M×1.0 + C×1.5</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-card__label">Excluded（未分配）</div>
-    <div class="kpi-card__value" style="color:#b7791f;">439,004</div>
-    <div class="kpi-card__note">占总量的 78.8%</div>
+    <div class="kpi-card__value" style="color:#b7791f;">691,532</div>
+    <div class="kpi-card__note">占总量的 96.9%</div>
   </div>
 </div>
 
@@ -127,82 +127,86 @@ tr:last-child td{border-bottom:none}
   <div class="table-wrapper">
     <table>
       <thead><tr>
-        <th>BU</th><th>BU 名称</th><th>Raw</th><th>Simple &times;0.5</th><th>Medium &times;1.0</th><th>Complex &times;1.5</th><th>Multiplied</th><th>占比</th>
+        <th>BU</th><th>BU 名称</th><th>Raw</th><th>Simple ×0.5</th><th>Medium ×1.0</th><th>Complex ×1.5</th><th>Multiplied</th><th>占比</th>
       </tr></thead>
-      <tbody><tr><td><strong>TH</strong></td><td>泰国</td><td>66,539.0</td><td>159.5</td><td>21,987.0</td><td>66,349.5</td><td><strong>88,496.0</strong></td><td>56.1%</td></tr>
-<tr><td><strong>HK</strong></td><td>香港</td><td>33,834.0</td><td>202.0</td><td>3,004.0</td><td>45,639.0</td><td><strong>48,845.0</strong></td><td>31.0%</td></tr>
-<tr><td><strong>SSHK</strong></td><td>SSHK共享服务</td><td>12,926.0</td><td>1,119.0</td><td>4,504.0</td><td>9,276.0</td><td><strong>14,899.0</strong></td><td>9.4%</td></tr>
-<tr><td><strong>MY</strong></td><td>马来西亚</td><td>2,405.0</td><td>157.5</td><td>1,107.0</td><td>1,474.5</td><td><strong>2,739.0</strong></td><td>1.7%</td></tr>
-<tr><td><strong>SG</strong></td><td>新加坡</td><td>1,384.0</td><td>65.0</td><td>543.0</td><td>1,066.5</td><td><strong>1,674.5</strong></td><td>1.1%</td></tr>
-<tr><td><strong>BX</strong></td><td>蓝十字</td><td>635.0</td><td>9.0</td><td>278.0</td><td>508.5</td><td><strong>795.5</strong></td><td>0.5%</td></tr>
-<tr><td><strong>KH</strong></td><td>柬埔寨</td><td>314.0</td><td>41.5</td><td>143.0</td><td>132.0</td><td><strong>316.5</strong></td><td>0.2%</td></tr>
+      <tbody><tr><td><strong>SSHK</strong></td><td>共享服务</td><td>4,347</td><td>377</td><td>1,917</td><td>2,513</td><td><strong>4,807</strong></td><td>19.7%</td></tr>
+<tr><td><strong>HK</strong></td><td>香港</td><td>3,353</td><td>223</td><td>1,650</td><td>1,886</td><td><strong>3,758</strong></td><td>15.4%</td></tr>
+<tr><td><strong>MY</strong></td><td>马来西亚</td><td>2,241</td><td>179</td><td>1,122</td><td>1,143</td><td><strong>2,444</strong></td><td>10.0%</td></tr>
+<tr><td><strong>TH</strong></td><td>泰国</td><td>1,958</td><td>162</td><td>850</td><td>1,176</td><td><strong>2,188</strong></td><td>9.0%</td></tr>
+<tr><td><strong>AU</strong></td><td>澳大利亚</td><td>1,757</td><td>116</td><td>692</td><td>1,251</td><td><strong>2,058</strong></td><td>8.5%</td></tr>
+<tr><td><strong>SG</strong></td><td>新加坡</td><td>1,357</td><td>85</td><td>529</td><td>989</td><td><strong>1,602</strong></td><td>6.6%</td></tr>
+<tr><td><strong>PH</strong></td><td>菲律宾</td><td>801</td><td>45</td><td>399</td><td>470</td><td><strong>913</strong></td><td>3.7%</td></tr>
+<tr><td><strong>ID</strong></td><td>印度尼西亚</td><td>725</td><td>34</td><td>349</td><td>464</td><td><strong>846</strong></td><td>3.5%</td></tr>
+<tr><td><strong>AH-SG</strong></td><td>Amplify Health 新加坡</td><td>839</td><td>114</td><td>368</td><td>365</td><td><strong>846</strong></td><td>3.5%</td></tr>
+<tr><td><strong>NZ</strong></td><td>新西兰</td><td>758</td><td>89</td><td>345</td><td>354</td><td><strong>788</strong></td><td>3.2%</td></tr>
 </tbody>
     </table>
   </div>
 </div>
 
 <div class="excluded-box">
-  <div class="excluded-box__title">注意：Excluded 数据规模庞大</div>
+  <div class="excluded-box__title">注意：Excluded 规模创纪录 — 96.9%</div>
   <div class="excluded-box__text">
-    2025年6月共有 439,004 Instance Count 被标记为 Excluded，占总量的 <strong>78.8%</strong>。
-    这部分数据未纳入 CloudOps 成本分配计算，主要来自泰国和香港，建议与业务方确认排除原因。
+    2026年5月共有 691,532 Instance Count 被标记为 Excluded，占总量的 <strong>96.9%</strong>。
+    泰国（TH）的 Excluded 高达 410,762（占其总量 99.5%），香港 195,847（98.3%）。
+    大量原始资源未纳入 CloudOps 成本分配计算，建议紧急审查排除规则。
   </div>
 </div>
 
 <div class="bu-nav">
   <div class="bu-nav__title">跳转至各 BU 分析</div>
-  <a class="bu-nav__link" href="#bu-th">TH 泰国</a>
+  <a class="bu-nav__link" href="#bu-sshk">SSHK 共享服务</a>
 <a class="bu-nav__link" href="#bu-hk">HK 香港</a>
-<a class="bu-nav__link" href="#bu-sshk">SSHK SSHK共享服务</a>
 <a class="bu-nav__link" href="#bu-my">MY 马来西亚</a>
+<a class="bu-nav__link" href="#bu-th">TH 泰国</a>
+<a class="bu-nav__link" href="#bu-au">AU 澳大利亚</a>
 <a class="bu-nav__link" href="#bu-sg">SG 新加坡</a>
-<a class="bu-nav__link" href="#bu-bx">BX 蓝十字</a>
-<a class="bu-nav__link" href="#bu-kh">KH 柬埔寨</a>
+<a class="bu-nav__link" href="#bu-ph">PH 菲律宾</a>
 
 </div>
 
 <div class="section">
   <h2 class="section__title">按 BU 逐业务单元分析</h2>
   <p class="section__subtitle">每个BU包含：核心指标、Top 服务类型、Top 业务应用、复杂度构成、业务洞察</p>
-  
-    <div class="bu-card" id="bu-th">
+
+    <div class="bu-card" id="bu-sshk">
       <div class="bu-card__header" style="background:linear-gradient(135deg,#1a365d 0%,#1a365ddd 100%);">
         <div class="bu-card__header-left">
-          <span class="bu-card__badge">TH</span>
-          <h3 class="bu-card__title">泰国</h3>
+          <span class="bu-card__badge">SS</span>
+          <h3 class="bu-card__title">SSHK 共享服务</h3>
         </div>
         <div class="bu-card__header-right">
-          <span>Multiplied: <strong>56.1%</strong> | Raw: 66,539</span>
+          <span>Multiplied: <strong>19.7%</strong> | Raw: 4,347</span>
         </div>
       </div>
       <div class="bu-card__body">
         <div class="bu-kpi-row">
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">66,539</span>
+            <span class="bu-kpi-value">4,347</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">88,496</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">4,807</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 0.5% | M 33.0% | C 66.5%</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 17.4% | M 44.1% | C 38.5%</span>
           </div>
         </div>
         <div class="bu-charts-row">
           <div class="bu-chart-col">
             <h4 class="bu-chart-title">Top 8 服务类型（加权）</h4>
-            <div class="chart-container"><canvas id="chart-svc-th"></canvas></div>
+            <div class="chart-container"><canvas id="chart-svc-sshk"></canvas></div>
           </div>
           <div class="bu-chart-col">
             <h4 class="bu-chart-title">Top 7 业务应用（加权）</h4>
-            <div class="chart-container"><canvas id="chart-app-th"></canvas></div>
+            <div class="chart-container"><canvas id="chart-app-sshk"></canvas></div>
           </div>
         </div>
         <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #1a365d;">
-          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 泰国 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">泰国是6月最大的云消费BU，占比 56.1%。VM 消耗占绝对主导（86,696），主要由 AIA THAILAND DATA PLATFORM 驱动（84,674）。Complex 占比 66.5%，提示工作负载以高复杂度为主。</p>
+          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; SSHK 核心洞察</h4>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">SSHK 是2026年5月最大的加权消费方，占 19.7%。VM 消耗（1,211）和 Storage（701）居前。Investment ETL（367）、Network Critical（274）和 Subledger（220）为主要应用。复杂度适中，Medium 占比 44.1% 为主导。</p>
         </div>
       </div>
     </div>
@@ -213,22 +217,22 @@ tr:last-child td{border-bottom:none}
           <h3 class="bu-card__title">香港</h3>
         </div>
         <div class="bu-card__header-right">
-          <span>Multiplied: <strong>31.0%</strong> | Raw: 33,834</span>
+          <span>Multiplied: <strong>15.4%</strong> | Raw: 3,353</span>
         </div>
       </div>
       <div class="bu-card__body">
         <div class="bu-kpi-row">
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">33,834</span>
+            <span class="bu-kpi-value">3,353</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">48,845</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">3,758</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 1.2% | M 8.9% | C 89.9%</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 13.3% | M 49.2% | C 37.5%</span>
           </div>
         </div>
         <div class="bu-charts-row">
@@ -243,74 +247,33 @@ tr:last-child td{border-bottom:none}
         </div>
         <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #2b6cb0;">
           <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 香港 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">香港是第二大消费BU，占比 31.0%。VM 消耗 46,337，Operational Data Store（32,686）和数据平台为两大驱动力。Complex 占比达 89.9%，显著高于其他BU，建议审查复杂度分类。</p>
-        </div>
-      </div>
-    </div>
-    <div class="bu-card" id="bu-sshk">
-      <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#2c5282dd 100%);">
-        <div class="bu-card__header-left">
-          <span class="bu-card__badge">SSHK</span>
-          <h3 class="bu-card__title">SSHK共享服务</h3>
-        </div>
-        <div class="bu-card__header-right">
-          <span>Multiplied: <strong>9.4%</strong> | Raw: 12,926</span>
-        </div>
-      </div>
-      <div class="bu-card__body">
-        <div class="bu-kpi-row">
-          <div class="bu-kpi-item">
-            <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">12,926</span>
-          </div>
-          <div class="bu-kpi-item">
-            <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">14,899</span>
-          </div>
-          <div class="bu-kpi-item">
-            <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 17.3% | M 34.8% | C 47.8%</span>
-          </div>
-        </div>
-        <div class="bu-charts-row">
-          <div class="bu-chart-col">
-            <h4 class="bu-chart-title">Top 8 服务类型（加权）</h4>
-            <div class="chart-container"><canvas id="chart-svc-sshk"></canvas></div>
-          </div>
-          <div class="bu-chart-col">
-            <h4 class="bu-chart-title">Top 7 业务应用（加权）</h4>
-            <div class="chart-container"><canvas id="chart-app-sshk"></canvas></div>
-          </div>
-        </div>
-        <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #2c5282;">
-          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; SSHK共享服务 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">SSHK 占 9.4%，业务范围最广——VDI（1,979）、Investment ETL（1,743）和 Subledger（950）并举。复杂度最均衡：S 17.3% / M 34.8% / C 47.8%。</p>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">香港占 15.4%。SQL DB（869）和 Storage（736）为核心服务类型。InfrastructureFour（620）和数据与分析平台（422）主导业务应用。Medium 占比 49.2% 为各BU中最高之一。</p>
         </div>
       </div>
     </div>
     <div class="bu-card" id="bu-my">
-      <div class="bu-card__header" style="background:linear-gradient(135deg,#3182ce 0%,#3182cedd 100%);">
+      <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#2c5282dd 100%);">
         <div class="bu-card__header-left">
           <span class="bu-card__badge">MY</span>
           <h3 class="bu-card__title">马来西亚</h3>
         </div>
         <div class="bu-card__header-right">
-          <span>Multiplied: <strong>1.7%</strong> | Raw: 2,405</span>
+          <span>Multiplied: <strong>10.0%</strong> | Raw: 2,241</span>
         </div>
       </div>
       <div class="bu-card__body">
         <div class="bu-kpi-row">
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">2,405</span>
+            <span class="bu-kpi-value">2,241</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">2,739</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">2,444</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 13.1% | M 46.0% | C 40.9%</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 15.9% | M 50.1% | C 34.0%</span>
           </div>
         </div>
         <div class="bu-charts-row">
@@ -323,35 +286,117 @@ tr:last-child td{border-bottom:none}
             <div class="chart-container"><canvas id="chart-app-my"></canvas></div>
           </div>
         </div>
-        <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #3182ce;">
+        <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #2c5282;">
           <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 马来西亚 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">马来西亚占 1.7%。VM（850）和 SQL MI（738）为主要类型。Enterprise Integration Platform（368）和 Data Science Lab 消耗最大。复杂度分布较均匀：M 46.0% / C 40.9%。</p>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">马来西亚占 10.0%。SQL MI（495）和 VM（397）为主，Web App Service（384）和 Data Factory（274）紧随其后。Data Science Lab（303）和 Enterprise Integration Platform（265）为最大应用。Medium 占比 50.1%，复杂度偏低。</p>
         </div>
       </div>
     </div>
-    <div class="bu-card" id="bu-sg">
-      <div class="bu-card__header" style="background:linear-gradient(135deg,#4299e1 0%,#4299e1dd 100%);">
+    <div class="bu-card" id="bu-th">
+      <div class="bu-card__header" style="background:linear-gradient(135deg,#3182ce 0%,#3182cedd 100%);">
         <div class="bu-card__header-left">
-          <span class="bu-card__badge">SG</span>
-          <h3 class="bu-card__title">新加坡</h3>
+          <span class="bu-card__badge">TH</span>
+          <h3 class="bu-card__title">泰国</h3>
         </div>
         <div class="bu-card__header-right">
-          <span>Multiplied: <strong>1.1%</strong> | Raw: 1,384</span>
+          <span>Multiplied: <strong>9.0%</strong> | Raw: 1,958</span>
         </div>
       </div>
       <div class="bu-card__body">
         <div class="bu-kpi-row">
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">1,384</span>
+            <span class="bu-kpi-value">1,958</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">1,674</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">2,188</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 9.4% | M 39.2% | C 51.4%</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 16.5% | M 43.4% | C 40.0%</span>
+          </div>
+        </div>
+        <div class="bu-charts-row">
+          <div class="bu-chart-col">
+            <h4 class="bu-chart-title">Top 8 服务类型（加权）</h4>
+            <div class="chart-container"><canvas id="chart-svc-th"></canvas></div>
+          </div>
+          <div class="bu-chart-col">
+            <h4 class="bu-chart-title">Top 7 业务应用（加权）</h4>
+            <div class="chart-container"><canvas id="chart-app-th"></canvas></div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #3182ce;">
+          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 泰国 核心洞察</h4>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">泰国加权占比 9.0%，显著低于历史同期，主因 99.5% 的原始数据被 Excluded。Included 范围内 VM（347）和 SQL DB（296）居前。Business User Support（154）和 Data Platform（133）为主要应用。建议重点审查排除规则。</p>
+        </div>
+      </div>
+    </div>
+    <div class="bu-card" id="bu-au">
+      <div class="bu-card__header" style="background:linear-gradient(135deg,#4299e1 0%,#4299e1dd 100%);">
+        <div class="bu-card__header-left">
+          <span class="bu-card__badge">AU</span>
+          <h3 class="bu-card__title">澳大利亚</h3>
+        </div>
+        <div class="bu-card__header-right">
+          <span>Multiplied: <strong>8.5%</strong> | Raw: 1,757</span>
+        </div>
+      </div>
+      <div class="bu-card__body">
+        <div class="bu-kpi-row">
+          <div class="bu-kpi-item">
+            <span class="bu-kpi-label">Raw Instance Count</span>
+            <span class="bu-kpi-value">1,757</span>
+          </div>
+          <div class="bu-kpi-item">
+            <span class="bu-kpi-label">Multiplied（加权）</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">2,058</span>
+          </div>
+          <div class="bu-kpi-item">
+            <span class="bu-kpi-label">复杂度构成</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 13.1% | M 39.4% | C 47.5%</span>
+          </div>
+        </div>
+        <div class="bu-charts-row">
+          <div class="bu-chart-col">
+            <h4 class="bu-chart-title">Top 8 服务类型（加权）</h4>
+            <div class="chart-container"><canvas id="chart-svc-au"></canvas></div>
+          </div>
+          <div class="bu-chart-col">
+            <h4 class="bu-chart-title">Top 7 业务应用（加权）</h4>
+            <div class="chart-container"><canvas id="chart-app-au"></canvas></div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #4299e1;">
+          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 澳大利亚 核心洞察</h4>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">澳大利亚占 8.5%。VM（636）和 Storage（187）为主。Citrix VDI（382）和 Core Data Platform（265）是最大应用。Complex 占比 47.5% 略高于 Medium 39.4%，工作负载复杂度偏高。</p>
+        </div>
+      </div>
+    </div>
+    <div class="bu-card" id="bu-sg">
+      <div class="bu-card__header" style="background:linear-gradient(135deg,#63b3ed 0%,#63b3eddd 100%);">
+        <div class="bu-card__header-left">
+          <span class="bu-card__badge">SG</span>
+          <h3 class="bu-card__title">新加坡</h3>
+        </div>
+        <div class="bu-card__header-right">
+          <span>Multiplied: <strong>6.6%</strong> | Raw: 1,357</span>
+        </div>
+      </div>
+      <div class="bu-card__body">
+        <div class="bu-kpi-row">
+          <div class="bu-kpi-item">
+            <span class="bu-kpi-label">Raw Instance Count</span>
+            <span class="bu-kpi-value">1,357</span>
+          </div>
+          <div class="bu-kpi-item">
+            <span class="bu-kpi-label">Multiplied（加权）</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">1,602</span>
+          </div>
+          <div class="bu-kpi-item">
+            <span class="bu-kpi-label">复杂度构成</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 12.5% | M 39.0% | C 48.6%</span>
           </div>
         </div>
         <div class="bu-charts-row">
@@ -364,91 +409,50 @@ tr:last-child td{border-bottom:none}
             <div class="chart-container"><canvas id="chart-app-sg"></canvas></div>
           </div>
         </div>
-        <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #4299e1;">
-          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 新加坡 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">新加坡占 1.1%。VM（491）和 SQL MI（450）为主。Infrastructure Common（178）和 LEAP 为主要应用。Complex 占比 51.4% 高于 Medium 39.2%。</p>
-        </div>
-      </div>
-    </div>
-    <div class="bu-card" id="bu-bx">
-      <div class="bu-card__header" style="background:linear-gradient(135deg,#63b3ed 0%,#63b3eddd 100%);">
-        <div class="bu-card__header-left">
-          <span class="bu-card__badge">BX</span>
-          <h3 class="bu-card__title">蓝十字</h3>
-        </div>
-        <div class="bu-card__header-right">
-          <span>Multiplied: <strong>0.5%</strong> | Raw: 635</span>
-        </div>
-      </div>
-      <div class="bu-card__body">
-        <div class="bu-kpi-row">
-          <div class="bu-kpi-item">
-            <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">635</span>
-          </div>
-          <div class="bu-kpi-item">
-            <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">796</span>
-          </div>
-          <div class="bu-kpi-item">
-            <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 2.8% | M 43.8% | C 53.4%</span>
-          </div>
-        </div>
-        <div class="bu-charts-row">
-          <div class="bu-chart-col">
-            <h4 class="bu-chart-title">Top 8 服务类型（加权）</h4>
-            <div class="chart-container"><canvas id="chart-svc-bx"></canvas></div>
-          </div>
-          <div class="bu-chart-col">
-            <h4 class="bu-chart-title">Top 7 业务应用（加权）</h4>
-            <div class="chart-container"><canvas id="chart-app-bx"></canvas></div>
-          </div>
-        </div>
         <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #63b3ed;">
-          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 蓝十字 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">蓝十字占 0.5%。VM 消耗 583；Customer Facing Shared Service（96）和 Back End Shared Service（64）为主要应用。Complex 53.4% / Medium 43.8%。</p>
+          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 新加坡 核心洞察</h4>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">新加坡占 6.6%。SQL MI（316）和 VM（243）为主，Storage（239）和 SQL DB（218）紧随其后。Infrastructure Common（129）和 LEAP（55）为 Top 应用。Complex 占比 48.6%，高于 Medium 39.0%。</p>
         </div>
       </div>
     </div>
-    <div class="bu-card" id="bu-kh">
+    <div class="bu-card" id="bu-ph">
       <div class="bu-card__header" style="background:linear-gradient(135deg,#90cdf4 0%,#90cdf4dd 100%);">
         <div class="bu-card__header-left">
-          <span class="bu-card__badge">KH</span>
-          <h3 class="bu-card__title">柬埔寨</h3>
+          <span class="bu-card__badge">PH</span>
+          <h3 class="bu-card__title">菲律宾</h3>
         </div>
         <div class="bu-card__header-right">
-          <span>Multiplied: <strong>0.2%</strong> | Raw: 314</span>
+          <span>Multiplied: <strong>3.7%</strong> | Raw: 801</span>
         </div>
       </div>
       <div class="bu-card__body">
         <div class="bu-kpi-row">
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Raw Instance Count</span>
-            <span class="bu-kpi-value">314</span>
+            <span class="bu-kpi-value">801</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">Multiplied（加权）</span>
-            <span class="bu-kpi-value bu-kpi-value--accent">316</span>
+            <span class="bu-kpi-value bu-kpi-value--accent">913</span>
           </div>
           <div class="bu-kpi-item">
             <span class="bu-kpi-label">复杂度构成</span>
-            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 26.4% | M 45.5% | C 28.0%</span>
+            <span class="bu-kpi-value" style="font-size:15px;font-weight:600;">S 11.1% | M 49.8% | C 39.1%</span>
           </div>
         </div>
         <div class="bu-charts-row">
           <div class="bu-chart-col">
             <h4 class="bu-chart-title">Top 8 服务类型（加权）</h4>
-            <div class="chart-container"><canvas id="chart-svc-kh"></canvas></div>
+            <div class="chart-container"><canvas id="chart-svc-ph"></canvas></div>
           </div>
           <div class="bu-chart-col">
             <h4 class="bu-chart-title">Top 7 业务应用（加权）</h4>
-            <div class="chart-container"><canvas id="chart-app-kh"></canvas></div>
+            <div class="chart-container"><canvas id="chart-app-ph"></canvas></div>
           </div>
         </div>
         <div style="margin-top:20px;padding:16px 20px;background:#f8f9fa;border-radius:6px;border-left:3px solid #90cdf4;">
-          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 柬埔寨 核心洞察</h4>
-          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">柬埔寨占 0.2%。Web App Service 消耗相对突出（88）。Simple 占比 26.4%，是所有主要BU中 Simple 占比最高的。</p>
+          <h4 style="font-size:13px;font-weight:600;color:#495057;margin-bottom:8px;">&#128161; 菲律宾 核心洞察</h4>
+          <p style="font-size:13px;color:#495057;line-height:1.7;margin:0;">菲律宾占 3.7%。VM（178）和 SQL DB（167）为主。myAIA & AIA+（106）和 Lotus Cloud Data Platform（98）是最大应用。Medium 占比 49.8%，复杂度分布均衡。</p>
         </div>
       </div>
     </div>
@@ -457,46 +461,46 @@ tr:last-child td{border-bottom:none}
 <div class="section">
   <h2 class="section__title">异常与关注点</h2>
   <div class="alert">
-    <div class="alert__title">香港 Complex 占比 89.9% — 远高于其他BU</div>
-    <div class="alert__text">香港近九成资源被标记为 Complex（泰国 66.5%、SSHK 47.8%），建议审查分类一致性，避免因标准不一致导致分配偏差。</div>
+    <div class="alert__title">Excluded 占比 96.9% — 创历史新高</div>
+    <div class="alert__text">TH（99.5%）和 HK（98.3%）的 Excluded 比例极高。全月仅 21,923 条记录纳入分配，占总 Instance Count 的 3.1%，建议紧急审查成本分配规则。</div>
   </div>
   <div class="alert">
-    <div class="alert__title">Excluded 占总量 78.8% — TH+HK 占 Excluded 的 85.7%</div>
-    <div class="alert__text">泰国和香港的 Excluded 远超 Included，需确认是否因默认排除规则导致大量资源未被分配。</div>
+    <div class="alert__title">SSHK 跃居第一 — 泰国加权占比大幅下滑</div>
+    <div class="alert__text">SSHK 以 19.7% 成为最大加权消费方，而泰国因大量 Excluded 仅占 9.0%，位列第四。历史核心 BU 的结构性变化值得关注。</div>
   </div>
   <div class="alert">
-    <div class="alert__title">SSHK 复杂度最均衡 — 可作为跨BU基准</div>
-    <div class="alert__text">SSHK（S 17.3% / M 34.8% / C 47.8%）是唯一 Complex 低于 50% 的主要BU，可作为复杂度分类合理性的参考基准。</div>
+    <div class="alert__title">AH-SG 和 ID 并列 — 新兴BU崛起</div>
+    <div class="alert__text">AH-SG（Amplify Health）和 ID（印度尼西亚）各占 3.5%，与 NZ（3.2%）接近，表明新兴市场和健康科技业务对云资源的消耗正在增长。</div>
   </div>
 </div>
 
 <div class="section">
   <h2 class="section__title">建议操作</h2>
-  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>审查香港复杂度分类</strong> — Complex 占比 89.9% 明显异常，建议重建 HK 的 Complexity 标签。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>核实 Excluded 原因</strong> — 78.8% 被排除，建议与 CloudOps 确认排除规则，评估是否应重新纳入。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>TH Data Platform 优化</strong> — VM 占 BU 加权总量 98%，建议审查规格和利用率，评估 RI 或降配方案。</div></div>
-  <div class="recommendation"><div class="recommendation__icon">4</div><div class="recommendation__text"><strong>建立跨BU复杂度基准</strong> — 以 SSHK 为参考（S 17.3% / M 34.8% / C 47.8%），评估各BU分类合理性。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>紧急审查 Excluded 规则</strong> — 96.9% 被排除意味着成本分配模型基本失效，建议与 CloudOps 和 FinOps 团队协同核查排除逻辑。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>TH 排除原因专项调查</strong> — 泰国 99.5% 被排除（410,762），需确认是否因数据源或标签变更导致大规模排除。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>SSHK 资源优化</strong> — SSHK 已成为最大消费方，建议审查 VM（1,211）和 Storage（701）的规格与利用率。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">4</div><div class="recommendation__text"><strong>HK SQL DB 成本分析</strong> — 香港 SQL DB（869）是单一服务类型中占比最高的，建议评估预留实例或降级方案。</div></div>
 </div>
 
-<div class="footer">本报告由 AI 数据分析助手自动生成 ｜ 数据：Consumption.xlsx 2025年6月 ｜ DAX 度量值：Instance Count · Simple · Medium · Complex · Multiplied</div>
+<div class="footer">本报告由 AI 数据分析助手自动生成 ｜ 数据：Consumption.xlsx 2026年5月 ｜ DAX 度量值：Instance Count · Simple · Medium · Complex · Multiplied</div>
 
 </div>
 
 <script>
-const buChartData = {"TH": {"svc_labels": ["VM", "SQL DB", "SQL MI", "Storage", "Web app service", "AKS", "Databricks", "Cognitive Services"], "svc_vals": [86696.0, 506.5, 397.0, 329.0, 237.5, 154.5, 41.5, 23.0], "app_labels": ["DATA PLATFORM", "DATA SCIENCE LAB", "DATA PLATFORM COMMON WORKSPACE", "BUSINESS USER SUPPORT", "VDI SERVICES", "AGENT PORTAL", "INFRASTRUCTURE TOOLS"], "app_vals": [84674.0, 1276.0, 348.0, 143.0, 97.5, 86.5, 86.0], "comp": {"S": 0.5, "M": 33.0, "C": 66.5}}, "HK": {"svc_labels": ["VM", "SQL DB", "Storage", "AKS", "Load balancer", "Data factory v2", "Redis cache", "Cognitive Services"], "svc_vals": [46337.0, 1033.0, 823.0, 243.5, 112.0, 93.5, 72.5, 30.5], "app_labels": ["OPERATIONAL DATA STORE", "DATA & ANALYTICS PLATFORM", "VDI SERVICES", "INFRASTRUCTUREFOUR", "SYSTEM INTEGRATION PLATFORM", "DEVOPS", "AML SYSTEM - NICE ACTIMIZE (HAML)"], "app_vals": [32685.5, 12067.0, 778.5, 742.0, 137.5, 113.0, 98.5], "comp": {"S": 1.2, "M": 8.9, "C": 89.9}}, "SSHK": {"svc_labels": ["VM", "Storage", "SQL DB", "Load balancer", "AKS", "Data factory v2", "Web app service", "Databricks"], "svc_vals": [8629.0, 1649.0, 1178.0, 765.0, 682.0, 657.0, 310.0, 236.0], "app_labels": ["VDI SERVICES", "INVESTMENT ETL", "CLOUD INFRASTRUCTURE 3RD PARTY MANAGED NETWORK CRITICAL", "SUBLEDGER", "PROJECT CLARITY", "FIREWALLS", "TREASURY DATA MART"], "app_vals": [1979.0, 1743.0, 985.0, 950.0, 659.0, 599.0, 593.0], "comp": {"S": 17.3, "M": 34.8, "C": 47.8}}, "MY": {"svc_labels": ["VM", "SQL MI", "Data factory v2", "Storage", "Web app service", "AKS", "SQL DB", "Load balancer"], "svc_vals": [850.0, 737.5, 313.5, 265.0, 212.5, 130.0, 113.5, 44.5], "app_labels": ["ENTERPRISE INTEGRATION PLATFORM", "DATA SCIENCE LAB", "INFRA SUITE", "G360/EXEC360 ROBOTS", "VDI SERVICES", "AHS CRM D365", "NBFE / WORKFLOW - NB COMMON FRONT END (NBFE)"], "app_vals": [368.0, 351.0, 319.5, 185.0, 141.0, 135.5, 79.0], "comp": {"S": 13.1, "M": 46.0, "C": 40.9}}, "SG": {"svc_labels": ["VM", "SQL MI", "SQL DB", "Storage", "Database - postgresql", "AKS", "Load balancer", "Web app service"], "svc_vals": [491.0, 450.5, 244.0, 241.0, 54.5, 46.5, 39.5, 16.5], "app_labels": ["INFRASTRUCTURE COMMON", "LEAP", "GENESYS CONTACT CENTRE", "RPA", "PPPS", "ESB", "EDEN"], "app_vals": [178.0, 93.5, 85.5, 85.0, 74.0, 57.5, 51.5], "comp": {"S": 9.4, "M": 39.2, "C": 51.4}}, "BX": {"svc_labels": ["VM", "SQL MI", "Storage", "AKS", "Load balancer", "Application gateway", "Azure API Management", "Cognitive Services"], "svc_vals": [583.0, 89.5, 61.0, 41.0, 8.5, 5.5, 2.5, 1.5], "app_labels": ["CUSTOMER FACING SHARED SERVICE", "BACK END SHARED SERVICE", "[U CARE] HEALTHCARE CONNECT", "SUN ACCOUNTING AND VISION FINANCE SYSTEM", "SAS IFRS17 SYSTEM", "CHATBOT / LIVECHAT", "BX01 INFRASTRUCTURE"], "app_vals": [95.5, 63.5, 62.0, 61.5, 50.5, 41.5, 36.5], "comp": {"S": 2.8, "M": 43.8, "C": 53.4}}, "KH": {"svc_labels": ["Web app service", "VM", "Storage", "AKS", "SQL DB", "SQL MI", "Application gateway", "Data factory v2"], "svc_vals": [88.0, 57.5, 55.5, 43.0, 24.5, 21.5, 11.0, 5.0], "app_labels": ["MEDICAL PRODUCT SUPPORT SYSTEM", "PASS DB SERVICE - PRD", "EDW", "IPOS WEB", "ALPA & CONTENT HUB", "ALPA", "SERVER SERVICE - PRD"], "app_vals": [27.5, 27.0, 25.0, 24.5, 23.5, 22.0, 18.0], "comp": {"S": 26.4, "M": 45.5, "C": 28.0}}};
+const buChartData = {"SSHK": {"svc_labels": ["Compute Virtual Machines", "Storage", "Database - sql", "AKS", "Network - Load balancer", "Web app service", "Data factory v2", "Databricks"], "svc_vals": [1211.0, 701.0, 452.0, 316.0, 303.0, 263.0, 216.0, 197.0], "app_labels": ["INVESTMENT ETL", "CLOUD INFRASTRUCTURE 3RD PARTY MANAGED NETWORK CRITICAL", "SUBLEDGER", "CLOUD INFRATRUCTURE 3RD PARTY MANAGED FIREWALLS", "PROJECT CLARITY", "CLOUD INFRASTRUCTURE COMMON LOW", "VDI SERVICES"], "app_vals": [367.0, 274.0, 220.0, 194.0, 170.0, 157.0, 143.0], "comp": {"S": 17.4, "M": 44.1, "C": 38.5}}, "HK": {"svc_labels": ["Database - sql", "Storage", "Compute Virtual Machines", "AKS", "Redis cache", "Network - Load balancer", "Data factory v2", "Web app service"], "svc_vals": [869.0, 736.0, 701.0, 189.0, 159.0, 154.0, 82.0, 70.0], "app_labels": ["INFRASTRUCTUREFOUR", "DATA & ANALYTICS PLATFORM", "LIFE IMAGING AND WORKFLOW", "SYSTEM INTEGRATION PLATFORM", "VDI SERVICES", "DEVOPS", "CHEQUE ENQUIRY"], "app_vals": [620.0, 422.0, 122.0, 98.0, 91.0, 75.0, 60.0], "comp": {"S": 13.3, "M": 49.2, "C": 37.5}}, "MY": {"svc_labels": ["sql managed instance", "Compute Virtual Machines", "Web app service", "Data factory v2", "Storage", "Database - sql", "AKS", "Network - Load balancer"], "svc_vals": [495.0, 397.0, 384.0, 274.0, 234.0, 128.0, 110.0, 60.0], "app_labels": ["DATA SCIENCE LAB", "ENTERPRISE INTEGRATION PLATFORM", "AHS CRM D365", "INFRA SUITE", "G360/EXEC360 ROBOTS", "NBFE / WORKFLOW - NB COMMON FRONT END (NBFE)", "VDI SERVICES"], "app_vals": [303.0, 265.0, 214.0, 193.0, 67.0, 49.0, 41.0], "comp": {"S": 15.9, "M": 50.1, "C": 34.0}}, "TH": {"svc_labels": ["Compute Virtual Machines", "Database - sql", "Storage", "sql managed instance", "Web app service", "AKS", "Redis cache", "Data factory v2"], "svc_vals": [347.0, 296.0, 287.0, 259.0, 248.0, 120.0, 97.0, 74.0], "app_labels": ["BUSINESS USER SUPPORT", "DATA PLATFORM", "ONLINE SALES", "IPOS+ (TH)", "INFRASTRUCTURE TOOLS", "DATA PLATFORM COMMON WORKSPACE", "AGENT PORTAL"], "app_vals": [154.0, 133.0, 77.0, 70.0, 64.0, 60.0, 51.0], "comp": {"S": 16.5, "M": 43.4, "C": 40.0}}, "AU": {"svc_labels": ["Compute Virtual Machines", "Storage", "Data factory v2", "Web app service", "Database - sql", "NetApp", "AKS", "Network - Load balancer"], "svc_vals": [636.0, 187.0, 185.0, 184.0, 157.0, 144.0, 140.0, 80.0], "app_labels": ["CITRIX VDI", "CORE DATA PLATFORM (OPERATIONAL LAYER)", "FILE & PRINT SERVICES", "ESB", "DOCUMENT MANAGEMENT SYSTEM", "SECURE FILE TRANSFER", "INTELLIGENT AUTOMATION"], "app_vals": [382.0, 265.0, 158.0, 96.0, 86.0, 68.0, 60.0], "comp": {"S": 13.1, "M": 39.4, "C": 47.5}}, "SG": {"svc_labels": ["sql managed instance", "Compute Virtual Machines", "Storage", "Database - sql", "Network - Load balancer", "Redis cache", "AKS", "Web app service"], "svc_vals": [316.0, 243.0, 239.0, 218.0, 52.0, 47.0, 43.0, 32.0], "app_labels": ["INFRASTRUCTURE COMMON", "LEAP", "PPAS - PAR POLICY ANNUAL STATEMENT", "CHATTY", "ESB", "EDEN", "DIGITAL SOLUTION"], "app_vals": [129.0, 55.0, 50.0, 49.0, 49.0, 46.0, 34.0], "comp": {"S": 12.5, "M": 39.0, "C": 48.6}}, "PH": {"svc_labels": ["Compute Virtual Machines", "Database - sql", "Storage", "AKS", "Data factory v2", "sql managed instance", "Web app service", "Network - Load balancer"], "svc_vals": [178.0, 167.0, 136.0, 109.0, 43.0, 42.0, 38.0, 28.0], "app_labels": ["MYAIA AND AIA+ PH", "LOTUS CLOUD DATA PLATFORM", "INSURANCE SERVICING APIS", "INFRASTRUCTURE SERVICES", "AML NICE ACTIMIZE CLOUD", "VDI SERVICES", "GO SALES"], "app_vals": [106.0, 98.0, 66.0, 62.0, 46.0, 43.0, 38.0], "comp": {"S": 11.1, "M": 49.8, "C": 39.1}}};
 const COLORS = {bars:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#90cdf4']};
 const PIE_COLORS = ['#f56565','#ed8936','#48bb78'];
 Chart.defaults.font.family = "'Inter','Noto Sans SC',sans-serif";
 Chart.defaults.font.size = 11;
 
-const buBarData = [{"label": "泰国", "value": 88496.0}, {"label": "香港", "value": 48845.0}, {"label": "SSHK共享服务", "value": 14899.0}, {"label": "马来西亚", "value": 2739.0}, {"label": "新加坡", "value": 1674.5}, {"label": "蓝十字", "value": 795.5}, {"label": "柬埔寨", "value": 316.5}];
+const buBarData = [{"label": "SSHK 共享服务", "value": 4807.0}, {"label": "HK 香港", "value": 3758.0}, {"label": "MY 马来西亚", "value": 2444.0}, {"label": "TH 泰国", "value": 2188.0}, {"label": "AU 澳大利亚", "value": 2058.0}, {"label": "SG 新加坡", "value": 1602.0}, {"label": "PH 菲律宾", "value": 913.0}];
 new Chart(document.getElementById('chart-overview-bar'), {
   type:'bar',
   data:{labels:buBarData.map(d=>d.label), datasets:[{data:buBarData.map(d=>d.value), backgroundColor:["#1a365d", "#2b6cb0", "#2c5282", "#3182ce", "#4299e1", "#63b3ed", "#90cdf4"], borderRadius:3}]},
   options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>v.toLocaleString()}},y:{grid:{display:false}}}}
 });
 
-const compData = [{"label": "Simple ×0.5", "value": 1754.0}, {"label": "Medium ×1.0", "value": 31566.0}, {"label": "Complex ×1.5", "value": 124446.0}];
+const compData = [{"label": "Simple ×0.5", "value": 1603.0}, {"label": "Medium ×1.0", "value": 10447.0}, {"label": "Complex ×1.5", "value": 12350.0}];
 new Chart(document.getElementById('chart-overview-pie'), {
   type:'doughnut',
   data:{labels:compData.map(d=>d.label), datasets:[{data:compData.map(d=>d.value),backgroundColor:PIE_COLORS,borderWidth:0}]},
