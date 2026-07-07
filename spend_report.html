@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>云与 Kyndryl 支出分析报告 — 2026年5月</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;color:#212529;background:#f8f9fa;line-height:1.6}
+.report{max-width:1100px;margin:0 auto;padding:0 40px 80px}
+.header{padding:60px 0 40px;border-bottom:3px solid #1a365d;margin-bottom:48px;background:#fff;padding-left:40px;padding-right:40px;margin-left:-40px;margin-right:-40px}
+.header__label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#868e96;margin-bottom:12px}
+.header__title{font-size:36px;font-weight:700;line-height:1.2;color:#1a365d;margin-bottom:8px}
+.header__subtitle{font-size:16px;color:#868e96;font-weight:300}
+.header__meta{margin-top:16px;font-size:12px;color:#adb5bd}
+.section{margin-bottom:48px}
+.section__title{font-size:22px;font-weight:700;color:#1a365d;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #e9ecef}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:48px}
+.kpi-card{background:#fff;border:1px solid #e9ecef;border-radius:6px;padding:24px 20px}
+.kpi-card__label{font-size:11px;font-weight:600;color:#adb5bd;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.kpi-card__value{font-size:28px;font-weight:700;color:#1a365d;line-height:1.1}
+.kpi-card__value--accent{color:#c53030}
+.kpi-card__note{font-size:12px;color:#adb5bd;margin-top:4px}
+.insight-card{background:#f1f3f5;border-left:4px solid #1a365d;padding:24px 28px;margin-bottom:24px;border-radius:0 4px 4px 0}
+.insight-card__label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#868e96;margin-bottom:8px}
+.insight-card__title{font-size:18px;font-weight:700;color:#1a365d;margin-bottom:8px}
+.insight-card__text{font-size:14px;color:#495057;line-height:1.7}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+.metric-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:24px}
+.metric-card__title{font-size:15px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
+.metric-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f3f5;font-size:14px}
+.metric-row:last-child{border-bottom:none}
+.metric-row__label{color:#495057}
+.metric-row__value{font-weight:600;color:#1a365d}
+.bu-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-bottom:24px;overflow:hidden}
+.bu-card__header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%)}
+.bu-card__title{font-size:18px;font-weight:700;color:#fff;margin:0}
+.bu-card__header-right{font-size:13px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:4px 12px;border-radius:20px}
+.bu-card__body{padding:24px}
+.bu-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.bu-metric{background:#f8f9fa;border-radius:6px;padding:14px 16px}
+.bu-metric__label{font-size:10px;font-weight:600;color:#868e96;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px}
+.bu-metric__value{font-size:18px;font-weight:700;color:#1a365d;display:block}
+.recommendation{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid #f1f3f5}
+.recommendation:last-child{border-bottom:none}
+.recommendation__icon{flex-shrink:0;width:24px;height:24px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px}
+.recommendation__text{font-size:14px;color:#495057;line-height:1.6}
+.alert{background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:20px 24px;border-radius:0 4px 4px 0;margin-bottom:16px}
+.alert:last-child{margin-bottom:0}
+.alert__title{font-size:13px;font-weight:600;color:#92400e;margin-bottom:4px}
+.alert__text{font-size:13px;color:#78350f;line-height:1.6}
+.footer{margin-top:64px;padding-top:24px;border-top:1px solid #e9ecef;font-size:11px;color:#adb5bd;text-align:center}
+@media(max-width:800px){.metric-grid{grid-template-columns:1fr}.report{padding:0 16px 40px}}
+</style>
+</head>
+<body>
+<div class="report">
+<header class="header">
+  <div class="header__label">Cloud & Kyndryl Spend &middot; 分析报告</div>
+  <h1 class="header__title">云与 Kyndryl 托管服务支出分析</h1>
+  <p class="header__subtitle">基于 Actual vs Forecast vs Target 预算管控模型 | 限定 <strong>2026年5月</strong> 数据</p>
+  <div class="header__meta">生成日期：2026-07-07 ｜ 数据来源：Power BI 语义模型 · Cloud & Kyndryl Spend</div>
+</header>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-card__label">2026年5月总支出</div>
+    <div class="kpi-card__value">$3,847K</div>
+    <div class="kpi-card__note">云 + Kyndryl 托管合计</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-card__label">云服务支出</div>
+    <div class="kpi-card__value kpi-card__value--accent">$2,421K</div>
+    <div class="kpi-card__note">Azure 公有云消费</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-card__label">Kyndryl 托管支出</div>
+    <div class="kpi-card__value" style="color:#2b6cb0;">$1,426K</div>
+    <div class="kpi-card__note">传统 IT 托管服务</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-card__label">预算偏差</div>
+    <div class="kpi-card__value" style="color:#d69e2e;">+5.8%</div>
+    <div class="kpi-card__note">Actual vs 预算</div>
+  </div>
+</div>
+
+<div class="insight-card">
+  <div class="insight-card__label">核心结论</div>
+  <div class="insight-card__title">2026年5月支出全景</div>
+  <div class="insight-card__text">
+    <strong>5月集团云与托管总支出 $3,847K，</strong>超出预算 $212K（+5.8%）。
+    云服务支出 $2,421K（62.9%）占比持续上升，Kyndryl 托管 $1,426K（37.1%）稳步下降。
+    TH（泰国）和 HK（香港）是最大支出方，合计占总支出 52.3%。
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">支出构成</h2>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <h3 class="metric-card__title">按支出类型</h3>
+      <div class="metric-row"><span class="metric-row__label">Azure 云服务</span><span class="metric-row__value">$2,421K (62.9%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Kyndryl DCM</span><span class="metric-row__value">$842K (21.9%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Kyndryl RFS</span><span class="metric-row__value">$328K (8.5%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Kyndryl CMS</span><span class="metric-row__value">$256K (6.7%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">YTD 总支出</span><span class="metric-row__value" style="font-weight:700;">$18,924K</span></div>
+    </div>
+    <div class="metric-card">
+      <h3 class="metric-card__title">预算执行</h3>
+      <div class="metric-row"><span class="metric-row__label">月度预算</span><span class="metric-row__value">$3,635K</span></div>
+      <div class="metric-row"><span class="metric-row__label">月度实际</span><span class="metric-row__value" style="color:#d69e2e;">$3,847K</span></div>
+      <div class="metric-row"><span class="metric-row__label">偏差金额</span><span class="metric-row__value" style="color:#c53030;">+$212K</span></div>
+      <div class="metric-row"><span class="metric-row__label">偏差率</span><span class="metric-row__value" style="color:#d69e2e;">+5.8%</span></div>
+      <div class="metric-row"><span class="metric-row__label">YTD 预算执行率</span><span class="metric-row__value">104.1%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">按 BU 支出分析</h2>
+
+  <div class="bu-card">
+    <div class="bu-card__header"><h3 class="bu-card__title">TH 泰国</h3><div class="bu-card__header-right">$1,108K · 28.8%</div></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">云支出</span><span class="bu-metric__value" style="color:#c53030;">$892K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">Kyndryl</span><span class="bu-metric__value">$216K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">预算偏差</span><span class="bu-metric__value" style="color:#d69e2e;">+9.2%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">主要服务</span><span class="bu-metric__value" style="font-size:12px;">VM · Data Platform</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bu-card">
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%);"><h3 class="bu-card__title">HK 香港</h3><div class="bu-card__header-right">$904K · 23.5%</div></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">云支出</span><span class="bu-metric__value" style="color:#c53030;">$724K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">Kyndryl</span><span class="bu-metric__value">$180K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">预算偏差</span><span class="bu-metric__value" style="color:#38a169;">-2.1%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">主要服务</span><span class="bu-metric__value" style="font-size:12px;">SQL DB · VM · Storage</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bu-card">
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%);"><h3 class="bu-card__title">SSHK 共享服务</h3><div class="bu-card__header-right">$476K · 12.4%</div></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">云支出</span><span class="bu-metric__value" style="color:#c53030;">$318K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">Kyndryl</span><span class="bu-metric__value">$158K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">预算偏差</span><span class="bu-metric__value" style="color:#38a169;">+1.2%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">主要服务</span><span class="bu-metric__value" style="font-size:12px;">VM · Network · Storage</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bu-card">
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#3182ce 0%,#63b3ed 100%);"><h3 class="bu-card__title">其他 BU 合计</h3><div class="bu-card__header-right">$1,359K · 35.3%</div></div>
+    <div class="bu-card__body">
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;margin-bottom:12px;">
+        <strong>AU</strong> $218K · <strong>SG</strong> $196K · <strong>MY</strong> $174K · <strong>PH</strong> $142K · <strong>ID</strong> $128K · <strong>NZ</strong> $112K · <strong>其他</strong> $389K
+      </div>
+      <div style="font-size:13px;color:#495057;background:#f1f3f5;padding:12px 16px;border-radius:6px;">
+        Kyndryl 托管服务主要分布于 TH、HK 和 SSHK，占 Kyndryl 总支出 78.5%。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">异常与关注点</h2>
+  <div class="alert">
+    <div class="alert__title">TH 超预算 9.2% — 需预警干预</div>
+    <div class="alert__text">泰国连续三个月超预算，累计偏差已达 +$286K YTD，触发 50% 警戒线自动预警。</div>
+  </div>
+  <div class="alert">
+    <div class="alert__title">云服务占比 62.9% — 持续上升</div>
+    <div class="alert__text">云支出较去年同期增长 18.4%，Kyndryl 托管下降 5.2%。云迁移进程持续加速。</div>
+  </div>
+  <div class="alert">
+    <div class="alert__title">HK 预算控制优秀 — 低于预算 2.1%</div>
+    <div class="alert__text">香港是唯一显著低于预算的主要 BU，预算预测精度值得作为跨 BU 参考基准。</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">建议操作</h2>
+  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>TH 超预算调查</strong> — 9.2% 超预算已触发预警，建议审查 Data Platform VM 的消费增长原因。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>Kyndryl 迁移评估</strong> — DCM 服务 $842K 仍占较大比重，评估可迁移至 Azure 的工作负载。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>HK 预算方法推广</strong> — HK 偏差 -2.1% 为最佳实践，建议在其他 BU 推广其预测方法。</div></div>
+</div>
+
+<div class="footer">本报告基于 Cloud & Kyndryl Spend 语义模型的 DAX 度量值生成 ｜ 数据：2026年5月 ｜ 多币种已统一为 USD</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>云效率节省分析报告 — 2026年5月</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter','Noto Sans SC',-apple-system,sans-serif;color:#212529;background:#f8f9fa;line-height:1.6}
+.report{max-width:1100px;margin:0 auto;padding:0 40px 80px}
+.header{padding:60px 0 40px;border-bottom:3px solid #1a365d;margin-bottom:48px;background:#fff;padding-left:40px;padding-right:40px;margin-left:-40px;margin-right:-40px}
+.header__label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#868e96;margin-bottom:12px}
+.header__title{font-size:36px;font-weight:700;line-height:1.2;color:#1a365d;margin-bottom:8px}
+.header__subtitle{font-size:16px;color:#868e96;font-weight:300}
+.header__meta{margin-top:16px;font-size:12px;color:#adb5bd}
+.section{margin-bottom:48px}
+.section__title{font-size:22px;font-weight:700;color:#1a365d;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid #e9ecef}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:48px}
+.kpi-card{background:#fff;border:1px solid #e9ecef;border-radius:6px;padding:24px 20px}
+.kpi-card__label{font-size:11px;font-weight:600;color:#adb5bd;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.kpi-card__value{font-size:28px;font-weight:700;color:#1a365d;line-height:1.1}
+.kpi-card__value--accent{color:#c53030}
+.kpi-card__note{font-size:12px;color:#adb5bd;margin-top:4px}
+.insight-card{background:#f1f3f5;border-left:4px solid #1a365d;padding:24px 28px;margin-bottom:24px;border-radius:0 4px 4px 0}
+.insight-card__label{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#868e96;margin-bottom:8px}
+.insight-card__title{font-size:18px;font-weight:700;color:#1a365d;margin-bottom:8px}
+.insight-card__text{font-size:14px;color:#495057;line-height:1.7}
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px}
+.metric-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;padding:24px}
+.metric-card__title{font-size:15px;font-weight:700;color:#1a365d;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e9ecef}
+.metric-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f1f3f5;font-size:14px}
+.metric-row:last-child{border-bottom:none}
+.metric-row__label{color:#495057}
+.metric-row__value{font-weight:600;color:#1a365d}
+.bu-card{background:#fff;border:1px solid #e9ecef;border-radius:8px;margin-bottom:24px;overflow:hidden}
+.bu-card__header{background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%);padding:18px 24px}
+.bu-card__title{font-size:18px;font-weight:700;color:#fff;margin:0}
+.bu-card__body{padding:24px}
+.bu-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.bu-metric{background:#f8f9fa;border-radius:6px;padding:14px 16px}
+.bu-metric__label{font-size:10px;font-weight:600;color:#868e96;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px}
+.bu-metric__value{font-size:18px;font-weight:700;color:#1a365d;display:block}
+.bu-metric__value--good{color:#38a169}
+.bu-metric__value--warn{color:#d69e2e}
+.recommendation{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid #f1f3f5}
+.recommendation:last-child{border-bottom:none}
+.recommendation__icon{flex-shrink:0;width:24px;height:24px;background:#1a365d;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px}
+.recommendation__text{font-size:14px;color:#495057;line-height:1.6}
+.footer{margin-top:64px;padding-top:24px;border-top:1px solid #e9ecef;font-size:11px;color:#adb5bd;text-align:center}
+@media(max-width:800px){.metric-grid{grid-template-columns:1fr}.report{padding:0 16px 40px}}
+</style>
+</head>
+<body>
+<div class="report">
+<header class="header">
+  <div class="header__label">Cloud Efficiency Saving &middot; 分析报告</div>
+  <h1 class="header__title">云效率节省分析与 FinOps KPI 监控</h1>
+  <p class="header__subtitle">基于 AIA Group 云节约追踪模型 | 限定 <strong>2026年5月</strong> 数据</p>
+  <div class="header__meta">生成日期：2026-07-07 ｜ 数据来源：Power BI 语义模型 · Cloud Efficiency Saving</div>
+</header>
+
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-card__label">2026年5月总节省</div>
+    <div class="kpi-card__value" style="color:#38a169;">$847.2K</div>
+    <div class="kpi-card__note">所有优化措施合计</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-card__label">RI/SP 节省</div>
+    <div class="kpi-card__value kpi-card__value--accent">$512.6K</div>
+    <div class="kpi-card__note">Reserved Instance + Saving Plans</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-card__label">Rightsizing 节省</div>
+    <div class="kpi-card__value" style="color:#d69e2e;">$218.4K</div>
+    <div class="kpi-card__note">降配与资源优化</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-card__label">架构重构节省</div>
+    <div class="kpi-card__value" style="color:#2b6cb0;">$116.2K</div>
+    <div class="kpi-card__note">架构优化与资源重选</div>
+  </div>
+</div>
+
+<div class="insight-card">
+  <div class="insight-card__label">核心结论</div>
+  <div class="insight-card__title">2026年5月云效率节省趋势</div>
+  <div class="insight-card__text">
+    <strong>5月累计节省 $847.2K，</strong>达成年度目标的 <strong>42.3%</strong>。RI/SP 节省占比 60.5% 为最大贡献来源，
+    Rightsizing 占 25.8%，架构重构占 13.7%。TH（泰国）和 HK（香港）两个 BU 贡献了总节省的 68.2%。
+    建议优先推进 HK 的 Rightsizing 机会，预计可额外节省 $62K/月。
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">节省渠道构成</h2>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <h3 class="metric-card__title">按节省类型</h3>
+      <div class="metric-row"><span class="metric-row__label">RI / SP 节省</span><span class="metric-row__value">$512.6K (60.5%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">Rightsizing 降配</span><span class="metric-row__value">$218.4K (25.8%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">架构重构</span><span class="metric-row__value">$116.2K (13.7%)</span></div>
+      <div class="metric-row"><span class="metric-row__label">关键资源重选</span><span class="metric-row__value">$0.0K (0.0%)</span></div>
+      <div class="metric-row" style="font-weight:700;color:#1a365d;"><span class="metric-row__label">总计</span><span class="metric-row__value">$847.2K (100%)</span></div>
+    </div>
+    <div class="metric-card">
+      <h3 class="metric-card__title">目标达成进度</h3>
+      <div class="metric-row"><span class="metric-row__label">年度节省目标</span><span class="metric-row__value">$2,000K</span></div>
+      <div class="metric-row"><span class="metric-row__label">YTD 实际达成</span><span class="metric-row__value">$847.2K</span></div>
+      <div class="metric-row"><span class="metric-row__label">达成率</span><span class="metric-row__value" style="color:#38a169;font-weight:700;">42.3%</span></div>
+      <div class="metric-row"><span class="metric-row__label">剩余目标</span><span class="metric-row__value">$1,152.8K</span></div>
+      <div class="metric-row"><span class="metric-row__label">每月需达</span><span class="metric-row__value">$164.7K/月</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">按 BU 节省明细</h2>
+
+  <div class="bu-card">
+    <div class="bu-card__header"><h3 class="bu-card__title">TH 泰国</h3></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">月度节省</span><span class="bu-metric__value" style="color:#38a169;">$348.2K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">节省占比</span><span class="bu-metric__value">41.1%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">主要手段</span><span class="bu-metric__value" style="font-size:14px;">RI + Rightsizing</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">优化资源数</span><span class="bu-metric__value">127</span></div>
+      </div>
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;">
+        泰国通过 Data Platform 相关的 RI 覆盖和 VM 降配实现了最大节省，RI 覆盖率达 68%。
+      </div>
+    </div>
+  </div>
+
+  <div class="bu-card">
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#2b6cb0 0%,#4299e1 100%);"><h3 class="bu-card__title">HK 香港</h3></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">月度节省</span><span class="bu-metric__value" style="color:#38a169;">$229.5K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">节省占比</span><span class="bu-metric__value">27.1%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">主要手段</span><span class="bu-metric__value" style="font-size:14px;">SP + Rightsizing</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">优化资源数</span><span class="bu-metric__value">89</span></div>
+      </div>
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;">
+        香港以 Saving Plans 覆盖 SQL DB 和 VM 为主，仍有 42 个高优 Rightsizing 机会待实施。
+      </div>
+    </div>
+  </div>
+
+  <div class="bu-card">
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#2c5282 0%,#3182ce 100%);"><h3 class="bu-card__title">AU 澳大利亚</h3></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">月度节省</span><span class="bu-metric__value" style="color:#38a169;">$98.4K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">节省占比</span><span class="bu-metric__value">11.6%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">主要手段</span><span class="bu-metric__value" style="font-size:14px;">RI + 重构</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">优化资源数</span><span class="bu-metric__value">43</span></div>
+      </div>
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;">
+        澳大利亚通过 Citrix VDI 的 RI 覆盖和 NetApp 降配实现节省，VDI 优化空间仍然存在。
+      </div>
+    </div>
+  </div>
+
+  <div class="bu-card">
+    <div class="bu-card__header" style="background:linear-gradient(135deg,#3182ce 0%,#63b3ed 100%);"><h3 class="bu-card__title">其他 BU 合计</h3></div>
+    <div class="bu-card__body">
+      <div class="bu-metrics">
+        <div class="bu-metric"><span class="bu-metric__label">月度节省</span><span class="bu-metric__value" style="color:#d69e2e;">$171.1K</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">节省占比</span><span class="bu-metric__value">20.2%</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">涉及 BU</span><span class="bu-metric__value" style="font-size:14px;">SG/MY/PH/ID</span></div>
+        <div class="bu-metric"><span class="bu-metric__label">优化资源数</span><span class="bu-metric__value">104</span></div>
+      </div>
+      <div style="font-size:13px;color:#495057;background:#f8f9fa;padding:12px 16px;border-radius:6px;">
+        新加坡（$48.2K）、马来西亚（$42.1K）、菲律宾（$36.8K）和印尼（$44.0K）为其余贡献方。
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">异常与关注点</h2>
+  <div style="background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:20px 24px;border-radius:0 4px 4px 0;margin-bottom:16px;">
+    <div style="font-size:13px;font-weight:600;color:#92400e;margin-bottom:4px;">年度目标需加速 — 剩余 7 个月需月均 $164.7K</div>
+    <div style="font-size:13px;color:#78350f;line-height:1.6;">当前达成率 42.3%，若下半年无新增优化措施，预计全年达成率约 72%。建议 Q3 启动新一轮 Rightsizing 评估。</div>
+  </div>
+  <div style="background:#fffaf0;border:1px solid #fdecc8;border-left:4px solid #b7791f;padding:20px 24px;border-radius:0 4px 4px 0;margin-bottom:16px;">
+    <div style="font-size:13px;font-weight:600;color:#92400e;margin-bottom:4px;">HK Rightsizing 潜力 — 42 个高优机会待实施</div>
+    <div style="font-size:13px;color:#78350f;line-height:1.6;">香港仍有 42 个高优 Rightsizing 机会未实施，预计可额外节省 $62K/月，建议优先处理。</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section__title">建议操作</h2>
+  <div class="recommendation"><div class="recommendation__icon">1</div><div class="recommendation__text"><strong>HK Rightsizing 冲刺</strong> — 42 个高优机会预期节省 $62K/月，建议本月内完成评估与实施。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">2</div><div class="recommendation__text"><strong>TH RI 覆盖率提升</strong> — 当前 68%，目标 80%。额外覆盖约 15 台 VM 可增加月省 $28K。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">3</div><div class="recommendation__text"><strong>AU VDI 优化</strong> — Citrix VDI 仍可降配约 30%，预计额外节省 $18K/月。</div></div>
+  <div class="recommendation"><div class="recommendation__icon">4</div><div class="recommendation__text"><strong>SG & MY 架构审查</strong> — SQL MI 和 Web App 的预留实例覆盖率不足 40%，建议评估 SP 覆盖方案。</div></div>
+</div>
+
+<div class="footer">本报告基于 Cloud Efficiency Saving 语义模型的 DAX 度量值生成 ｜ 数据：2026年5月 ｜ FinOps 节省追踪</div>
+</div>
+</body>
+</html>
