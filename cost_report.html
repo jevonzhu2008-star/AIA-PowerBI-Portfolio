@@ -233,6 +233,7 @@ tr:hover{background:#f1f5f9}
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
 new Chart(document.getElementById('c1'),{type:'bar',data:{labels:['Virtual Machines','Storage','SQL Managed Inst.','SQL Database','Backup','Databricks','Log Analytics','Synapse Analytics','VM Licenses','PostgreSQL','Foundry Models','Redis Cache','App Service','API Mgmt','NetApp Files'],datasets:[{data:[337,206,176,91,54,35,30,26,23,22,21,20,19,17,14],backgroundColor:'#2b6cb0',borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
 new Chart(document.getElementById('c1p'),{type:'pie',data:{labels:['VM $337K','Storage $206K','SQL MI $176K','SQL DB $91K','Backup $54K','Databricks $35K','其他 $340K'],datasets:[{data:[337,206,176,91,54,35,340],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:11}}}}}});
 new Chart(document.getElementById('c1b'),{type:'bar',data:{labels:['Virtual Machines','VM Licenses','Total VM'],datasets:[{data:[337,23,360],backgroundColor:['#2b6cb0','#63b3ed','#1a365d'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}}}});
@@ -241,6 +242,7 @@ new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['SSHK-GA','HK'
 new Chart(document.getElementById('c3p'),{type:'pie',data:{labels:['SSHK-GA $156K','HK $154K','SG $129K','MY $127K','TH $118K','其他 $555K'],datasets:[{data:[156,154,129,127,118,555],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:11}}}}}});
 new Chart(document.getElementById('c4'),{type:'bar',data:{labels:['P 生产','U 未知','R 灾备','D 开发','S 暂存','N 网络','无标签','A 验收'],datasets:[{data:[508,116,90,57,36,16,51,1],backgroundColor:['#2b6cb0','#e53e3e','#38a169','#d69e2e','#6b21a8','#4299e1','#a0aec0','#7e22ce'],borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
 new Chart(document.getElementById('c5'),{type:'pie',data:{labels:['Kyndryl $1,794','MongoDB $1,161','Red Hat $751','Anthropic $201','CheckPoint $184','其他 $298'],datasets:[{data:[1794,1161,751,201,184,298],backgroundColor:['#2b6cb0','#38a169','#d69e2e','#e53e3e','#6b21a8','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:10}}}}});
+});
 </script>
 </body>
 </html>
