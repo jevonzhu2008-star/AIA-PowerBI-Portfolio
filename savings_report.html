@@ -171,12 +171,14 @@ tr:hover{background:#f1f5f9}
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function initCharts() {
+if (typeof Chart === 'undefined') { setTimeout(initCharts, 100); return; }
 new Chart(document.getElementById('c1'),{type:'doughnut',data:{labels:['Reservation $1,057K','Architecture $679K','Reselection $470K','Rightsizing $212K'],datasets:[{data:[1056978,678786,470366,212232],backgroundColor:['#2b6cb0','#38a169','#d69e2e','#e53e3e'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,usePointStyle:true,font:{size:11}}}},cutout:'58%'}});
 new Chart(document.getElementById('c2'),{type:'bar',data:{labels:['Reservation','Architecture','Reselection','Rightsizing'],datasets:[{data:[1057,679,470,212],backgroundColor:['#2b6cb0','#38a169','#d69e2e','#e53e3e'],borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}}}});
 new Chart(document.getElementById('c3'),{type:'bar',data:{labels:['HK','SSHK-GA','CN','KR','TH','MY','SG','AU','VN','ID','SSHK-PE','AH-SG'],datasets:[{data:[664,433,229,150,127,115,111,91,73,67,64,63],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#4299e1','#63b3ed','#90cdf4','#553c9a','#6b21a8','#7e22ce','#9333ea','#a855f7'],borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#f1f3f5'},ticks:{callback:v=>'$'+v+'K'}},y:{grid:{display:false}}}}});
 new Chart(document.getElementById('c4'),{type:'pie',data:{labels:['HK $664K','SSHK-GA $433K','CN $229K','KR $150K','其他 $942K'],datasets:[{data:[664,433,229,150,942],backgroundColor:['#1a365d','#2b6cb0','#2c5282','#3182ce','#e2e8f0'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,font:{size:11}}}}}});
-});
+}
+window.addEventListener('load', initCharts);
 </script>
 </body>
 </html>
