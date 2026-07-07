@@ -663,14 +663,14 @@
             position: relative;
             overflow: visible;
             width: 100%;
-            padding: 0 10px;
+            padding: 0;
         }
         .carousel-track {
             display: flex;
             align-items: center;
             transition: transform 0.5s var(--ease-out);
             will-change: transform;
-            gap: 8px;
+            gap: 0;
         }
         .carousel-item {
             flex: 0 0 78%;
@@ -734,8 +734,8 @@
             transform: translateY(-50%) scale(1.08);
         }
         .carousel-btn:active { transform: translateY(-50%) scale(0.95); }
-        .carousel-prev { left: -8px; }
-        .carousel-next { right: -8px; }
+        .carousel-prev { left: 8px; }
+        .carousel-next { right: 8px; }
         .carousel-indicator {
             display: flex;
             align-items: center;
@@ -786,12 +786,12 @@
             .carousel-item { flex: 0 0 85%; }
             .carousel-item.active { transform: scale(1.17); }
             .carousel-item.dim { transform: scale(0.75); }
-            .carousel-track { gap: 6px; }
+            .carousel-track { gap: 0; }
             .carousel-btn { width: 36px; height: 36px; }
             .carousel-btn svg { width: 18px; height: 18px; }
             .carousel-prev { left: -4px; }
             .carousel-next { right: -4px; }
-            .carousel-viewport { margin: 0; }
+            .carousel-viewport { margin: 0; overflow: visible; }
             .carousel-indicator { margin-top: 50px; }
         }
             .carousel-btn { width: 34px; height: 34px; }
@@ -1494,13 +1494,12 @@
                     var viewW = viewport.offsetWidth;
                     if (viewW <= 0) { viewW = w.offsetWidth; }
                     var itemW = viewW * 0.78;
-                    var step = itemW;
-                    var gap = 8;
+                    var step = itemW * 0.7;
                     var currentIdx = -1;
                     items.forEach(function(item, i) { if (item.classList.contains('active')) currentIdx = i; });
                     if (currentIdx === -1) currentIdx = 0;
                     var offset = -(currentIdx * step) + (viewW - itemW) / 2;
-                    offset = Math.max(-((items.length - 1) * step + gap * (items.length - 1)) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
+                    offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                     track.style.transform = 'translateX(' + offset + 'px)';
                     items.forEach(function(item, i) {
                         var dist = i - currentIdx;
@@ -1547,10 +1546,9 @@
                 var viewW = viewport.offsetWidth;
                 if (viewW <= 0) { viewW = carousel.offsetWidth; }
                 var itemW = viewW * 0.78;
-                var step = itemW;
-                var gap = 8;
-                var offset = -(currentIdx * step + gap * currentIdx) + (viewW - itemW) / 2;
-                offset = Math.max(-((items.length - 1) * step + gap * (items.length - 1)) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
+                var step = itemW * 0.7;
+                var offset = -(currentIdx * step) + (viewW - itemW) / 2;
+                offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                 track.style.transform = 'translateX(' + offset + 'px)';
 
                 var introTab = activePanel.querySelector('.card-tab[data-card="intro"]');
@@ -1839,8 +1837,7 @@
                 var viewport = getViewport();
                 var viewW = viewport.offsetWidth;
                 var itemW = viewW * 0.78;
-                var gap = 8;
-                var step = itemW + gap;
+                var step = itemW * 0.7;
                 var offset = -(current * step) + (viewW - itemW) / 2;
                 // Clamp: allow positive (center first) to negative (center last)
                 var minOffset = -((total - 1) * step) + (viewW - itemW) / 2;
@@ -1932,8 +1929,7 @@
                         var viewport = w.querySelector('.carousel-viewport');
                         var viewW = viewport.offsetWidth;
                         var itemW = viewW * 0.78;
-                        var gap = 8;
-                        var step = itemW + gap;
+                        var step = itemW * 0.7;
                         var offset = -(curIdx * step) + (viewW - itemW) / 2;
                         offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                         track.style.transform = 'translateX(' + offset + 'px)';
@@ -1953,7 +1949,7 @@
                             var vp = w.querySelector('.carousel-viewport');
                             var vw = vp.offsetWidth;
                             var iw = vw * 0.78;
-                            var st = iw + 8;
+                            var st = iw * 0.7;
                             var off = -(nxt * st) + (vw - iw) / 2;
                             off = Math.max(-((allItems.length - 1) * st) + (vw - iw) / 2, Math.min((vw - iw) / 2, off));
                             tr.style.transform = 'translateX(' + off + 'px)';
