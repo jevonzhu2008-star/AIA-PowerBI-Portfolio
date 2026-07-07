@@ -1496,7 +1496,7 @@
                     var viewW = viewport.offsetWidth;
                     if (viewW <= 0) { viewW = w.offsetWidth; }
                     var itemW = viewW * 0.88;
-                    var step = viewW * 0.88;
+                    var step = viewW * 0.66;
                     var currentIdx = -1;
                     items.forEach(function(item, i) { if (item.classList.contains('active')) currentIdx = i; });
                     if (currentIdx === -1) currentIdx = 0;
@@ -1548,7 +1548,7 @@
                 var viewW = viewport.offsetWidth;
                 if (viewW <= 0) { viewW = carousel.offsetWidth; }
                 var itemW = viewW * 0.88;
-                var step = viewW * 0.88;
+                var step = viewW * 0.66;
                 var offset = -(currentIdx * step) + (viewW - itemW) / 2;
                 offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                 track.style.transform = 'translateX(' + offset + 'px)';
@@ -1839,7 +1839,7 @@
                 var viewport = getViewport();
                 var viewW = viewport.offsetWidth;
                 var itemW = viewW * 0.88;
-                var step = viewW * 0.88;
+                var step = viewW * 0.66;
                 var offset = -(current * step) + (viewW - itemW) / 2;
                 // Clamp: allow positive (center first) to negative (center last)
                 var minOffset = -((total - 1) * step) + (viewW - itemW) / 2;
@@ -1931,7 +1931,7 @@
                         var viewport = w.querySelector('.carousel-viewport');
                         var viewW = viewport.offsetWidth;
                         var itemW = viewW * 0.88;
-                        var step = viewW * 0.88;
+                        var step = viewW * 0.66;
                         var offset = -(curIdx * step) + (viewW - itemW) / 2;
                         offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                         track.style.transform = 'translateX(' + offset + 'px)';
@@ -1951,7 +1951,7 @@
                             var vp = w.querySelector('.carousel-viewport');
                             var vw = vp.offsetWidth;
                             var iw = vw * 0.88;
-                            var st = vw * 0.88;
+                            var st = vw * 0.66;
                             var off = -(nxt * st) + (vw - iw) / 2;
                             off = Math.max(-((allItems.length - 1) * st) + (vw - iw) / 2, Math.min((vw - iw) / 2, off));
                             tr.style.transform = 'translateX(' + off + 'px)';
