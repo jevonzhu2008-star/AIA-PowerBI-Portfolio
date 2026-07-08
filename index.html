@@ -311,7 +311,7 @@
             padding: 1px 10px; border-radius: 10px; letter-spacing: 0.04em;
             white-space: nowrap;
         }
-        .current-report .cr-tag:empty { display: none; }
+        .current-report .cr-tag { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
         .current-report .cr-tag.监控 { background: rgba(79,172,254,0.15); color: var(--color-profile); }
         .current-report .cr-tag.分析 { background: rgba(244,166,74,0.15); color: var(--color-report); }
         .current-report .cr-tag.profile { background: rgba(79,172,254,0.15); color: var(--color-profile); }
@@ -1569,29 +1569,25 @@
             var cardKey = '';
 
             if (secIdx === '1') {
-                // Others section — use carousel active item title
+                // Others section — carousel title goes into capsule
                 var activePanel = content ? content.querySelector('.main-panel.active') : null;
                 if (activePanel) {
                     var activeItem = activePanel.querySelector('.carousel-item.active');
                     if (activeItem) {
                         var h2 = activeItem.querySelector('.card-header h2');
                         if (h2) {
-                            mainName = h2.textContent || '';
-                            mainName = mainName.replace(/\s+/g, ' ').trim();
+                            cardName = h2.textContent || '';
+                            cardName = cardName.replace(/\s+/g, ' ').trim();
                         }
                     }
                     var activeMain = content ? content.querySelector('.main-tab.active') : null;
                     var mIdx = activeMain ? activeMain.dataset.main : '0';
                     var key = '1-' + mIdx;
                     var fallback = mainLabels[key] || '';
-                    if (fallback && mainName) {
-                        mainName = fallback + ' · ' + mainName;
-                    } else if (fallback) {
-                        mainName = fallback;
-                    }
-                    // Use main-tab name as tag
-                    cardKey = mIdx === '0' ? '监控' : '分析';
+                    mainName = fallback || '';
                 }
+                // Set cardKey to the carousel title so it shows in capsule
+                cardKey = cardName || (mIdx === '0' ? '监控' : '分析');
             } else {
                 var activeMain = content ? content.querySelector('.main-tab.active') : null;
                 var mIdx = activeMain ? activeMain.dataset.main : '0';
