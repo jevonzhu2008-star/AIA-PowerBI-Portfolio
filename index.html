@@ -344,6 +344,80 @@
         .section-tab .icon { width: 16px; height: 16px; opacity: 0.7; }
         .main-tab .icon { width: 16px; height: 16px; display: block; }
 
+        /* ── Collapsible Navigation ── */
+        .nav-collapse {
+            transition: max-height 0.5s var(--ease-out), margin-top 0.5s var(--ease-out),
+                        margin-bottom 0.5s var(--ease-out), opacity 0.35s var(--ease-out);
+            overflow: hidden;
+            max-height: 500px;
+        }
+        .nav-collapse.nav-hidden {
+            max-height: 0 !important;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .nav-trigger {
+            position: fixed; z-index: 99;
+            left: 0; top: 20%;
+            transform: translateY(-50%) translateX(-100%);
+            display: flex; align-items: center; gap: 8px;
+            padding: 12px 14px 12px 10px;
+            border: none;
+            border-radius: 0 14px 14px 0;
+            background: linear-gradient(135deg, rgba(233,69,96,0.18) 0%, rgba(18,18,30,0.92) 60%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--color-text-nav); cursor: pointer;
+            font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.03em;
+            transition: transform 0.45s var(--ease-out), background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(233,69,96,0.08);
+            white-space: nowrap;
+            border-left: 3px solid var(--color-primary);
+        }
+        .nav-trigger.visible {
+            transform: translateY(-50%) translateX(0);
+            border-left-color: var(--color-primary);
+            box-shadow: 4px 0 30px rgba(233,69,96,0.2), 0 0 0 1px rgba(233,69,96,0.15);
+            animation: triggerPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes triggerPulse {
+            0%, 100% { box-shadow: 4px 0 30px rgba(233,69,96,0.2), 0 0 0 1px rgba(233,69,96,0.15); }
+            50% { box-shadow: 4px 0 40px rgba(233,69,96,0.35), 0 0 0 1px rgba(233,69,96,0.25); }
+        }
+        .nav-trigger:hover {
+            background: linear-gradient(135deg, rgba(233,69,96,0.28) 0%, rgba(30,20,40,0.95) 70%);
+            color: var(--color-primary);
+            border-left-color: var(--color-primary);
+            box-shadow: 4px 0 40px rgba(233,69,96,0.3), 0 0 0 1px rgba(233,69,96,0.2);
+            animation: none;
+        }
+        .nav-trigger svg {
+            width: 20px; height: 20px; flex-shrink: 0;
+            filter: drop-shadow(0 0 6px rgba(233,69,96,0.3));
+        }
+        .nav-trigger .tr-icon-wrap {
+            display: flex; align-items: center; justify-content: center;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: rgba(233,69,96,0.12);
+            transition: background 0.3s;
+        }
+        .nav-trigger:hover .tr-icon-wrap { background: rgba(233,69,96,0.2); }
+        .nav-trigger .tr-text {
+            display: flex; flex-direction: column; line-height: 1.2;
+        }
+        .nav-trigger .tr-text .tr-main {
+            font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.8);
+        }
+        .nav-trigger .tr-text .tr-sub {
+            font-size: 0.58rem; font-weight: 400; color: rgba(255,255,255,0.3);
+            letter-spacing: 0.06em;
+        }
+        .nav-trigger:hover .tr-text .tr-main { color: var(--color-primary); }
+
         .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
         .section-content { display: none; animation: none; }
         .section-content.active { display: block; animation: slideUp 0.4s var(--ease-out) both; }
@@ -821,7 +895,17 @@
     </div>
 </header>
 
-<div class="container section-outer">
+<button class="nav-trigger" id="navTrigger" title="展开导航" type="button">
+    <span class="tr-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </span>
+    <span class="tr-text">
+        <span class="tr-main">展开导航</span>
+        <span class="tr-sub">MENU</span>
+    </span>
+</button>
+
+<div class="container section-outer nav-collapse" id="sectionTabsWrap">
     <nav class="section-tabs" role="tablist" aria-label="主题切换">
         <button class="section-tab active" role="tab" aria-selected="true" data-section="0">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
@@ -840,7 +924,7 @@
 
 <!-- ════ Section 0 ════ -->
 <div class="section-content active" data-section="0">
-    <div class="container main-tabs-outer">
+    <div class="nav-collapse" id="mainTabsWrap0"><div class="container main-tabs-outer">
         <nav class="main-tabs" role="tablist" aria-label="报表分类">
             <button class="main-tab active" role="tab" aria-selected="true" data-main="0">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"/><path d="M16 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="M5 8V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg>
@@ -859,7 +943,7 @@
                 Cloud Cost Management <span class="tab-hint">成本管理</span>
             </button>
         </nav>
-    </div>
+    </div></div>
 
     <main class="content-wrapper">
 
@@ -1163,7 +1247,7 @@
 
 <!-- ════ Section 1: Others ════ -->
 <div class="section-content" data-section="1">
-    <div class="container main-tabs-outer">
+    <div class="nav-collapse" id="mainTabsWrap1"><div class="container main-tabs-outer">
         <nav class="main-tabs" role="tablist" aria-label="报表分类">
             <button class="main-tab active" role="tab" aria-selected="true" data-main="0">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
@@ -1174,7 +1258,7 @@
                 Operational Analytics <span class="tab-hint">运营分析</span>
             </button>
         </nav>
-    </div>
+    </div></div>
 
     <main class="content-wrapper">
 
@@ -1410,6 +1494,62 @@
             if (btn) btn.classList.remove('spinning');
         }
     };
+
+    /* ── Collapsible Navigation: auto-hide 2s after tab click ── */
+    (function() {
+        var hideTimer = null;
+        var HIDE_DELAY = 2000; /* 2 seconds */
+
+        function showNav() {
+            if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+            document.querySelectorAll('.nav-collapse').forEach(function(el) {
+                el.classList.remove('nav-hidden');
+            });
+            document.getElementById('navTrigger').classList.remove('visible');
+        }
+
+        function scheduleHide() {
+            if (hideTimer) { clearTimeout(hideTimer); }
+            hideTimer = setTimeout(function() {
+                document.querySelectorAll('.nav-collapse').forEach(function(el) {
+                    el.classList.add('nav-hidden');
+                });
+                document.getElementById('navTrigger').classList.add('visible');
+                hideTimer = null;
+            }, HIDE_DELAY);
+        }
+
+        // Trigger on section-tab and main-tab clicks only (not card-tabs / sub-tabs)
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.section-tab, .main-tab');
+            if (target) {
+                showNav();
+                scheduleHide();
+            }
+        });
+
+        // Nav trigger — hover to auto-show, click also supported
+        var navBtn = document.getElementById('navTrigger');
+
+        navBtn.addEventListener('mouseenter', function() {
+            showNav();
+            scheduleHide();
+        });
+
+        navBtn.addEventListener('click', function() {
+            showNav();
+        });
+
+        // Also show nav when hovering near left edge if hidden
+        document.addEventListener('mousemove', function(e) {
+            if (e.clientX < 20) {
+                var trigger = document.getElementById('navTrigger');
+                if (trigger && trigger.classList.contains('visible')) {
+                    trigger.style.opacity = '1';
+                }
+            }
+        });
+    })();
 
     /* ── Section Tabs ── */
     var sectionTabs = Array.from(document.querySelectorAll('.section-tab'));
