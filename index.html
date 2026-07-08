@@ -2163,14 +2163,9 @@
             });
 
             function restartAuto() {
-                if (timers[key]) { clearInterval(timers[key]); delete timers[key]; }
-                if (total < 2) return;
-                timers[key] = setInterval(function() {
-                    if (document.hidden) return;
-                    nextItem();
-                }, 10000);
+                // Auto-advance disabled
             }
-            restartAuto();
+            // Do not start auto-advance
 
             wrapper.addEventListener('mouseenter', function() {
                 if (timers[key]) { clearInterval(timers[key]); delete timers[key]; }
@@ -2211,36 +2206,6 @@
                         var offset = -(curIdx * step) + (viewW - itemW) / 2;
                         offset = Math.max(-((items.length - 1) * step) + (viewW - itemW) / 2, Math.min((viewW - itemW) / 2, offset));
                         track.style.transform = 'translateX(' + offset + 'px)';
-                        timers[k] = setInterval(function() {
-                            if (document.hidden) return;
-                            var tr = w.querySelector('.carousel-track');
-                            var allItems = tr.querySelectorAll('.carousel-item');
-                            var dots = w.querySelectorAll('.carousel-dot');
-                            var ci = -1;
-                            allItems.forEach(function(item, i) {
-                                if (item.classList.contains('active')) ci = i;
-                            });
-                            if (ci === -1) ci = 0;
-                            var nxt = (ci + 1) % allItems.length;
-                            dots[ci].classList.remove('active');
-                            dots[nxt].classList.add('active');
-                            var vp = w.querySelector('.carousel-viewport');
-                            var vw = vp.offsetWidth;
-                            var iw = vw * 0.88;
-                            var st = vw * 0.66;
-                            var off = -(nxt * st) + (vw - iw) / 2;
-                            off = Math.max(-((allItems.length - 1) * st) + (vw - iw) / 2, Math.min((vw - iw) / 2, off));
-                            tr.style.transform = 'translateX(' + off + 'px)';
-                            allItems.forEach(function(item, i) {
-                                var dist = i - nxt;
-                                if (dist === 0) item.className = 'carousel-item active';
-                                else if (Math.abs(dist) === 1) item.className = 'carousel-item dim';
-                                else item.className = 'carousel-item hidden';
-                            });
-                            var c = w.querySelector('.carousel-counter');
-                            if (c) c.textContent = (nxt + 1) + ' / ' + allItems.length;
-                            tr.querySelectorAll('video').forEach(function(v) { v.pause(); });
-                        }, 10000);
                     });
                 }, 200);
             });
