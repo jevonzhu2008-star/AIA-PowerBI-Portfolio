@@ -314,6 +314,16 @@
         .current-report .cr-tag { max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
         .current-report .cr-tag.监控 { background: rgba(79,172,254,0.15); color: var(--color-profile); }
         .current-report .cr-tag.分析 { background: rgba(244,166,74,0.15); color: var(--color-report); }
+        .current-report .cr-tag.cr-c0 { background: rgba(79,172,254,0.15); color: var(--color-profile); }
+        .current-report .cr-tag.cr-c1 { background: rgba(244,166,74,0.15); color: var(--color-report); }
+        .current-report .cr-tag.cr-c2 { background: rgba(80,200,120,0.15); color: #50c878; }
+        .current-report .cr-tag.cr-c3 { background: rgba(160,120,240,0.15); color: #a078f0; }
+        .current-report .cr-tag.cr-c4 { background: rgba(233,69,96,0.12); color: #f06a80; }
+        .current-report .cr-tag.cr-c5 { background: rgba(245,166,35,0.12); color: var(--color-accent); }
+        .current-report .cr-tag.cr-c6 { background: rgba(100,200,230,0.15); color: #64c8e6; }
+        .current-report .cr-tag.cr-c7 { background: rgba(255,150,100,0.15); color: #ff9664; }
+        .current-report .cr-tag.cr-c8 { background: rgba(200,130,200,0.15); color: #c882c8; }
+        .current-report .cr-tag.cr-c9 { background: rgba(130,200,180,0.15); color: #82c8b4; }
         .current-report .cr-tag.profile { background: rgba(79,172,254,0.15); color: var(--color-profile); }
         .current-report .cr-tag.report  { background: rgba(244,166,74,0.15);  color: var(--color-report); }
         .current-report .cr-tag.intro   { background: rgba(233,69,96,0.12);  color: #f06a80; }
@@ -1319,11 +1329,11 @@
 
                     <div class="carousel-item active">
                         <div class="report-card">
-                            <div class="card-header"><h2><svg class="pbi-icon-carousel" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="3" height="10" rx="0.6"/><rect x="10.5" y="5" width="3" height="13" rx="0.6"/><rect x="16" y="2" width="3" height="16" rx="0.6"/></svg>Group Applications Monitoring Dashboard</h2></div>
+                            <div class="card-header"><h2><svg class="pbi-icon-carousel" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="3" height="10" rx="0.6"/><rect x="10.5" y="5" width="3" height="13" rx="0.6"/><rect x="16" y="2" width="3" height="16" rx="0.6"/></svg>Group Applications Monitoring</h2></div>
                             <div class="card-desc">全面监控各组应用系统的运行状态，包括服务可用性、响应时间、错误率及应用健康评分等关键指标。</div>
                             <div class="card-body">
                                 <div class="loader" id="loader-s1-0"><div class="spinner"></div><div class="load-text">正在加载报告<span class="load-dot"></span><span class="load-dot"></span><span class="load-dot"></span></div></div>
-                                <iframe id="iframe-s1-0" title="Group Applications Monitoring Dashboard" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSection48e0148969a7a9e57dbf&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-0')"></iframe>
+                                <iframe id="iframe-s1-0" title="Group Applications Monitoring" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&amp;pageName=ReportSection48e0148969a7a9e57dbf&amp;language=en-US" allowFullScreen="true" onload="loaderHide('s1-0')"></iframe>
                             </div>
                         </div>
                     </div>
@@ -1594,6 +1604,13 @@
                 // Set cardKey to the carousel title so it shows in capsule
                 cardKey = cardName || (mIdx === '0' ? '监控' : '分析');
                 var tagClass = cardName ? '' : '监控'; // fallback tag class color
+                // Assign a color index based on carousel position for varied colors
+                if (activeItem) {
+                    var allItems = activePanel.querySelectorAll('.carousel-item');
+                    var colorIdx = 0;
+                    allItems.forEach(function(item, i) { if (item === activeItem) colorIdx = i; });
+                    tagClass = 'cr-c' + (colorIdx % 10);
+                }
             } else {
                 var activeMain = content ? content.querySelector('.main-tab.active') : null;
                 var mIdx = activeMain ? activeMain.dataset.main : '0';
@@ -1612,10 +1629,10 @@
             document.getElementById('crMain').textContent = mainName;
             var tag = document.getElementById('crTag');
             tag.textContent = cardKey;
-            // Set class: for Others section use fallback color, for FinOps use cardKey directly
+            // Set class: for Others section use dynamic color index, for FinOps use cardKey directly
             var cls = 'cr-tag';
             if (secIdx === '1') {
-                cls += cardName ? ' 监控' : ' 监控';
+                cls += ' ' + (tagClass || 'cr-c0');
             } else if (cardKey) {
                 cls += ' ' + cardKey;
             }
