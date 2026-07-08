@@ -469,6 +469,7 @@
         .nav-trigger:hover .tr-text .tr-main { color: var(--color-primary); }
 
         .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
+        .content-wrapper.cw-hidden { display: none !important; }
         .section-content { display: none; animation: none; }
         .section-content.active { display: block; animation: slideUp 0.4s var(--ease-out) both; }
         .main-panel { display: none; animation: none; }
@@ -1648,6 +1649,9 @@
             });
             document.getElementById('navTrigger').classList.remove('visible');
             document.getElementById('currentReport').classList.remove('visible');
+            document.querySelectorAll('.content-wrapper').forEach(function(el) {
+                el.classList.add('cw-hidden');
+            });
         }
 
         function scheduleHide() {
@@ -1659,6 +1663,9 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
+                document.querySelectorAll('.content-wrapper').forEach(function(el) {
+                    el.classList.remove('cw-hidden');
+                });
                 hideTimer = null;
             }, HIDE_DELAY);
         }
