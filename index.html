@@ -1716,6 +1716,9 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
+                document.querySelectorAll('.content-wrapper').forEach(function(el) {
+                    el.classList.remove('cw-hidden');
+                });
             }, 2000);
         });
 
