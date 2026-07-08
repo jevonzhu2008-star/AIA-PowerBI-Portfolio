@@ -1603,7 +1603,7 @@
                 cardKey = activeCard ? activeCard.dataset.card : '';
                 var cardLabels = {intro:'Intro', profile:'Profile', report:'Report', business:'Business', doc:'Document', analysis:'Analysis'};
                 cardName = cardLabels[cardKey] || '';
-                mainName = mainLabel ? (mainLabel + (cardName ? ' · ' + cardName : '')) : '';
+                mainName = mainLabel || '';
             }
 
             document.getElementById('crSection').textContent = secName;
