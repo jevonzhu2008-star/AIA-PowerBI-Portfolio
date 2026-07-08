@@ -1517,6 +1517,11 @@
 (function() {
     'use strict';
 
+    /* ── Nav visible → hide content immediately ── */
+    document.querySelectorAll('.content-wrapper').forEach(function(el) {
+        el.classList.add('cw-hidden');
+    });
+
     /* ── Pause other videos when one plays ── */
     window.pauseOtherVideos = function(current) {
         document.querySelectorAll('.card-video video').forEach(function(v) {
