@@ -1559,24 +1559,55 @@
             var activeSec = document.querySelector('.section-tab.active');
             var secIdx = activeSec ? activeSec.dataset.section : '0';
             var content = document.querySelector('.section-content.active');
-            var activeMain = content ? content.querySelector('.main-tab.active') : null;
-            var mIdx = activeMain ? activeMain.dataset.main : '0';
-            var key = secIdx + '-' + mIdx;
-            var mainName = mainLabels[key] || '';
             var secName = secLabels[parseInt(secIdx)] || '';
 
-            var panel = content ? content.querySelector('.main-panel.active') : null;
-            var activeCard = panel ? panel.querySelector('.card-tab.active') : null;
-            var cardKey = activeCard ? activeCard.dataset.card : '';
-            var cardLabels = {intro:'Intro', profile:'Profile', report:'Report', business:'Business', doc:'Document', analysis:'Analysis'};
-            var cardName = cardLabels[cardKey] || '';
+            var mainName = '';
+            var cardName = '';
+            var cardKey = '';
+
+            if (secIdx === '1') {
+                // Others section — use carousel active item title
+                var activePanel = content ? content.querySelector('.main-panel.active') : null;
+                if (activePanel) {
+                    var activeItem = activePanel.querySelector('.carousel-item.active');
+                    if (activeItem) {
+                        var h2 = activeItem.querySelector('.card-header h2');
+                        if (h2) {
+                            mainName = h2.textContent || '';
+                            // Clean up extra whitespace from SVG being serialized
+                            mainName = mainName.replace(/\s+/g, ' ').trim();
+                        }
+                        var activeMain = content ? content.querySelector('.main-tab.active') : null;
+                        var mIdx = activeMain ? activeMain.dataset.main : '0';
+                        var key = '1-' + mIdx;
+                        var fallback = mainLabels[key] || '';
+                        if (fallback && mainName.indexOf(fallback) === -1) {
+                            mainName = fallback + ' · ' + mainName;
+                        }
+                    }
+                }
+            } else {
+                var activeMain = content ? content.querySelector('.main-tab.active') : null;
+                var mIdx = activeMain ? activeMain.dataset.main : '0';
+                var key = secIdx + '-' + mIdx;
+                var mainLabel = mainLabels[key] || '';
+
+                var panel = content ? content.querySelector('.main-panel.active') : null;
+                var activeCard = panel ? panel.querySelector('.card-tab.active') : null;
+                cardKey = activeCard ? activeCard.dataset.card : '';
+                var cardLabels = {intro:'Intro', profile:'Profile', report:'Report', business:'Business', doc:'Document', analysis:'Analysis'};
+                cardName = cardLabels[cardKey] || '';
+                mainName = mainLabel ? (mainLabel + (cardName ? ' · ' + cardName : '')) : '';
+            }
 
             document.getElementById('crSection').textContent = secName;
-            document.getElementById('crMain').textContent = mainName ? (mainName + (cardName ? ' · ' + cardName : '')) : '';
+            document.getElementById('crMain').textContent = mainName;
             var tag = document.getElementById('crTag');
             tag.textContent = cardKey;
             tag.className = 'cr-tag' + (cardKey ? ' ' + cardKey : '');
         }
+
+        window.updateReportBadge = updateCurrentReport;
 
         function showNav() {
             if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
@@ -2063,6 +2094,10 @@
                 layoutItems();
                 track.querySelectorAll('video').forEach(function(v) { v.pause(); });
                 restartAuto();
+                // Update report badge if section 1 nav is hidden
+                if (document.getElementById('sectionTabsWrap').classList.contains('nav-hidden') && typeof window.updateReportBadge === 'function') {
+                    window.updateReportBadge();
+                }
             }
 
             function nextItem() { goTo((current + 1) % total); }
