@@ -314,16 +314,6 @@
         .current-report .cr-tag { max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
         .current-report .cr-tag.监控 { background: rgba(79,172,254,0.15); color: var(--color-profile); }
         .current-report .cr-tag.分析 { background: rgba(244,166,74,0.15); color: var(--color-report); }
-        .current-report .cr-tag.cr-c0 { background: rgba(79,172,254,0.15); color: var(--color-profile); }
-        .current-report .cr-tag.cr-c1 { background: rgba(244,166,74,0.15); color: var(--color-report); }
-        .current-report .cr-tag.cr-c2 { background: rgba(80,200,120,0.15); color: #50c878; }
-        .current-report .cr-tag.cr-c3 { background: rgba(160,120,240,0.15); color: #a078f0; }
-        .current-report .cr-tag.cr-c4 { background: rgba(233,69,96,0.12); color: #f06a80; }
-        .current-report .cr-tag.cr-c5 { background: rgba(245,166,35,0.12); color: var(--color-accent); }
-        .current-report .cr-tag.cr-c6 { background: rgba(100,200,230,0.15); color: #64c8e6; }
-        .current-report .cr-tag.cr-c7 { background: rgba(255,150,100,0.15); color: #ff9664; }
-        .current-report .cr-tag.cr-c8 { background: rgba(200,130,200,0.15); color: #c882c8; }
-        .current-report .cr-tag.cr-c9 { background: rgba(130,200,180,0.15); color: #82c8b4; }
         .current-report .cr-tag.profile { background: rgba(79,172,254,0.15); color: var(--color-profile); }
         .current-report .cr-tag.report  { background: rgba(244,166,74,0.15);  color: var(--color-report); }
         .current-report .cr-tag.intro   { background: rgba(233,69,96,0.12);  color: #f06a80; }
@@ -469,7 +459,6 @@
         .nav-trigger:hover .tr-text .tr-main { color: var(--color-primary); }
 
         .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
-        .content-wrapper.cw-hidden { display: none !important; }
         .section-content { display: none; animation: none; }
         .section-content.active { display: block; animation: slideUp 0.4s var(--ease-out) both; }
         .main-panel { display: none; animation: none; }
@@ -1517,11 +1506,6 @@
 (function() {
     'use strict';
 
-    /* ── Nav visible → hide content immediately ── */
-    document.querySelectorAll('.content-wrapper').forEach(function(el) {
-        el.classList.add('cw-hidden');
-    });
-
     /* ── Pause other videos when one plays ── */
     window.pauseOtherVideos = function(current) {
         document.querySelectorAll('.card-video video').forEach(function(v) {
@@ -1610,13 +1594,6 @@
                 // Set cardKey to the carousel title so it shows in capsule
                 cardKey = cardName || (mIdx === '0' ? '监控' : '分析');
                 var tagClass = cardName ? '' : '监控'; // fallback tag class color
-                // Assign a color index based on carousel position for varied colors
-                if (activeItem) {
-                    var allItems = activePanel.querySelectorAll('.carousel-item');
-                    var colorIdx = 0;
-                    allItems.forEach(function(item, i) { if (item === activeItem) colorIdx = i; });
-                    tagClass = 'cr-c' + (colorIdx % 10);
-                }
             } else {
                 var activeMain = content ? content.querySelector('.main-tab.active') : null;
                 var mIdx = activeMain ? activeMain.dataset.main : '0';
@@ -1635,10 +1612,17 @@
             document.getElementById('crMain').textContent = mainName;
             var tag = document.getElementById('crTag');
             tag.textContent = cardKey;
-            // Set class: for Others section use dynamic color index, for FinOps use cardKey directly
+            // Set class: for Others section use fallback color, for FinOps use cardKey directly
             var cls = 'cr-tag';
             if (secIdx === '1') {
-                cls += ' ' + (tagClass || 'cr-c0');
+                // Different color per carousel index — cycle through distinct colors
+                var activePanel = content ? content.querySelector('.main-panel.active') : null;
+                var activeItem = activePanel ? activePanel.querySelector('.carousel-item.active') : null;
+                var allItems = activePanel ? activePanel.querySelectorAll('.carousel-item') : [];
+                var itemIdx = 0;
+                allItems.forEach(function(item, i) { if (item === activeItem) itemIdx = i; });
+                var carColors = ['监控', '分析', 'report', 'intro', 'doc', 'analysis', 'business', 'profile', 'report', 'intro'];
+                cls += ' ' + (carColors[itemIdx] || '监控');
             } else if (cardKey) {
                 cls += ' ' + cardKey;
             }
@@ -1654,9 +1638,6 @@
             });
             document.getElementById('navTrigger').classList.remove('visible');
             document.getElementById('currentReport').classList.remove('visible');
-            document.querySelectorAll('.content-wrapper').forEach(function(el) {
-                el.classList.add('cw-hidden');
-            });
         }
 
         function scheduleHide() {
@@ -1668,9 +1649,6 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
-                document.querySelectorAll('.content-wrapper').forEach(function(el) {
-                    el.classList.remove('cw-hidden');
-                });
                 hideTimer = null;
             }, HIDE_DELAY);
         }
@@ -1716,9 +1694,6 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
-                document.querySelectorAll('.content-wrapper').forEach(function(el) {
-                    el.classList.remove('cw-hidden');
-                });
             }, 2000);
         });
 
