@@ -458,7 +458,8 @@
         }
         .nav-trigger:hover .tr-text .tr-main { color: var(--color-primary); }
 
-        .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
+        .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; transition: margin-top 0.5s var(--ease-out); }
+        .content-wrapper.shifted { margin-top: -20px; }
         .section-content { display: none; animation: none; }
         .section-content.active { display: block; animation: slideUp 0.4s var(--ease-out) both; }
         .main-panel { display: none; animation: none; }
@@ -1545,7 +1546,7 @@
     /* ── Collapsible Navigation: auto-hide 2s after tab click ── */
     (function() {
         var hideTimer = null;
-        var HIDE_DELAY = 2000; /* 2 seconds */
+        var HIDE_DELAY = 5000; /* 5 seconds */
 
         // Section / Main-tab label map
         var secLabels = ['Cloud Finance & FinOps', 'Others', 'Tutorials'];
@@ -1631,6 +1632,12 @@
 
         window.updateReportBadge = updateCurrentReport;
 
+        function shiftContentUp(shift) {
+            document.querySelectorAll('.section-content.active .content-wrapper').forEach(function(w) {
+                if (shift) { w.classList.add('shifted'); } else { w.classList.remove('shifted'); }
+            });
+        }
+
         function showNav() {
             if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
             document.querySelectorAll('.nav-collapse').forEach(function(el) {
@@ -1638,6 +1645,7 @@
             });
             document.getElementById('navTrigger').classList.remove('visible');
             document.getElementById('currentReport').classList.remove('visible');
+            shiftContentUp(false);
         }
 
         function scheduleHide() {
@@ -1649,6 +1657,7 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
+                shiftContentUp(true);
                 hideTimer = null;
             }, HIDE_DELAY);
         }
