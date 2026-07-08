@@ -1576,8 +1576,13 @@
                     if (activeItem) {
                         var h2 = activeItem.querySelector('.card-header h2');
                         if (h2) {
-                            cardName = h2.textContent || '';
-                            cardName = cardName.replace(/\s+/g, ' ').trim();
+                            // Extract only text nodes, skip SVG child textContent
+                            var txt = '';
+                            for (var i = 0; i < h2.childNodes.length; i++) {
+                                var n = h2.childNodes[i];
+                                if (n.nodeType === 3) { txt += n.textContent; }
+                            }
+                            cardName = txt.trim() || h2.textContent.replace(/<[^>]+>/g, '').trim();
                         }
                     }
                     var activeMain = content ? content.querySelector('.main-tab.active') : null;
