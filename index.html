@@ -281,6 +281,43 @@
         .hero .disclaimer-badge svg { width: 12px; height: 12px; flex-shrink: 0; opacity: 0.6; }
         .hero.compact .disclaimer-badge { display: none; }
 
+        /* ── Current Report Badge ── */
+        .current-report {
+            display: none; align-items: center; gap: 10px;
+            margin-top: 8px; max-width: 90%;
+            animation: fadeUp 0.4s var(--ease-out) both;
+        }
+        .current-report.visible { display: flex; }
+        .current-report .cr-divider {
+            width: 1px; height: 18px;
+            background: rgba(255,255,255,0.08); flex-shrink: 0;
+        }
+        .current-report .cr-sec {
+            font-size: 0.65rem; font-weight: 500;
+            color: var(--color-text-muted); letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .current-report .cr-sep {
+            font-size: 0.6rem; color: rgba(255,255,255,0.1);
+        }
+        .current-report .cr-main {
+            font-size: 0.75rem; font-weight: 600;
+            color: #c0d0e0; letter-spacing: 0.02em;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .current-report .cr-tag {
+            display: inline-block;
+            font-size: 0.55rem; font-weight: 600; text-transform: uppercase;
+            padding: 1px 10px; border-radius: 10px; letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .current-report .cr-tag.profile { background: rgba(79,172,254,0.15); color: var(--color-profile); }
+        .current-report .cr-tag.report  { background: rgba(244,166,74,0.15);  color: var(--color-report); }
+        .current-report .cr-tag.intro   { background: rgba(233,69,96,0.12);  color: #f06a80; }
+        .current-report .cr-tag.business{ background: rgba(80,200,120,0.12);  color: #50c878; }
+        .current-report .cr-tag.doc     { background: rgba(160,120,240,0.12);  color: #a078f0; }
+        .current-report .cr-tag.analysis{ background: rgba(245,166,35,0.12);  color: var(--color-accent); }
+
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -892,6 +929,13 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01M10.29 20.14l-7.21-7.21c-.57-.57-.57-1.5 0-2.07l7.21-7.21c.57-.57 1.5-.57 2.07 0l7.21 7.21c.57.57.57 1.5 0 2.07l-7.21 7.21c-.57.57-1.5.57-2.07 0z"/></svg>
             模拟演示数据 · 不代表真实业务信息
         </div>
+        <div class="current-report" id="currentReport">
+            <span class="cr-sec" id="crSection"></span>
+            <span class="cr-sep">›</span>
+            <span class="cr-main" id="crMain"></span>
+            <span class="cr-divider"></span>
+            <span class="cr-tag" id="crTag"></span>
+        </div>
     </div>
 </header>
 
@@ -1500,12 +1544,47 @@
         var hideTimer = null;
         var HIDE_DELAY = 2000; /* 2 seconds */
 
+        // Section / Main-tab label map
+        var secLabels = ['Cloud Finance & FinOps', 'Others', 'Tutorials'];
+        var mainLabels = {
+            '0-0': 'Consumption',
+            '0-1': 'Cloud Efficiency Saving',
+            '0-2': 'Cloud & Kyndryl Spend',
+            '0-3': 'Cloud Cost Management',
+            '1-0': 'IT Operations Monitoring',
+            '1-1': 'Operational Analytics'
+        };
+
+        function updateCurrentReport() {
+            var activeSec = document.querySelector('.section-tab.active');
+            var secIdx = activeSec ? activeSec.dataset.section : '0';
+            var content = document.querySelector('.section-content.active');
+            var activeMain = content ? content.querySelector('.main-tab.active') : null;
+            var mIdx = activeMain ? activeMain.dataset.main : '0';
+            var key = secIdx + '-' + mIdx;
+            var mainName = mainLabels[key] || '';
+            var secName = secLabels[parseInt(secIdx)] || '';
+
+            var panel = content ? content.querySelector('.main-panel.active') : null;
+            var activeCard = panel ? panel.querySelector('.card-tab.active') : null;
+            var cardKey = activeCard ? activeCard.dataset.card : '';
+            var cardLabels = {intro:'Intro', profile:'Profile', report:'Report', business:'Business', doc:'Document', analysis:'Analysis'};
+            var cardName = cardLabels[cardKey] || '';
+
+            document.getElementById('crSection').textContent = secName;
+            document.getElementById('crMain').textContent = mainName ? (mainName + (cardName ? ' · ' + cardName : '')) : '';
+            var tag = document.getElementById('crTag');
+            tag.textContent = cardKey;
+            tag.className = 'cr-tag' + (cardKey ? ' ' + cardKey : '');
+        }
+
         function showNav() {
             if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
             document.querySelectorAll('.nav-collapse').forEach(function(el) {
                 el.classList.remove('nav-hidden');
             });
             document.getElementById('navTrigger').classList.remove('visible');
+            document.getElementById('currentReport').classList.remove('visible');
         }
 
         function scheduleHide() {
@@ -1515,9 +1594,22 @@
                     el.classList.add('nav-hidden');
                 });
                 document.getElementById('navTrigger').classList.add('visible');
+                updateCurrentReport();
+                document.getElementById('currentReport').classList.add('visible');
                 hideTimer = null;
             }, HIDE_DELAY);
         }
+
+        // Also update report badge on card-tab clicks
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.section-tab, .main-tab, .card-tab');
+            if (target) {
+                // If nav is hidden, update badge
+                if (document.getElementById('sectionTabsWrap').classList.contains('nav-hidden')) {
+                    updateCurrentReport();
+                }
+            }
+        });
 
         // Trigger on section-tab and main-tab clicks only (not card-tabs / sub-tabs)
         document.addEventListener('click', function(e) {
