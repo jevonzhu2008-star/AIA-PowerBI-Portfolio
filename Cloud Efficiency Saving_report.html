@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据分析报告 — Cloud Efficiency Saving</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #1a365d;
+  --primary-light: #2b6cb0;
+  --accent: #c53030;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #adb5bd;
+  --gray-500: #868e96;
+  --gray-600: #495057;
+  --gray-700: #343a40;
+  --gray-800: #212529;
+  --green: #276749;
+  --red: #c53030;
+  --amber: #b7791f;
+  --blue: #2b6cb0;
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--gray-800);
+  background: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.report { max-width: 1040px; margin: 0 auto; padding: 0 40px 80px; }
+
+.header {
+  padding: 60px 0 40px;
+  border-bottom: 3px solid var(--primary);
+  margin-bottom: 48px;
+}
+
+.header__label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-500); margin-bottom: 12px; }
+.header__title { font-size: 36px; font-weight: 700; line-height: 1.2; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px; }
+.header__subtitle { font-size: 16px; color: var(--gray-500); font-weight: 300; }
+.header__meta { margin-top: 16px; font-size: 12px; color: var(--gray-400); }
+
+.executive-summary {
+  background: var(--gray-50);
+  border-left: 4px solid var(--green);
+  padding: 28px 32px; margin-bottom: 48px;
+  border-radius: 0 4px 4px 0;
+}
+
+.executive-summary__label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+.executive-summary__text { font-size: 18px; font-weight: 400; line-height: 1.5; color: var(--gray-700); }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.kpi-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  padding: 24px 20px;
+  transition: box-shadow 0.2s;
+}
+.kpi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+.kpi-card__label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.kpi-card__value { font-size: 32px; font-weight: 700; color: var(--primary); line-height: 1.1; margin-bottom: 4px; letter-spacing: -0.5px; }
+.kpi-card__value--green { color: var(--green); }
+.kpi-card__value--accent { color: var(--accent); }
+.kpi-card__note { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+.section { margin-bottom: 48px; }
+
+.section__title {
+  font-size: 20px; font-weight: 700; color: var(--primary);
+  margin-bottom: 24px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.section__title-number {
+  font-size: 12px; font-weight: 600; color: #fff;
+  background: var(--primary); width: 24px; height: 24px;
+  border-radius: 50%; display: inline-flex; align-items: center;
+  justify-content: center; margin-right: 4px;
+}
+
+.finding {
+  margin-bottom: 36px; padding: 28px 32px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 6px;
+}
+
+.finding__title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px; line-height: 1.4; }
+.finding__insight { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 12px; }
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+@media (min-width: 800px) { .chart-grid { grid-template-columns: 1fr 1fr; } }
+
+.chart-box {
+  background: #fff; border: 1px solid var(--gray-200);
+  border-radius: 6px; padding: 24px;
+}
+
+.chart-box h3 {
+  font-size: 14px; font-weight: 600; color: var(--gray-600);
+  margin-bottom: 16px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.chart-box canvas { width: 100% !important; max-height: 340px; }
+.chart-box--wide { grid-column: 1 / -1; }
+
+.alert {
+  background: #fffaf0;
+  border: 1px solid #fdecc8;
+  border-left: 4px solid var(--amber);
+  padding: 20px 24px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 12px;
+}
+.alert--green {
+  background: #f0fff4;
+  border-color: #c6f6d5;
+  border-left-color: var(--green);
+}
+.alert--green .alert__title { color: #276749; }
+.alert--green .alert__text { color: #22543d; }
+.alert__title { font-size: 13px; font-weight: 600; color: #92400e; margin-bottom: 4px; }
+.alert__text { font-size: 13px; color: #78350f; line-height: 1.6; }
+
+.table-wrapper { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 6px; margin-top: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead { background: var(--gray-50); }
+th { text-align: left; padding: 10px 14px; font-weight: 600; color: var(--gray-600); border-bottom: 2px solid var(--gray-200); white-space: nowrap; }
+td { padding: 9px 14px; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-50); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.bar-cell { width: 120px; }
+.bar-bg { height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; }
+
+.recommendation {
+  display: flex; gap: 12px;
+  padding: 16px 0; border-bottom: 1px solid var(--gray-100);
+}
+.recommendation:last-child { border-bottom: none; }
+.recommendation__icon { flex-shrink: 0; width: 24px; height: 24px; background: var(--green); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 2px; }
+.recommendation__text { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+.footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--gray-200); font-size: 11px; color: var(--gray-400); text-align: center; }
+
+@media (max-width: 700px) {
+  .report { padding: 0 20px 40px; }
+  .header { padding: 40px 0 24px; }
+  .header__title { font-size: 26px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .finding { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="report">
+
+  <!-- ════════════════ 页眉 ════════════════ -->
+  <header class="header">
+    <div class="header__label">数据分析报告</div>
+    <h1 class="header__title">Cloud Efficiency Saving</h1>
+    <p class="header__subtitle">AIA Group 跨 BU 云成本节省分析 — 四维节省措施全景透视</p>
+    <div class="header__meta">生成日期：2026-07-09 ｜ 数据范围：月度聚合 ｜ 来源：Cloud Efficiency Saving.xlsx ｜ 覆盖 23 个业务线 × 4 种节省措施</div>
+  </header>
+
+  <!-- ════════════════ 核心结论 ════════════════ -->
+  <div class="executive-summary">
+    <div class="executive-summary__label">一句话结论</div>
+    <p class="executive-summary__text">
+      23 个业务线通过四项节省措施累计实现 <strong>$2.42M 成本节省</strong>。
+      <strong>预留实例（Reservation）贡献最大，达 $1.06M（43.7%）</strong>；
+      架构优化（Architecture Optimisation）以 $679K（28.1%）位列第二。
+      HK 和 SSHK - Group Apps 两大 BU 合计贡献 $1.10M（45.3%），是节省的主力军。
+    </p>
+  </div>
+
+  <!-- ════════════════ KPI 概览 ════════════════ -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card__label">总节省金额</div>
+      <div class="kpi-card__value kpi-card__value--green">$2.42M</div>
+      <div class="kpi-card__note">23 个业务线合计</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Reservation</div>
+      <div class="kpi-card__value">$1.06M</div>
+      <div class="kpi-card__note">43.7% · 最大节省杠杆</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Architecture Optimisation</div>
+      <div class="kpi-card__value">$679K</div>
+      <div class="kpi-card__note">28.1% · 可持续性最强</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Top 50 Reselection</div>
+      <div class="kpi-card__value">$472K</div>
+      <div class="kpi-card__note">19.5% · CN 贡献最大</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Rightsizing</div>
+      <div class="kpi-card__value">$212K</div>
+      <div class="kpi-card__note">8.8% · 仍有过配空间</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Top 2 BU 集中度</div>
+      <div class="kpi-card__value kpi-card__value--accent">45.3%</div>
+      <div class="kpi-card__note">HK + SSHK - Group Apps</div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 发现 1：节省措施全景 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">1</span>四种节省措施的总量与结构</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>四种节省措施金额对比</h3>
+        <canvas id="measureChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>节省构成比例</h3>
+        <canvas id="measurePieChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight" style="margin-top:12px;">
+      <strong>🔍 解读：</strong> <strong>Reservation（43.7%）</strong>是最大节省来源，说明预留实例购买策略已产生显著回报。
+      <strong>Architecture Optimisation（28.1%）</strong>位居第二，其节省通过架构重构实现（如降级、缩减、弃用冗余资源），
+      可持续性优于一次性优惠。Top 50 Reselection（19.5%）和 Rightsizing（8.8%）合计占 28.3%，仍有较大挖掘空间，
+      尤其在 CN 和 MY 等 BU 中。
+    </p>
+  </div>
+
+  <!-- ════════════════ 发现 2：BU 排名 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">2</span>Top 8 BU 贡献了 86% 的节省</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box chart-box--wide">
+        <h3>各 BU 四种措施节省汇总排行 · 按 Total 降序</h3>
+        <canvas id="buStackedChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong> <strong>HK（$664K）</strong>在 Reservation 和 Architecture 两项上均领先，
+      节省策略最均衡。<strong>SSHK - Group Apps（$433K）</strong>的 Reservation 贡献极大，但 Rightsizing 为零，
+      可能需要检查是否存在过配。CN（$229K）的 Top 50 Reselection 收益突出（$150K），但 Architecture 为 0，
+      建议补充架构审查。AU（$91K）四项均有覆盖，策略最健康。
+    </p>
+  </div>
+
+  <!-- ════════════════ 发现 3：措施深度分析 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">3</span>措施深度分析：各 BU 表现出明显差异</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>Architecture Optimisation · Top 10 BU</h3>
+        <canvas id="archChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Rightsizing · Top 10 BU</h3>
+        <canvas id="rightChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Top 50 Reselection · Top 10 BU</h3>
+        <canvas id="top50Chart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Reservation · Top 10 BU</h3>
+        <canvas id="resChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong>
+      <br><strong>Architecture Optimisation</strong> — HK（$294K）一家独大，SSHK - Group Apps（$55K）第二但差距明显。
+      CN、AH-SG 等 7 个 BU 此项为零，架构审查缺位。
+      <br><strong>Rightsizing</strong> — CN（$79K）和 MY（$53K）问题最突出，暗示这两地的资源规格严重过配。
+      KR（$14K）和 AU（$12K）也需要注意。
+      <br><strong>Top 50 Reselection</strong> — CN（$150K）和 HK（$109K）收益最高。注意 KR（-$555）和 AH-SG（-$810）出现负值，
+      需要排查是否因重新选择导致成本上升。
+      <br><strong>Reservation</strong> — SSHK - Group Apps（$348K）和 HK（$242K）是预留实例的最大受益者。
+      但仍有 5 个 BU 未使用任何预留实例，建议推动覆盖。
+    </p>
+  </div>
+
+  <!-- ════════════════ 异常提醒 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">4</span>异常与关注点</h2>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ Top 50 Reselection 出现负值（KR -$555 / AH-SG -$810）</div>
+      <div class="alert__text">两个 BU 在 Top 50 资源重新选择后成本反而上升。虽然绝对值不大，但需要排查原因：可能是重新选择了更高规格的替代资源，或者迁移过程中产生了额外过渡成本。</div>
+    </div>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ 多个 BU 的 Architecture 优化为零（CN、AH-SG、PH、TSS 等 7 个 BU）</div>
+      <div class="alert__text">架构优化是最可持续的节省方式，但近三分之一的 BU 完全没有开展。建议将架构审查纳入例行的 FinOps 流程，至少每季度一次。</div>
+    </div>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ 5 个 BU 未使用任何预留实例</div>
+      <div class="alert__text">AH-SG、SSHK - CLZ、TSS 等 BU 的 Reservation 项为空。对于有持续运行负载的 BU，预留实例是最直接的节省手段。</div>
+    </div>
+
+    <div class="alert alert--green">
+      <div class="alert__title">✅ 亮点：HK 和 AU 四项措施全面覆盖</div>
+      <div class="alert__text">HK（$664K）和 AU（$91K）在四种措施上均有可观节省，表明其云成本管理成熟度较高，可作为其他 BU 的参考模板。</div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 建议操作 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">5</span>建议操作</h2>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">1</div>
+      <div class="recommendation__text">
+        <strong>推广预留实例到零覆盖 BU</strong> — AH-SG、SSHK-CLZ、TH Wellness、TSS 等 BU 尚未使用预留实例。
+        评估其稳定运行负载并推荐预留购买，保守估计可额外节省 $50K–$100K。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">2</div>
+      <div class="recommendation__text">
+        <strong>CN / MY Rightsizing 专项</strong> — 这两个 BU 的 Rightsizing 节省突出（$79K / $53K），说明过配严重。
+        对各 VM 实例的 CPU/内存利用率进行 30 天监控，制定降级计划。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">3</div>
+      <div class="recommendation__text">
+        <strong>Top 50 负值回溯</strong> — 审查 KR 和 AH-SG 的 Top 50 重新选择决策。如果是因为数据问题导致的误报，修正分析方法；如果是实际成本上升，回退选择并重新评估。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">4</div>
+      <div class="recommendation__text">
+        <strong>架构优化推广计划</strong> — 以 HK 为标杆（Architecture $294K），向零覆盖 BU 推广架构审查最佳实践。将架构优化纳入各 BU 的季度 OKR。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">5</div>
+      <div class="recommendation__text">
+        <strong>建立节省追踪仪表板</strong> — 按 BU × 措施维度的月度节省追踪，将 AU 的四维均衡覆盖设为标杆（四项均有），目标 6 个月内将四维覆盖的 BU 数量提升到 15+。
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 数据附录 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">6</span>数据附录</h2>
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:4px;">23 个 BU 的四维节省明细（按 Total 降序）</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>业务线</th><th class="num">架构优化</th><th class="num">预留实例</th><th class="num">Rightsizing</th><th class="num">Top50 重选</th><th class="num">总节省</th><th class="num">占比</th><th class="bar-cell"></th></tr>
+        </thead>
+        <tbody id="dataTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    本报告由 AI 数据分析助手自动生成 ｜ 数据来源：Cloud Efficiency Saving.xlsx
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.color = '#495057';
+Chart.defaults.font.family = "'Inter', 'Noto Sans SC', sans-serif";
+Chart.defaults.plugins.legend.labels.padding = 12;
+
+const C_ARCH = '#2b6cb0';
+const C_RES  = '#276749';
+const C_RGHT = '#b7791f';
+const C_T50  = '#805ad5';
+const TOTAL  = 2418363;
+
+const DATA = [
+  {bu:"HK",       arch:294333, res:241881, rgt:18371, t50:109143, total:663727},
+  {bu:"SSHK - Group Apps", arch:55432, res:347740, rgt:0, t50:29776, total:432947},
+  {bu:"CN",       arch:0,     res:0,      rgt:79401, t50:150000, total:229401},
+  {bu:"KR",       arch:15360, res:81972,  rgt:53039, t50:-555,   total:149816},
+  {bu:"TH",       arch:49131, res:67590,  rgt:2599,  t50:7354,   total:126674},
+  {bu:"MY",       arch:30383, res:24142,  rgt:28551, t50:32124,  total:115200},
+  {bu:"SG",       arch:39902, res:38277,  rgt:0,     t50:32982,  total:111161},
+  {bu:"AU",       arch:28099, res:39923,  rgt:11066, t50:12081,  total:91170},
+  {bu:"VN",       arch:7297,  res:49163,  rgt:2043,  t50:14493,  total:72995},
+  {bu:"ID",       arch:12016, res:53015,  rgt:711,   t50:885,    total:66627},
+  {bu:"SSHK - PE",arch:35400, res:0,      rgt:0,     t50:28245,  total:63645},
+  {bu:"AH-SG",    arch:20355, res:40474,  rgt:2688,  t50:-810,   total:62706},
+  {bu:"SSHK - CLZ",arch:23792,res:20317,  rgt:1115,  t50:9422,   total:54645},
+  {bu:"AH-HK",    arch:23782, res:16416,  rgt:0,     t50:2615,   total:42813},
+  {bu:"PH",       arch:4306,  res:19167,  rgt:4517,  t50:5812,   total:33802},
+  {bu:"BX",       arch:16475, res:5909,   rgt:0,     t50:9000,   total:31385},
+  {bu:"TH Wellness",arch:9407,res:6600,   rgt:1890,  t50:11915,  total:29811},
+  {bu:"TSS",      arch:3856,  res:655,    rgt:4466,  t50:3688,   total:12664},
+  {bu:"LK",       arch:3174,  res:1800,   rgt:22,    t50:5787,   total:10783},
+  {bu:"MM",       arch:3136,  res:1716,   rgt:206,   t50:765,    total:5823},
+  {bu:"KH",       arch:3153,  res:189,    rgt:821,   t50:1079,   total:5241},
+  {bu:"NZ",       arch:0,     res:0,      rgt:0,     t50:4160,   total:4160},
+  {bu:"SSMY",     arch:0,     res:31,     rgt:728,   t50:408,    total:1167},
+];
+
+// ====== Measures Summary ======
+const archTotal = DATA.reduce((s,d)=>s+d.arch,0);
+const resTotal  = DATA.reduce((s,d)=>s+d.res,0);
+const rgtTotal  = DATA.reduce((s,d)=>s+d.rgt,0);
+const t50Total  = DATA.reduce((s,d)=>s+d.t50,0);
+
+new Chart(document.getElementById('measureChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Architecture\nOptimisation', 'Reservation', 'Rightsizing', 'Top 50\nReselection'],
+    datasets: [{
+      data: [archTotal, resTotal, rgtTotal, t50Total],
+      backgroundColor: [C_ARCH, C_RES, C_RGHT, C_T50],
+      borderRadius: 4,
+      barThickness: 60
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(1)+'K' } }
+    },
+    scales: {
+      y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('measurePieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Architecture Optimisation', 'Reservation', 'Rightsizing', 'Top 50 Reselection'],
+    datasets: [{
+      data: [archTotal, resTotal, rgtTotal, t50Total],
+      backgroundColor: [C_ARCH, C_RES, C_RGHT, C_T50],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, cutout: '55%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 14, padding: 10 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': $'+(ctx.raw/1000).toFixed(1)+'K ('+(ctx.raw/TOTAL*100).toFixed(1)+'%)' } }
+    }
+  }
+});
+
+// ====== Stacked Bar ======
+const top8 = DATA.slice(0,8);
+new Chart(document.getElementById('buStackedChart'), {
+  type: 'bar',
+  data: {
+    labels: top8.map(d=>d.bu),
+    datasets: [
+      { label: 'Architecture Optimisation', data: top8.map(d=>d.arch), backgroundColor: C_ARCH, borderRadius: 2 },
+      { label: 'Reservation',              data: top8.map(d=>d.res),  backgroundColor: C_RES },
+      { label: 'Rightsizing',              data: top8.map(d=>d.rgt),  backgroundColor: C_RGHT },
+      { label: 'Top 50 Reselection',       data: top8.map(d=>d.t50),  backgroundColor: C_T50 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top', labels: { font: { size: 10 }, boxWidth: 12 } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $'+(ctx.raw/1000).toFixed(1)+'K' } }
+    },
+    scales: {
+      x: { grid: { display: false }, stacked: true },
+      y: { grid: { color: 'rgba(0,0,0,0.04)' }, stacked: true, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } }
+    }
+  }
+});
+
+// ====== Measure detail charts ======
+function makeBarChart(id, dataKey, color) {
+  const sorted = [...DATA].sort((a,b)=>b[dataKey]-a[dataKey]).slice(0,10);
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: {
+      labels: sorted.map(d=>d.bu),
+      datasets: [{ data: sorted.map(d=>d[dataKey]), backgroundColor: color, borderRadius: 3, barThickness: 22 }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(1)+'K' } } },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  });
+}
+makeBarChart('archChart', 'arch', C_ARCH);
+makeBarChart('resChart', 'res', C_RES);
+makeBarChart('rightChart', 'rgt', C_RGHT);
+makeBarChart('top50Chart', 't50', C_T50);
+
+// ====== Data Table ======
+const tbody = document.getElementById('dataTable');
+const maxTotal = Math.max(...DATA.map(d=>d.total));
+DATA.forEach((d,i) => {
+  const pct = (d.total / TOTAL * 100).toFixed(1);
+  const barW = Math.round(d.total / maxTotal * 100);
+  const color = i < 4 ? '#2b6cb0' : (i < 8 ? '#276749' : (i < 12 ? '#b7791f' : '#868e96'));
+  tbody.innerHTML += `<tr>
+    <td>${d.bu}</td>
+    <td class="num">$${d.arch.toLocaleString()}</td>
+    <td class="num">$${d.res.toLocaleString()}</td>
+    <td class="num">$${d.rgt.toLocaleString()}</td>
+    <td class="num">$${d.t50.toLocaleString()}</td>
+    <td class="num"><strong>$${d.total.toLocaleString()}</strong></td>
+    <td class="num">${pct}%</td>
+    <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${color}"></div></div></td>
+  </tr>`;
+});
+</script>
+</body>
+</html>

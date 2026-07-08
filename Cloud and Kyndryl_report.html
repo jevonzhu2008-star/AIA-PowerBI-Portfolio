@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据分析报告 — Cloud and Kyndryl Spend</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #1a365d;
+  --accent: #c53030;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #adb5bd;
+  --gray-500: #868e96;
+  --gray-600: #495057;
+  --gray-700: #343a40;
+  --gray-800: #212529;
+  --green: #276749;
+  --red: #c53030;
+  --amber: #b7791f;
+  --blue: #2b6cb0;
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); color: var(--gray-800); background: #fff; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.report { max-width: 1040px; margin: 0 auto; padding: 0 40px 80px; }
+
+.header { padding: 60px 0 40px; border-bottom: 3px solid var(--primary); margin-bottom: 48px; }
+.header__label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-500); margin-bottom: 12px; }
+.header__title { font-size: 36px; font-weight: 700; line-height: 1.2; color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px; }
+.header__subtitle { font-size: 16px; color: var(--gray-500); font-weight: 300; }
+.header__meta { margin-top: 16px; font-size: 12px; color: var(--gray-400); }
+
+.executive-summary { background: var(--gray-50); border-left: 4px solid var(--primary); padding: 28px 32px; margin-bottom: 48px; border-radius: 0 4px 4px 0; }
+.executive-summary__label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px; }
+.executive-summary__text { font-size: 18px; font-weight: 400; line-height: 1.5; color: var(--gray-700); }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 48px; }
+.kpi-card { background: #fff; border: 1px solid var(--gray-200); border-radius: 6px; padding: 24px 20px; transition: box-shadow 0.2s; }
+.kpi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.kpi-card__label { font-size: 11px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.kpi-card__value { font-size: 32px; font-weight: 700; color: var(--primary); line-height: 1.1; margin-bottom: 4px; letter-spacing: -0.5px; }
+.kpi-card__value--accent { color: var(--accent); }
+.kpi-card__note { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+
+.section { margin-bottom: 48px; }
+.section__title { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 8px; }
+.section__title-number { font-size: 12px; font-weight: 600; color: #fff; background: var(--primary); width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 4px; }
+
+.finding { margin-bottom: 36px; padding: 28px 32px; background: #fff; border: 1px solid var(--gray-200); border-radius: 6px; }
+.finding__title { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px; line-height: 1.4; }
+.finding__insight { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 12px; }
+
+.chart-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-bottom: 12px; }
+@media (min-width: 800px) { .chart-grid { grid-template-columns: 1fr 1fr; } }
+
+.chart-box { background: #fff; border: 1px solid var(--gray-200); border-radius: 6px; padding: 24px; }
+.chart-box h3 { font-size: 14px; font-weight: 600; color: var(--gray-600); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-100); }
+.chart-box canvas { width: 100% !important; max-height: 340px; }
+.chart-box--wide { grid-column: 1 / -1; }
+
+.alert { background: #fffaf0; border: 1px solid #fdecc8; border-left: 4px solid var(--amber); padding: 20px 24px; border-radius: 0 4px 4px 0; margin-bottom: 12px; }
+.alert--blue { background: #f0f7ff; border-color: #bee3f8; border-left-color: var(--blue); }
+.alert--blue .alert__title { color: #2b6cb0; }
+.alert--blue .alert__text { color: #2a4365; }
+.alert__title { font-size: 13px; font-weight: 600; color: #92400e; margin-bottom: 4px; }
+.alert__text { font-size: 13px; color: #78350f; line-height: 1.6; }
+
+.table-wrapper { overflow-x: auto; border: 1px solid var(--gray-200); border-radius: 6px; margin-top: 16px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead { background: var(--gray-50); }
+th { text-align: left; padding: 10px 14px; font-weight: 600; color: var(--gray-600); border-bottom: 2px solid var(--gray-200); white-space: nowrap; }
+td { padding: 9px 14px; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-50); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.bar-cell { width: 120px; }
+.bar-bg { height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; }
+
+.recommendation { display: flex; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--gray-100); }
+.recommendation:last-child { border-bottom: none; }
+.recommendation__icon { flex-shrink: 0; width: 24px; height: 24px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 2px; }
+.recommendation__text { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+.footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--gray-200); font-size: 11px; color: var(--gray-400); text-align: center; }
+
+@media (max-width: 700px) {
+  .report { padding: 0 20px 40px; }
+  .header { padding: 40px 0 24px; }
+  .header__title { font-size: 26px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .finding { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="report">
+
+  <header class="header">
+    <div class="header__label">数据分析报告</div>
+    <h1 class="header__title">Cloud and Kyndryl Spend</h1>
+    <p class="header__subtitle">AIA Group 数据中心与托管服务总支出分析 — DCM、CMS、RFS 支出透视</p>
+    <div class="header__meta">生成日期：2026-07-09 ｜ 数据范围：月度聚合 ｜ 来源：Cloud and Kyndryl Spend.xlsx ｜ 覆盖 22 个业务线 × 20 个服务类别 × 4 种成本类型</div>
+  </header>
+
+  <div class="executive-summary">
+    <div class="executive-summary__label">一句话结论</div>
+    <p class="executive-summary__text">
+      Kyndryl 总支出 <strong>$4.81M</strong>，其中 <strong>DCM（数据中心托管）占 81.9%（$3.94M）</strong>，
+      是绝对的成本主体。存储（$694K）和 CMS（$635K）是最贵的服务类别。
+      AU（$862K）和 HK（$723K）两大市场合计占 33%。对比 Azure 侧 $1.24M 的成本，
+      传统数据中心支出是云成本的 <strong>3.9 倍</strong>，混合成本治理应优先聚焦数据中心。
+    </p>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card__label">Kyndryl 总支出</div>
+      <div class="kpi-card__value">$4.81M</div>
+      <div class="kpi-card__note">含 DCM / CMS / RFS</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">DCM 占比</div>
+      <div class="kpi-card__value kpi-card__value--accent">81.9%</div>
+      <div class="kpi-card__note">$3.94M — 最大成本项</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">CMS（AIA + Vendor）</div>
+      <div class="kpi-card__value">$634K</div>
+      <div class="kpi-card__note">AIA $420K + Vendor $214K</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Top 2 服务类别</div>
+      <div class="kpi-card__value">$1.33M</div>
+      <div class="kpi-card__note">存储 $694K + CMS $635K</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Top 2 BU 占比</div>
+      <div class="kpi-card__value">32.9%</div>
+      <div class="kpi-card__note">AU $862K + HK $723K</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Azure : Kyndryl 比值</div>
+      <div class="kpi-card__value">1 : 3.9</div>
+      <div class="kpi-card__note">云 $1.24M vs 传统 $4.81M</div>
+    </div>
+  </div>
+
+  <!-- 发现 1：成本类型 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">1</span>DCM 占八成以上，是绝对的成本重心</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>四种成本类型构成</h3>
+        <canvas id="typeChart"></canvas>
+      </div>
+      <div class="chart-box" style="display:flex;flex-direction:column;justify-content:center;">
+        <div style="padding:8px 0;">
+          <div style="display:grid;grid-template-columns:1fr;gap:10px;">
+            <div style="padding:12px 16px;background:var(--gray-50);border-radius:4px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;color:var(--gray-600);">🏢 DCM 数据中心托管</span>
+              <span style="font-size:20px;font-weight:700;color:var(--primary);">$3.94M</span>
+            </div>
+            <div style="padding:12px 16px;background:var(--gray-50);border-radius:4px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;color:var(--gray-600);">🛠️ CMS（AIA）</span>
+              <span style="font-size:18px;font-weight:600;color:#2b6cb0;">$420K</span>
+            </div>
+            <div style="padding:12px 16px;background:var(--gray-50);border-radius:4px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;color:var(--gray-600);">🔄 RFS 远程支持</span>
+              <span style="font-size:18px;font-weight:600;color:#276749;">$237K</span>
+            </div>
+            <div style="padding:12px 16px;background:var(--gray-50);border-radius:4px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;color:var(--gray-600);">🏭 CMS（Vendor）</span>
+              <span style="font-size:18px;font-weight:600;color:#b7791f;">$214K</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="finding__insight" style="margin-top:12px;">
+      <strong>🔍 解读：</strong> DCM 以 $3.94M 占总支出的 81.9%，是成本治理的首要目标。
+      CMS 合计 $634K（13.2%），其中 AIA 自管部分 $420K 是 Vendor 部分 $214K 的约 2 倍，
+      说明大部分运维由内部团队承担。RFS $237K（4.9%）占比较小但不可忽视。
+    </p>
+  </div>
+
+  <!-- 发现 2：BU 排名 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">2</span>AU + HK 占三分之一，Top 5 集中 60%</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box chart-box--wide">
+        <h3>22 个业务线 Kyndryl 支出排行 · Top 5 占 $2.93M（61%）</h3>
+        <canvas id="buChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong> <strong>AU（$862K / 17.9%）</strong>是所有市场中支出最高的，
+      其次是 HK（$723K / 15.0%）和 KR（$553K / 11.5%）。MY（$520K）和 TH（$275K）紧随其后。
+      前五名合计 $2.93M，占总额的 61%。相比之下，体量最小的 SSMY（$2K）、MM（$5K）和 AH-SG（$10K）
+      支出极低，意味着这些市场可能已全面上云或数据中心外包程度低。
+    </p>
+  </div>
+
+  <!-- 发现 3：服务类别 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">3</span>存储和 CMS 是最贵的服务类别</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box chart-box--wide">
+        <h3>20 个服务类别支出排行 · Top 3 占 $1.96M（41%）</h3>
+        <canvas id="catChart"></canvas>
+      </div>
+    </div>
+
+    <div class="table-wrapper" style="margin-top:16px;">
+      <table>
+        <thead>
+          <tr><th>排名</th><th>服务类别</th><th class="num">支出 ($)</th><th class="num">占比</th><th class="bar-cell"></th></tr>
+        </thead>
+        <tbody id="catTable"></tbody>
+      </table>
+    </div>
+
+    <p class="finding__insight" style="margin-top:16px;">
+      <strong>🔍 解读：</strong> <strong>存储（Storage $694K / 14.4%）</strong>是最贵的单项服务，
+      与 Azure 侧的存储成本（$206K）合计达到 $900K，验证了存储是跨云和数据中心的<strong>双重成本热点</strong>。
+      CMS（$635K / 13.2%）和 Maintenance Charge（$631K / 13.1%）紧随其后，前三大类别合计 $1.96M（41%）。
+      Hardware Charge（$538K / 11.2%）和 Account Management（$502K / 10.4%）位列四五，表明传统数据中心
+      的硬件资产和管理费用仍占相当比重。值得注意的是 DC Facilities（$139K / 2.9%）占比较低，
+      可能意味着部分数据中心设施费用已包含在 DCM 中。
+    </p>
+  </div>
+
+  <!-- 发现 4：云 vs 数据中心对比 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">4</span>跨域对比：传统数据中心支出是云的 3.9 倍</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>Azure 云成本 vs Kyndryl 传统支出</h3>
+        <canvas id="compareChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>混合成本中占比 · 总值 $6.05M</h3>
+        <canvas id="comparePieChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong> 综合 Azure 云成本（$1.24M）和 Kyndryl 传统支出（$4.81M），
+      集团总 IT 基础设施支出为 <strong>$6.05M/月</strong>。传统数据中心占比 79.5%，
+      云仅占 20.5%。虽然可能存在重复计算（部分 DCM 费用可能包含云连接成本），
+      但总体趋势表明：<strong>数据中心现代化和云迁移仍然是最大的成本优化杠杆</strong>。
+      尤其对于 AU 和 HK 这类双重高支出市场，评估迁移 ROI 应优先进行。
+    </p>
+  </div>
+
+  <!-- 异常提醒 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">5</span>异常与关注点</h2>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ AU 支出异常偏高（$862K）</div>
+      <div class="alert__text">AU 在 Kyndryl 支出中排名第一，是第二名 HK 的 1.2 倍。同时 AU 在 Azure 侧也有 $66K 的成本。建议审查 AU 的数据中心资产清单，评估整合/迁移可行性。</div>
+    </div>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ Storage 是跨云最大热点</div>
+      <div class="alert__text">Azure 存储 $206K + Kyndryl 存储 $694K = $900K/月。建议统一存储策略，将冷数据迁移到 Azure Blob 冷/归档层，可大幅降低总存储成本。</div>
+    </div>
+
+    <div class="alert alert--blue">
+      <div class="alert__title">✅ 部分市场已接近零传统支出</div>
+      <div class="alert__text">SSMY（$2K）、MM（$5K）、AH-SG（$10K）等市场的 Kyndryl 支出极低，可能是已全面上云的先行者。建议以这些市场为模板推广云优先策略。</div>
+    </div>
+  </div>
+
+  <!-- 建议操作 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">6</span>建议操作</h2>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">1</div>
+      <div class="recommendation__text">
+        <strong>AU + HK 数据中心整合可行性研究</strong> — 这两个市场占总支出的 33%（$1.58M）。
+        评估物理服务器虚拟化、存储整合和部分工作负载迁移到 Azure 的 ROI。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">2</div>
+      <div class="recommendation__text">
+        <strong>统一存储降本策略</strong> — Storage 在云和传统两侧都是 Top 1/2 成本项。
+        实施数据分层策略，将非活跃数据迁移到 Azure 冷存储或归档层，目标节省 30–50% 存储费用。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">3</div>
+      <div class="recommendation__text">
+        <strong>审核 Hardware + Maintenance 费用</strong> — Hardware Charge（$538K）和 Maintenance Charge（$631K）合计 $1.17M。
+        审查硬件生命周期和维保合同，淘汰 EOL 设备可缩减这两项支出。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">4</div>
+      <div class="recommendation__text">
+        <strong>云迁移 ROI 优先级排序</strong> — 按 BU 的 Kyndryl : Azure 支出比排序，
+        对传统支出远高于云支出的市场（如 AU 13:1、KR 8:1）优先进行迁移可行性评估。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">5</div>
+      <div class="recommendation__text">
+        <strong>统一 FinOps 治理框架</strong> — 将 Azure 云成本和 Kyndryl 传统支出纳入同一套 FinOps 仪表板，
+        按 BU 统一追踪总 IT 基础设施支出，为"云优先"决策提供数据支撑。
+      </div>
+    </div>
+  </div>
+
+  <!-- 数据附录 -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">7</span>数据附录</h2>
+
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:4px;">22 个业务线 Kyndryl 支出明细</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>业务线</th><th class="num">支出 ($)</th><th class="num">占比</th><th class="bar-cell"></th></tr>
+        </thead>
+        <tbody id="buTable"></tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13px;color:var(--gray-500);margin:20px 0 4px;">成本类型明细</p>
+    <div class="table-wrapper" style="max-width:500px;">
+      <table>
+        <thead>
+          <tr><th>成本类型</th><th class="num">支出 ($)</th><th class="num">占比</th></tr>
+        </thead>
+        <tbody id="typeTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    本报告由 AI 数据分析助手自动生成 ｜ 数据来源：Cloud and Kyndryl Spend.xlsx
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.color = '#495057';
+Chart.defaults.font.family = "'Inter', 'Noto Sans SC', sans-serif";
+Chart.defaults.plugins.legend.labels.padding = 12;
+
+const spTotal = 4809997;
+const COLORS = ['#2b6cb0','#c53030','#276749','#b7791f','#805ad5','#dd6b20','#319795','#d53f8c','#38a169','#6b46c1','#e53e3e','#4fd1c5','#ed8936','#667eea','#48bb78','#d69e2e','#e53e3e','#38b2ac','#9f7aea','#ed64a6'];
+
+const spBu = {"AU":862269,"HK":722716,"KR":552740,"MY":520005,"TH":274690,"PH":257362,"TW":239113,"NZ":235394,"SSHK":230903,"SG":230486,"ID":190760,"ITM":125856,"CN":114875,"LK":58697,"VN":56903,"KH":42253,"BX":41006,"AH-HK":19727,"TSS":17225,"AH-SG":9539,"MM":5413,"SSMY":2065};
+const spType = {"DCM":3938597,"CMS (AIA)":420245,"RFS":236881,"CMS (Vendor)":214272};
+const spCat = {"Storage":693758,"CMS":634517,"Maintenance Charge":630899,"Hardware Charge":537633,"Account Management":502029,"Operating Systems Support":453743,"Software and Maintenance":304381,"RFS":236881,"Application Services":143230,"DC Facilities":139044,"Network":134638,"Backup/Archive":131314,"Database":62680,"Middleware/Web-hosting":49317,"File Storage":45266,"Operation_Monitoring":34598,"Security Support":30482,"Hypervisor Support":19337,"SIL and Security focal":14318,"IPC":11932};
+
+// ====== Type Pie ======
+const typeColors = ['#2b6cb0', '#276749', '#dd6b20', '#b7791f'];
+new Chart(document.getElementById('typeChart'), {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(spType),
+    datasets: [{ data: Object.values(spType), backgroundColor: typeColors, borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, cutout: '55%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 14, padding: 10 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': $'+(ctx.raw/1000).toFixed(1)+'K ('+(ctx.raw/spTotal*100).toFixed(1)+'%)' } }
+    }
+  }
+});
+
+// ====== BU Bar ======
+const buSorted = Object.entries(spBu).sort((a,b)=>b[1]-a[1]);
+new Chart(document.getElementById('buChart'), {
+  type: 'bar',
+  data: {
+    labels: buSorted.map(x=>x[0]),
+    datasets: [{ data: buSorted.map(x=>x[1]), backgroundColor: buSorted.map((_,i)=>COLORS[i%COLORS.length]), borderRadius: 3, barThickness: 18 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(1)+'K' } } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ====== Cat Bar ======
+const catSorted = Object.entries(spCat).sort((a,b)=>b[1]-a[1]);
+new Chart(document.getElementById('catChart'), {
+  type: 'bar',
+  data: {
+    labels: catSorted.map(x=>x[0]),
+    datasets: [{ data: catSorted.map(x=>x[1]), backgroundColor: catSorted.map((_,i)=>COLORS[i%COLORS.length]), borderRadius: 3, barThickness: 16 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(1)+'K' } } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ====== Cloud vs Kyndryl ======
+new Chart(document.getElementById('compareChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Azure Cloud Cost', 'Kyndryl Traditional Spend'],
+    datasets: [{
+      data: [1239047, 4809997],
+      backgroundColor: ['#2b6cb0', '#b7791f'],
+      borderRadius: 4,
+      barThickness: 80
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(1)+'K' } }
+    },
+    scales: {
+      y: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+      x: { grid: { display: false }, ticks: { font: { size: 12 } } }
+    }
+  }
+});
+
+const combined = 1239047 + 4809997;
+new Chart(document.getElementById('comparePieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Azure Cloud 20.5%', 'Kyndryl Traditional 79.5%'],
+    datasets: [{
+      data: [1239047, 4809997],
+      backgroundColor: ['#2b6cb0', '#b7791f'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    responsive: true, cutout: '58%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 12 }, boxWidth: 14, padding: 10 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': $'+(ctx.raw/1000).toFixed(1)+'K' } }
+    }
+  }
+});
+
+// ====== BU Table ======
+const buTbody = document.getElementById('buTable');
+const maxBu = Math.max(...Object.values(spBu));
+buSorted.forEach(([name,val],i) => {
+  const pct = (val/spTotal*100).toFixed(1);
+  const barW = (val/maxBu*100).toFixed(0);
+  buTbody.innerHTML += `<tr>
+    <td>${name}</td>
+    <td class="num">$${val.toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+    <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${COLORS[i%COLORS.length]}"></div></div></td>
+  </tr>`;
+});
+
+// ====== Cat Table ======
+const catTbody = document.getElementById('catTable');
+const maxCat = Math.max(...Object.values(spCat));
+catSorted.forEach(([name,val],i) => {
+  const pct = (val/spTotal*100).toFixed(1);
+  const barW = (val/maxCat*100).toFixed(0);
+  catTbody.innerHTML += `<tr>
+    <td>${i+1}</td>
+    <td>${name}</td>
+    <td class="num">$${val.toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+    <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${COLORS[i%COLORS.length]}"></div></div></td>
+  </tr>`;
+});
+
+// ====== Type Table ======
+const typeTbody = document.getElementById('typeTable');
+Object.entries(spType).forEach(([name,val],i) => {
+  const pct = (val/spTotal*100).toFixed(1);
+  typeTbody.innerHTML += `<tr>
+    <td>${name}</td>
+    <td class="num">$${val.toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+  </tr>`;
+});
+</script>
+</body>
+</html>

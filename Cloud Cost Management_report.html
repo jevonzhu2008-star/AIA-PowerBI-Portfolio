@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据分析报告 — Cloud Cost Management</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary: #1a365d;
+  --primary-light: #2b6cb0;
+  --accent: #c53030;
+  --gray-50: #f8f9fa;
+  --gray-100: #f1f3f5;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #adb5bd;
+  --gray-500: #868e96;
+  --gray-600: #495057;
+  --gray-700: #343a40;
+  --gray-800: #212529;
+  --green: #276749;
+  --red: #c53030;
+  --amber: #b7791f;
+  --blue: #2b6cb0;
+  --font-sans: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--gray-800);
+  background: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.report { max-width: 1040px; margin: 0 auto; padding: 0 40px 80px; }
+
+.header {
+  padding: 60px 0 40px;
+  border-bottom: 3px solid var(--primary);
+  margin-bottom: 48px;
+}
+
+.header__label {
+  font-size: 11px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--gray-500); margin-bottom: 12px;
+}
+
+.header__title {
+  font-size: 36px; font-weight: 700; line-height: 1.2;
+  color: var(--primary); margin-bottom: 8px; letter-spacing: -0.5px;
+}
+
+.header__subtitle { font-size: 16px; color: var(--gray-500); font-weight: 300; }
+.header__meta { margin-top: 16px; font-size: 12px; color: var(--gray-400); }
+
+.executive-summary {
+  background: var(--gray-50);
+  border-left: 4px solid var(--primary);
+  padding: 28px 32px; margin-bottom: 48px;
+  border-radius: 0 4px 4px 0;
+}
+
+.executive-summary__label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gray-500); margin-bottom: 8px;
+}
+
+.executive-summary__text {
+  font-size: 18px; font-weight: 400; line-height: 1.5; color: var(--gray-700);
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.kpi-card {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  padding: 24px 20px;
+  transition: box-shadow 0.2s;
+}
+.kpi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+.kpi-card__label {
+  font-size: 11px; font-weight: 600; color: var(--gray-400);
+  text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px;
+}
+
+.kpi-card__value {
+  font-size: 32px; font-weight: 700; color: var(--primary);
+  line-height: 1.1; margin-bottom: 4px; letter-spacing: -0.5px;
+}
+
+.kpi-card__value--accent { color: var(--accent); }
+.kpi-card__change--up { color: var(--green); }
+.kpi-card__change--down { color: var(--red); }
+
+.kpi-card__note {
+  font-size: 12px; color: var(--gray-400); margin-top: 2px;
+}
+
+.section { margin-bottom: 48px; }
+
+.section__title {
+  font-size: 20px; font-weight: 700; color: var(--primary);
+  margin-bottom: 24px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.section__title-number {
+  font-size: 12px; font-weight: 600; color: #fff;
+  background: var(--primary); width: 24px; height: 24px;
+  border-radius: 50%; display: inline-flex; align-items: center;
+  justify-content: center; margin-right: 4px;
+}
+
+.finding {
+  margin-bottom: 36px; padding: 28px 32px;
+  background: #fff; border: 1px solid var(--gray-200); border-radius: 6px;
+}
+
+.finding__title {
+  font-size: 16px; font-weight: 700; color: var(--primary);
+  margin-bottom: 12px; line-height: 1.4;
+}
+
+.finding__insight {
+  font-size: 14px; color: var(--gray-600);
+  line-height: 1.7; margin-bottom: 12px;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+@media (min-width: 800px) {
+  .chart-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.chart-box {
+  background: #fff; border: 1px solid var(--gray-200);
+  border-radius: 6px; padding: 24px;
+}
+
+.chart-box h3 {
+  font-size: 14px; font-weight: 600; color: var(--gray-600);
+  margin-bottom: 16px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.chart-box canvas { width: 100% !important; max-height: 340px; }
+.chart-box--wide { grid-column: 1 / -1; }
+
+.alert {
+  background: #fffaf0;
+  border: 1px solid #fdecc8;
+  border-left: 4px solid var(--amber);
+  padding: 20px 24px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 12px;
+}
+
+.alert__title { font-size: 13px; font-weight: 600; color: #92400e; margin-bottom: 4px; }
+.alert__text { font-size: 13px; color: #78350f; line-height: 1.6; }
+
+.table-wrapper {
+  overflow-x: auto;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  margin-top: 16px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+thead { background: var(--gray-50); }
+
+th {
+  text-align: left; padding: 10px 14px;
+  font-weight: 600; color: var(--gray-600);
+  border-bottom: 2px solid var(--gray-200); white-space: nowrap;
+}
+
+td {
+  padding: 9px 14px; border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-700);
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--gray-50); }
+
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.bar-cell { width: 140px; }
+
+.bar-bg { height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; background: var(--primary-light); }
+
+.recommendation {
+  display: flex; gap: 12px;
+  padding: 16px 0; border-bottom: 1px solid var(--gray-100);
+}
+.recommendation:last-child { border-bottom: none; }
+
+.recommendation__icon {
+  flex-shrink: 0; width: 24px; height: 24px;
+  background: var(--primary); color: #fff; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; margin-top: 2px;
+}
+
+.recommendation__text {
+  font-size: 14px; color: var(--gray-600); line-height: 1.6;
+}
+
+.footer {
+  margin-top: 64px; padding-top: 24px;
+  border-top: 1px solid var(--gray-200);
+  font-size: 11px; color: var(--gray-400); text-align: center;
+}
+
+@media (max-width: 700px) {
+  .report { padding: 0 20px 40px; }
+  .header { padding: 40px 0 24px; }
+  .header__title { font-size: 26px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .finding { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="report">
+
+  <!-- ════════════════ 页眉 ════════════════ -->
+  <header class="header">
+    <div class="header__label">数据分析报告</div>
+    <h1 class="header__title">Cloud Cost Management</h1>
+    <p class="header__subtitle">AIA Group Azure 云成本全景分析 — 按业务线、服务类别、定价模型三维透视</p>
+    <div class="header__meta">生成日期：2026-07-09 ｜ 数据范围：月度聚合 ｜ 来源：Cloud Cost Management.xlsx</div>
+  </header>
+
+  <!-- ════════════════ 核心结论 ════════════════ -->
+  <div class="executive-summary">
+    <div class="executive-summary__label">一句话结论</div>
+    <p class="executive-summary__text">
+      Azure 月度总成本 <strong>$1.24M</strong>。最大的问题在于定价结构：<strong>74.3% 采用 OnDemand 按需计费</strong>，
+      预留实例和 SavingsPlan 合计仅覆盖 25.3%。虚拟机（$337K）和存储（$206K）合计占 43.8%。
+      若将稳定负载迁移到预留实例，保守估算年度可节省 <strong>$330 万–$440 万</strong>。
+    </p>
+  </div>
+
+  <!-- ════════════════ KPI 概览 ════════════════ -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-card__label">Azure 月度总成本</div>
+      <div class="kpi-card__value">$1.24M</div>
+      <div class="kpi-card__note">折合年化 $14.87M</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">OnDemand 占比</div>
+      <div class="kpi-card__value kpi-card__value--accent">74.3%</div>
+      <div class="kpi-card__note">$920.9K/月 — 优化空间巨大</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">预留 + SavingsPlan</div>
+      <div class="kpi-card__value">25.3%</div>
+      <div class="kpi-card__note">Reservation $312K + SP $1.5K</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Top 2 服务占比</div>
+      <div class="kpi-card__value">43.8%</div>
+      <div class="kpi-card__note">虚拟机 27.2% + 存储 16.6%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">Top 2 BU 占比</div>
+      <div class="kpi-card__value">25.0%</div>
+      <div class="kpi-card__note">SSHK-Group Apps + HK</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card__label">未归因成本</div>
+      <div class="kpi-card__value kpi-card__value--accent">$55.2K</div>
+      <div class="kpi-card__note">Unknown 占 4.5%</div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 发现 1：业务线 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">1</span>Top 5 业务线集中了 55% 的成本</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>各业务线 Azure 月度成本排行 · Top 5 占 $684K</h3>
+        <canvas id="busChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Top 5 vs 其余 10 个业务线</h3>
+        <canvas id="busPieChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong> SSHK - Group Apps（$156K）与 HK（$154K）并列成本第一梯队，
+      合计占总量四分之一。紧随其后的 SG、MY、TH 各约 $120K–$130K。
+      <strong>$55K Unknown 成本</strong>提示资源标签策略需要加强，缺失标签会直接阻碍精细化的成本归因与 Chargeback。
+    </p>
+  </div>
+
+  <!-- ════════════════ 发现 2：服务类别 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">2</span>虚拟机 + 存储吃掉近一半预算</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>15 个服务类别成本排行</h3>
+        <canvas id="catChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>成本集中度 · Top 3 占 58%</h3>
+        <canvas id="catPieChart"></canvas>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong> 虚拟机（$337K / 27.2%）、存储（$206K / 16.6%）、SQL Managed Instance（$176K / 14.2%）
+      构成了三大成本支柱。SQL Managed Instance + SQL Database 合计 <strong>$268K（21.6%）</strong>，
+      如果结合 Azure Hybrid Benefit 和预留实例，这部分成本有 30–50% 的压缩空间。
+    </p>
+  </div>
+
+  <!-- ════════════════ 发现 3：定价模型 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">3</span>OnDemand 占 74%，预留覆盖率严重偏低</h2>
+
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>四种定价模型成本构成</h3>
+        <canvas id="modelChart"></canvas>
+      </div>
+      <div class="chart-box" style="display:flex;flex-direction:column;justify-content:center;">
+        <div style="padding:12px 0;">
+          <div style="font-size:13px;font-weight:600;color:var(--gray-600);margin-bottom:16px;">优化潜力估算</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="padding:12px;background:var(--gray-50);border-radius:4px;text-align:center;">
+              <div style="font-size:22px;font-weight:700;color:var(--accent);">$921K</div>
+              <div style="font-size:11px;color:var(--gray-500);">月度 OnDemand</div>
+            </div>
+            <div style="padding:12px;background:var(--gray-50);border-radius:4px;text-align:center;">
+              <div style="font-size:22px;font-weight:700;color:var(--green);">30–40%</div>
+              <div style="font-size:11px;color:var(--gray-500);">预留实例节省率</div>
+            </div>
+            <div style="padding:12px;background:#f0f7ff;border-radius:4px;text-align:center;">
+              <div style="font-size:22px;font-weight:700;color:var(--blue);">$276K</div>
+              <div style="font-size:11px;color:var(--gray-500);">月省（保守）</div>
+            </div>
+            <div style="padding:12px;background:#f0f7ff;border-radius:4px;text-align:center;">
+              <div style="font-size:22px;font-weight:700;color:var(--blue);">$3.3M</div>
+              <div style="font-size:11px;color:var(--gray-500);">年省（保守）</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="finding__insight">
+      <strong>🔍 解读：</strong> Spot 和 SavingsPlan 的使用几乎可以忽略（合计不到 0.5%）。
+      对于持续运行 24/7 的生产负载，3 年预留实例可比 OnDemand 节省 30–40%。
+      按 $921K × 35% × 假设 60% 负载可迁移计算，<strong>年度节省潜力在 $3.3M–$4.4M 之间</strong>，
+      这是本报告最具财务影响力的优化建议。
+    </p>
+  </div>
+
+  <!-- ════════════════ 异常提醒 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">4</span>异常与关注点</h2>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ Unknown 归因成本 $55K（4.5%）</div>
+      <div class="alert__text">近 5% 的成本无法归因到业务线。Azure 资源标签缺失问题需要治理，建议建立强制标签策略，设定 95%+ 的标签合规率目标。</div>
+    </div>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ SQL 成本集中度过高（$290K / 23.4%）</div>
+      <div class="alert__text">SQL MI（$176K）+ SQL DB（$91K）+ PostgreSQL（$22K）合计 $290K。数据库降级和预留迁移应列为高优先级。</div>
+    </div>
+
+    <div class="alert">
+      <div class="alert__title">⚠️ Spot 和 SavingsPlan 几乎未被使用</div>
+      <div class="alert__text">Spot 仅 0.3% 的覆盖率。非生产环境和可中断的 Batch 工作负载应优先迁移到 Spot。SavingsPlan 也可覆盖 AKS/Databricks 此类动态工作负载。</div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 建议操作 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">5</span>建议操作</h2>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">1</div>
+      <div class="recommendation__text">
+        <strong>预留实例迁移（最高 ROI）</strong> — 识别 SSHK-Group Apps 和 HK 中持续运行的 VM 和 SQL 实例，
+        优先购买 3 年预留实例。目标：6 个月内将预留覆盖率从 25% 提升到 50%，年度节省约 $1.5M+。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">2</div>
+      <div class="recommendation__text">
+        <strong>资源标签治理</strong> — 对 $55K Unknown 成本回溯追因，实施强制资源标签策略，
+        将标签合规率纳入 FinOps 仪表板监控，目标 95%+。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">3</div>
+      <div class="recommendation__text">
+        <strong>SQL 专项降本</strong> — 审查 SQL Managed Instance 和 SQL Database 的 DTU/vCore 利用率，
+        结合 Azure Hybrid Benefit + 预留实例双重优惠，目标节省 30–50%。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">4</div>
+      <div class="recommendation__text">
+        <strong>引入 Spot + SavingsPlan</strong> — 非生产环境切换到 Spot Instance；
+        为 Databricks、AKS 等弹性工作负载购买 SavingsPlan。预计可额外降低 5–10% 总账单。
+      </div>
+    </div>
+
+    <div class="recommendation">
+      <div class="recommendation__icon">5</div>
+      <div class="recommendation__text">
+        <strong>月度 FinOps 审视</strong> — 按 BU × 服务类别 × 定价模型三维追踪成本变化，
+        将各 BU 资源利用率纳入考核，推动云成本文化从"随便用"转向"精打细算"。
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════ 数据附录 ════════════════ -->
+  <div class="section">
+    <h2 class="section__title"><span class="section__title-number">6</span>数据附录</h2>
+
+    <p style="font-size:13px;color:var(--gray-500);margin-bottom:4px;">表 1：按业务线的月度成本明细</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>业务线</th><th class="num">成本 ($)</th><th class="num">占比</th><th class="bar-cell"></th></tr>
+        </thead>
+        <tbody id="busTable"></tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13px;color:var(--gray-500);margin:20px 0 4px;">表 2：按服务类别的月度成本明细</p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>服务类别</th><th class="num">成本 ($)</th><th class="num">占比</th><th class="bar-cell"></th></tr>
+        </thead>
+        <tbody id="catTable"></tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13px;color:var(--gray-500);margin:20px 0 4px;">表 3：按定价模型</p>
+    <div class="table-wrapper">
+      <table style="max-width:400px;">
+        <thead>
+          <tr><th>定价模型</th><th class="num">成本 ($)</th><th class="num">占比</th><th class="bar-cell"></th></tr>
+        </thead>
+        <tbody id="modelTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    本报告由 AI 数据分析助手自动生成 ｜ 数据来源：Cloud Cost Management.xlsx
+  </div>
+
+</div>
+
+<script>
+Chart.defaults.color = '#495057';
+Chart.defaults.font.family = "'Inter', 'Noto Sans SC', sans-serif";
+Chart.defaults.plugins.legend.labels.padding = 12;
+
+const P = '#2b6cb0';
+const A = '#c53030';
+const G = '#276749';
+const COLORS = ['#2b6cb0','#c53030','#276749','#b7791f','#805ad5','#dd6b20','#319795','#d53f8c','#38a169','#6b46c1','#e53e3e','#4fd1c5','#ed8936','#667eea','#48bb78'];
+
+// ====== Data ======
+const busData = {"SSHK - Group Apps":155813,"HK":154448,"SG":128873,"MY":127131,"TH":118137,"SSHK - PE":72745,"KR":69445,"AU":66112,"Unknown":55197,"ID":53996,"SSHK - CLZ":47566,"VN":36406,"NZ":31727,"PH":27737,"TSS":22107};
+const catData = {"Virtual Machines":336610,"Storage":205931,"SQL Managed Instance":176288,"SQL Database":91288,"Backup":54092,"Azure Databricks":35451,"Log Analytics":29540,"Azure Synapse Analytics":26089,"Virtual Machines Licenses":22638,"Azure Database for PostgreSQL":22345,"Foundry Models":20972,"Redis Cache":19915,"Azure App Service":18583,"API Management":16517,"Azure NetApp Files":13709};
+const modelData = {"OnDemand":920874,"Reservation":312419,"Spot":4295,"SavingsPlan":1460};
+const total = 1239047;
+
+// ====== Chart 1: BU ======
+const busSorted = Object.entries(busData).sort((a,b)=>b[1]-a[1]);
+new Chart(document.getElementById('busChart'), {
+  type: 'bar',
+  data: {
+    labels: busSorted.map(x=>x[0]),
+    datasets: [{ data: busSorted.map(x=>x[1]), backgroundColor: busSorted.map((_,i)=>COLORS[i%COLORS.length]), borderRadius: 3, barThickness: 20 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(0)+'K' } } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+      y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+    }
+  }
+});
+
+// ====== Chart 2: BU Pie (Top5) ======
+const busTop5 = busSorted.slice(0,5);
+const busOther = busSorted.slice(5).reduce((s,x)=>s+x[1],0);
+new Chart(document.getElementById('busPieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: [...busTop5.map(x=>x[0]), 'Other (10 BU)'],
+    datasets: [{ data: [...busTop5.map(x=>x[1]), busOther], backgroundColor: [COLORS[0],COLORS[1],COLORS[2],COLORS[3],COLORS[4],'#dee2e6'], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, cutout: '55%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 12, padding: 8 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': $'+(ctx.raw/1000).toFixed(1)+'K ('+(ctx.raw/total*100).toFixed(1)+'%)' } }
+    }
+  }
+});
+
+// ====== Chart 3: Service Cat ======
+const catSorted = Object.entries(catData).sort((a,b)=>b[1]-a[1]);
+new Chart(document.getElementById('catChart'), {
+  type: 'bar',
+  data: {
+    labels: catSorted.map(x=>x[0]),
+    datasets: [{ data: catSorted.map(x=>x[1]), backgroundColor: catSorted.map((_,i)=>COLORS[i%COLORS.length]), borderRadius: 3, barThickness: 18 }]
+  },
+  options: {
+    indexAxis: 'y', responsive: true,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => '$'+(ctx.raw/1000).toFixed(0)+'K' } } },
+    scales: {
+      x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$'+(v/1000).toFixed(0)+'K' } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ====== Chart 4: Cat Pie (Top3) ======
+const catTop3 = catSorted.slice(0,3);
+const catOther = catSorted.slice(3).reduce((s,x)=>s+x[1],0);
+new Chart(document.getElementById('catPieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: [...catTop3.map(x=>x[0]), 'Other (12 services)'],
+    datasets: [{ data: [...catTop3.map(x=>x[1]), catOther], backgroundColor: [A, P, '#38a169', '#dee2e6'], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, cutout: '55%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 12, padding: 8 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': $'+(ctx.raw/1000).toFixed(1)+'K ('+(ctx.raw/total*100).toFixed(1)+'%)' } }
+    }
+  }
+});
+
+// ====== Chart 5: Pricing Model ======
+new Chart(document.getElementById('modelChart'), {
+  type: 'doughnut',
+  data: {
+    labels: Object.keys(modelData),
+    datasets: [{ data: Object.values(modelData), backgroundColor: [A, P, '#84cc16', '#b7791f'], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true, cutout: '58%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 14, padding: 10 } },
+      tooltip: { callbacks: { label: ctx => ctx.label + ': $'+(ctx.raw/1000).toFixed(1)+'K ('+(ctx.raw/total*100).toFixed(1)+'%)' } }
+    }
+  }
+});
+
+// ====== Table 1: Bus ======
+const busTbody = document.getElementById('busTable');
+const maxBus = Math.max(...Object.values(busData));
+busSorted.forEach(([name,val],i) => {
+  const pct = (val/total*100).toFixed(1);
+  const barW = (val/maxBus*100).toFixed(0);
+  busTbody.innerHTML += `<tr>
+    <td>${name}</td>
+    <td class="num">$${val.toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+    <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${COLORS[i%COLORS.length]}"></div></div></td>
+  </tr>`;
+});
+
+// ====== Table 2: Cat ======
+const catTbody = document.getElementById('catTable');
+const maxCat = Math.max(...Object.values(catData));
+catSorted.forEach(([name,val],i) => {
+  const pct = (val/total*100).toFixed(1);
+  const barW = (val/maxCat*100).toFixed(0);
+  catTbody.innerHTML += `<tr>
+    <td>${name}</td>
+    <td class="num">$${val.toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+    <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${COLORS[i%COLORS.length]}"></div></div></td>
+  </tr>`;
+});
+
+// ====== Table 3: Model ======
+const modelTbody = document.getElementById('modelTable');
+Object.entries(modelData).forEach(([name,val]) => {
+  const pct = (val/total*100).toFixed(1);
+  const colors = [A, P, '#84cc16', '#b7791f'];
+  const idx = Object.keys(modelData).indexOf(name);
+  modelTbody.innerHTML += `<tr>
+    <td>${name}</td>
+    <td class="num">$${val.toLocaleString()}</td>
+    <td class="num">${pct}%</td>
+    <td class="bar-cell"><div class="bar-bg"><div class="bar-fill" style="width:${pct*2}%;background:${colors[idx]}"></div></div></td>
+  </tr>`;
+});
+</script>
+</body>
+</html>
