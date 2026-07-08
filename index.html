@@ -455,23 +455,6 @@
         }
         .nav-trigger:hover .tr-text .tr-main { color: var(--color-primary); }
 
-        /* ── Content Overlay ── */
-        .content-overlay {
-            position: fixed; z-index: 98;
-            left: 0; right: 0; bottom: 0;
-            top: 220px;
-            background: rgba(0,0,0,0.35);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s var(--ease-out);
-        }
-        .content-overlay.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
         .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
         .section-content { display: none; animation: none; }
         .section-content.active { display: block; animation: slideUp 0.4s var(--ease-out) both; }
@@ -982,8 +965,6 @@
         </button>
     </nav>
 </div>
-
-<div class="content-overlay" id="contentOverlay"></div>
 
 <!-- ════ Section 0 ════ -->
 <div class="section-content active" data-section="0">
@@ -1604,7 +1585,6 @@
             });
             document.getElementById('navTrigger').classList.remove('visible');
             document.getElementById('currentReport').classList.remove('visible');
-            document.getElementById('contentOverlay').classList.add('visible');
         }
 
         function scheduleHide() {
@@ -1616,7 +1596,6 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
-                document.getElementById('contentOverlay').classList.remove('visible');
                 hideTimer = null;
             }, HIDE_DELAY);
         }
@@ -1663,11 +1642,6 @@
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
             }, 2000);
-        });
-
-        // Click overlay to hide nav
-        document.getElementById('contentOverlay').addEventListener('click', function() {
-            scheduleHide();
         });
 
         // Also show nav when hovering near left edge if hidden
