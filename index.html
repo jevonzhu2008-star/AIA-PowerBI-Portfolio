@@ -311,7 +311,7 @@
             padding: 1px 10px; border-radius: 10px; letter-spacing: 0.04em;
             white-space: nowrap;
         }
-        .current-report .cr-tag { max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+        .current-report .cr-tag { max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
         .current-report .cr-tag.监控 { background: rgba(79,172,254,0.15); color: var(--color-profile); }
         .current-report .cr-tag.分析 { background: rgba(244,166,74,0.15); color: var(--color-report); }
         .current-report .cr-tag.profile { background: rgba(79,172,254,0.15); color: var(--color-profile); }
@@ -1588,6 +1588,7 @@
                 }
                 // Set cardKey to the carousel title so it shows in capsule
                 cardKey = cardName || (mIdx === '0' ? '监控' : '分析');
+                var tagClass = cardName ? '' : '监控'; // fallback tag class color
             } else {
                 var activeMain = content ? content.querySelector('.main-tab.active') : null;
                 var mIdx = activeMain ? activeMain.dataset.main : '0';
@@ -1606,7 +1607,14 @@
             document.getElementById('crMain').textContent = mainName;
             var tag = document.getElementById('crTag');
             tag.textContent = cardKey;
-            tag.className = 'cr-tag' + (cardKey ? ' ' + cardKey : '');
+            // Set class: for Others section use fallback color, for FinOps use cardKey directly
+            var cls = 'cr-tag';
+            if (secIdx === '1') {
+                cls += cardName ? ' 监控' : ' 监控';
+            } else if (cardKey) {
+                cls += ' ' + cardKey;
+            }
+            tag.className = cls;
         }
 
         window.updateReportBadge = updateCurrentReport;
