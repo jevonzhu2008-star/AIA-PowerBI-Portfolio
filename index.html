@@ -1663,6 +1663,11 @@
             }, 2000);
         });
 
+        // Click overlay to hide nav
+        document.getElementById('contentOverlay').addEventListener('click', function() {
+            scheduleHide();
+        });
+
         // Also show nav when hovering near left edge if hidden
         document.addEventListener('mousemove', function(e) {
             if (e.clientX < 20) {
