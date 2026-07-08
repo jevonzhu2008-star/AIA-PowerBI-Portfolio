@@ -1602,7 +1602,7 @@
             });
             document.getElementById('navTrigger').classList.remove('visible');
             document.getElementById('currentReport').classList.remove('visible');
-            document.getElementById('contentOverlay').classList.remove('visible');
+            document.getElementById('contentOverlay').classList.add('visible');
         }
 
         function scheduleHide() {
@@ -1614,7 +1614,7 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
-                document.getElementById('contentOverlay').classList.add('visible');
+                document.getElementById('contentOverlay').classList.remove('visible');
                 hideTimer = null;
             }, HIDE_DELAY);
         }
@@ -1660,7 +1660,6 @@
                 document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
                 document.getElementById('currentReport').classList.add('visible');
-                document.getElementById('contentOverlay').classList.add('visible');
             }, 2000);
         });
 
