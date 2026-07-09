@@ -598,13 +598,7 @@
         /* ── Documentation Section ── */
         .card-doc {
             padding: var(--space-lg);
-            display: flex;
-            gap: var(--space-md);
             position: relative;
-        }
-        .card-doc .doc-body {
-            flex: 1;
-            min-width: 0;
         }
         .card-doc .doc-loading {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -659,23 +653,16 @@
             margin-bottom: var(--space-sm); color: #9aaabc;
         }
 
-        /* ── Document Sidebar ── */
-        .doc-sidebar {
-            flex-shrink: 0;
-            width: 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-        .doc-sidebar .scroll-to-top-btn {
-            position: sticky;
-            top: 80px;
-            width: 42px; height: 42px;
+        /* ── Scroll-to-top button (floating top-right of Document) ── */
+        .doc-scroll-top {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px; height: 36px;
             border-radius: 50%;
             border: 1px solid var(--color-border);
-            background: rgba(18,18,30,0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(18,18,30,0.8);
+            backdrop-filter: blur(8px);
             color: var(--color-text-nav);
             cursor: pointer;
             display: flex;
@@ -685,32 +672,21 @@
                         color var(--duration-fast) var(--ease-out),
                         border-color var(--duration-fast) var(--ease-out),
                         transform var(--duration-fast) var(--ease-out);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
             padding: 0;
             z-index: 10;
         }
-        .doc-sidebar .scroll-to-top-btn svg {
-            width: 18px; height: 18px;
+        .doc-scroll-top svg {
+            width: 16px; height: 16px;
         }
-        .doc-sidebar .scroll-to-top-btn:hover {
+        .doc-scroll-top:hover {
             background: rgba(233,69,96,0.2);
             color: var(--color-primary);
             border-color: rgba(233,69,96,0.3);
             transform: scale(1.1);
         }
-        .doc-sidebar .scroll-to-top-btn:active {
+        .doc-scroll-top:active {
             transform: scale(0.95);
-        }
-        .doc-sidebar .scroll-to-top-btn .btn-label {
-            display: none;
-        }
-        .doc-sidebar .scroll-to-top-btn:hover .btn-label {
-            display: inline;
-        }
-        @media (max-width: 600px) {
-            .doc-sidebar { width: 36px; }
-            .doc-sidebar .scroll-to-top-btn { width: 32px; height: 32px; top: 60px; }
-            .doc-sidebar .scroll-to-top-btn svg { width: 14px; height: 14px; }
         }
 
         /* ── Video Section ── */
@@ -1120,15 +1096,11 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <div class="doc-body">
-                        <div class="doc-loading" id="doc-loading-0"><div class="spinner"></div><span>正在加载文档…</span></div>
-                        <div class="doc-content" id="doc-content-0" style="display:none"></div>
-                    </div>
-                    <aside class="doc-sidebar">
-                        <button class="scroll-to-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                        </button>
-                    </aside>
+                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                    </button>
+                    <div class="doc-loading" id="doc-loading-0"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-0" style="display:none"></div>
                 </div>
 
                 <div class="card-section card-analysis" data-card="analysis">
@@ -1201,15 +1173,11 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <div class="doc-body">
-                        <div class="doc-loading" id="doc-loading-1"><div class="spinner"></div><span>正在加载文档…</span></div>
-                        <div class="doc-content" id="doc-content-1" style="display:none"></div>
-                    </div>
-                    <aside class="doc-sidebar">
-                        <button class="scroll-to-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                        </button>
-                    </aside>
+                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                    </button>
+                    <div class="doc-loading" id="doc-loading-1"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-1" style="display:none"></div>
                 </div>
 
                 <div class="card-section card-analysis" data-card="analysis">
@@ -1281,15 +1249,11 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <div class="doc-body">
-                        <div class="doc-loading" id="doc-loading-2"><div class="spinner"></div><span>正在加载文档…</span></div>
-                        <div class="doc-content" id="doc-content-2" style="display:none"></div>
-                    </div>
-                    <aside class="doc-sidebar">
-                        <button class="scroll-to-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                        </button>
-                    </aside>
+                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                    </button>
+                    <div class="doc-loading" id="doc-loading-2"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-2" style="display:none"></div>
                 </div>
 
                 <div class="card-section card-analysis" data-card="analysis">
@@ -1362,15 +1326,11 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <div class="doc-body">
-                        <div class="doc-loading" id="doc-loading-3"><div class="spinner"></div><span>正在加载文档…</span></div>
-                        <div class="doc-content" id="doc-content-3" style="display:none"></div>
-                    </div>
-                    <aside class="doc-sidebar">
-                        <button class="scroll-to-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                        </button>
-                    </aside>
+                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+                    </button>
+                    <div class="doc-loading" id="doc-loading-3"><div class="spinner"></div><span>正在加载文档…</span></div>
+                    <div class="doc-content" id="doc-content-3" style="display:none"></div>
                 </div>
 
                 <div class="card-section card-analysis" data-card="analysis">
