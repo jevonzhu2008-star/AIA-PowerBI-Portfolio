@@ -655,17 +655,17 @@
 
         /* ── Scroll-to-top button (floating top-right of Document) ── */
         .doc-scroll-top {
-            position: absolute;
-            top: 16px;
-            right: 16px;
+            position: fixed;
+            top: 12px;
+            right: 12px;
             width: 36px; height: 36px;
             border-radius: 50%;
             border: 1px solid var(--color-border);
-            background: rgba(18,18,30,0.8);
+            background: rgba(18,18,30,0.85);
             backdrop-filter: blur(8px);
             color: var(--color-text-nav);
             cursor: pointer;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             transition: background var(--duration-fast) var(--ease-out),
@@ -674,16 +674,19 @@
                         transform var(--duration-fast) var(--ease-out);
             box-shadow: 0 2px 12px rgba(0,0,0,0.3);
             padding: 0;
-            z-index: 10;
+            z-index: 999;
+        }
+        .doc-scroll-top.visible {
+            display: flex;
         }
         .doc-scroll-top svg {
             width: 16px; height: 16px;
         }
         .doc-scroll-top:hover {
-            background: rgba(233,69,96,0.2);
+            background: rgba(233,69,96,0.25);
             color: var(--color-primary);
             border-color: rgba(233,69,96,0.3);
-            transform: scale(1.1);
+            transform: scale(1.12);
         }
         .doc-scroll-top:active {
             transform: scale(0.95);
@@ -1096,9 +1099,6 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                    </button>
                     <div class="doc-loading" id="doc-loading-0"><div class="spinner"></div><span>正在加载文档…</span></div>
                     <div class="doc-content" id="doc-content-0" style="display:none"></div>
                 </div>
@@ -1173,9 +1173,6 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                    </button>
                     <div class="doc-loading" id="doc-loading-1"><div class="spinner"></div><span>正在加载文档…</span></div>
                     <div class="doc-content" id="doc-content-1" style="display:none"></div>
                 </div>
@@ -1249,9 +1246,6 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                    </button>
                     <div class="doc-loading" id="doc-loading-2"><div class="spinner"></div><span>正在加载文档…</span></div>
                     <div class="doc-content" id="doc-content-2" style="display:none"></div>
                 </div>
@@ -1326,9 +1320,6 @@
                 </div>
 
                 <div class="card-section card-doc" data-card="doc">
-                    <button class="doc-scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" title="回到顶部">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-                    </button>
                     <div class="doc-loading" id="doc-loading-3"><div class="spinner"></div><span>正在加载文档…</span></div>
                     <div class="doc-content" id="doc-content-3" style="display:none"></div>
                 </div>
@@ -1551,6 +1542,10 @@
         <div>© 2026 · 基于 Microsoft Power BI 构建 · Locale: en-US</div>
     </div>
 </footer>
+
+<button class="doc-scroll-top" id="docScrollTop" type="button" title="回到顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <script>
 (function() {
@@ -2262,6 +2257,41 @@
 
         window.addEventListener('beforeunload', function() {
             Object.keys(timers).forEach(function(k) { clearInterval(timers[k]); });
+        });
+    })();
+
+    /* ── Scroll-to-top button: show on Document tab, scroll on click ── */
+    (function() {
+        var btn = document.getElementById('docScrollTop');
+        if (!btn) return;
+
+        btn.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+
+        function updateBtn() {
+            var docTab = document.querySelector('.card-section.active[data-card="doc"]');
+            btn.classList.toggle('visible', !!docTab);
+        }
+
+        updateBtn();
+
+        // Watch all card-tab clicks
+        document.addEventListener('click', function(e) {
+            var tab = e.target.closest('.card-tab');
+            if (tab) setTimeout(updateBtn, 10);
+        });
+
+        // Watch section/main tab clicks (they reset card tabs)
+        document.addEventListener('click', function(e) {
+            var tab = e.target.closest('.section-tab, .main-tab');
+            if (tab) setTimeout(updateBtn, 100);
+        });
+
+        // Also update when section-tabs are clicked via the existing handler
+        // (hash change, first load)
+        window.addEventListener('hashchange', function() {
+            setTimeout(updateBtn, 100);
         });
     })();
 })();
