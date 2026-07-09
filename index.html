@@ -361,7 +361,7 @@
         .section-tab:active { transform: translateY(0) scale(0.985); }
         .section-tab.active { color: #fff; background: rgba(255,255,255,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.2); transform: translateY(0); }
 
-        .main-tabs-outer { margin-top: var(--space-lg); }
+        .main-tabs-outer { margin-top: var(--space-lg); scroll-margin-top: 160px; }
         .main-tabs {
             display: flex; gap: var(--space-xs);
             background: rgba(255,255,255,0.03); border-radius: var(--radius-md);
@@ -936,6 +936,242 @@
             .hero .logo-badge .logo-svg { width: 34px; height: 34px; }
         }
         [data-theme="light"] .logo-badge .logo-svg { display: none; }
+
+        /* ── Portfolio Introduction Module ── */
+        .portfolio-intro {
+            max-width: var(--max-width); margin: 28px auto 0;
+            padding: 0 var(--space-lg);
+            animation: fadeUp 0.8s var(--ease-out) 0.3s both;
+            position: relative; z-index: 1;
+        }
+        .intro-container {
+            position: relative;
+            background: linear-gradient(135deg, rgba(18,18,30,0.55) 0%, rgba(26,18,36,0.40) 50%, rgba(18,18,30,0.55) 100%);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl) var(--space-2xl);
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+        }
+        .intro-container::before {
+            content: ''; position: absolute; top: -120px; right: -80px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(233,69,96,0.05) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .intro-container::after {
+            content: ''; position: absolute; bottom: -60px; left: -60px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(79,172,254,0.04) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .intro-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 0.58rem; font-weight: 600; letter-spacing: 0.08em;
+            color: var(--color-primary);
+            background: rgba(233,69,96,0.08);
+            border: 1px solid rgba(233,69,96,0.12);
+            padding: 4px 14px; border-radius: 20px;
+            margin-bottom: var(--space-md);
+            text-transform: uppercase;
+            position: relative; z-index: 1;
+        }
+        .intro-badge svg { width: 12px; height: 12px; }
+        .intro-title {
+            font-size: 1.3rem; font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-sm);
+            line-height: 1.3;
+            position: relative; z-index: 1;
+        }
+        .intro-title .hl-grad {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .intro-desc {
+            font-size: 0.84rem; line-height: 1.85;
+            color: var(--color-text-secondary);
+            max-width: 820px;
+            margin-bottom: 0;
+            position: relative; z-index: 1;
+        }
+        .intro-desc strong { color: #c0d0d0; font-weight: 600; }
+
+        /* ── Theme Cards ── */
+        .intro-themes {
+            display: flex; flex-direction: column; gap: var(--space-lg);
+            margin-top: var(--space-lg);
+            position: relative; z-index: 1;
+        }
+        .theme-card {
+            display: flex; gap: var(--space-lg);
+            background: rgba(255,255,255,0.012);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            transition: background var(--duration-base) var(--ease-out),
+                        border-color var(--duration-base) var(--ease-out),
+                        box-shadow var(--duration-base) var(--ease-out);
+            position: relative; overflow: hidden;
+        }
+        .theme-card:hover {
+            background: rgba(255,255,255,0.022);
+            border-color: var(--color-border-hover);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        }
+        .theme-icon {
+            flex-shrink: 0;
+            width: 44px; height: 44px;
+            border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .theme-icon svg { width: 22px; height: 22px; }
+        .theme-icon-1 { background: rgba(233,69,96,0.1); color: var(--color-primary); }
+        .theme-icon-2 { background: rgba(79,172,254,0.1); color: var(--color-profile); }
+        .theme-icon-3 { background: rgba(245,166,35,0.1); color: var(--color-accent); }
+        .theme-content { flex: 1; min-width: 0; }
+        .theme-title {
+            font-size: 0.92rem; font-weight: 700;
+            color: var(--color-text-primary);
+            display: flex; align-items: center; gap: var(--space-sm);
+            flex-wrap: wrap; margin-bottom: var(--space-sm);
+        }
+        .theme-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; border-radius: 50%;
+            font-size: 0.7rem; font-weight: 700;
+            background: rgba(233,69,96,0.12); color: var(--color-primary);
+            flex-shrink: 0;
+        }
+        .theme-tag {
+            font-size: 0.62rem; font-weight: 500;
+            color: var(--color-text-muted);
+            background: rgba(255,255,255,0.04);
+            padding: 2px 10px; border-radius: 10px;
+            letter-spacing: 0.04em;
+        }
+        .theme-desc {
+            font-size: 0.8rem; line-height: 1.7;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-sm);
+        }
+        .theme-subs {
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .sub-item {
+            display: flex; align-items: baseline; gap: 8px;
+            font-size: 0.78rem; line-height: 1.6;
+            color: var(--color-text-secondary);
+        }
+        .sub-dot {
+            flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--dot-clr, var(--color-primary));
+            opacity: 0.6; margin-top: 7px;
+        }
+        .sub-name {
+            font-weight: 600; color: #b0c0d0;
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .sub-brief { color: var(--color-text-muted); }
+        .theme-footnote {
+            display: flex; align-items: center; gap: 10px;
+            margin-top: var(--space-sm); padding-top: var(--space-sm);
+            border-top: 1px solid var(--color-border);
+            font-size: 0.72rem; line-height: 1.6;
+            color: var(--color-text-muted);
+            flex-wrap: wrap;
+        }
+        .fn-label {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 0.68rem; font-weight: 600; color: var(--color-text-secondary);
+            white-space: nowrap; letter-spacing: 0.04em;
+            flex-shrink: 0;
+        }
+        .fn-badges {
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+        }
+        .fn-badge {
+            display: inline-flex; align-items: baseline; gap: 3px;
+            padding: 2px 10px; border-radius: 10px;
+            font-size: 0.65rem; font-weight: 600; color: var(--fb-clr, var(--color-primary));
+            background: color-mix(in srgb, var(--fb-clr, var(--color-primary)) 12%, transparent);
+            white-space: nowrap;
+        }
+        .fn-badge .fn-desc {
+            font-weight: 400; font-size: 0.6rem;
+            color: color-mix(in srgb, var(--fb-clr, var(--color-primary)) 50%, var(--color-text-muted));
+        }
+
+        .intro-stats {
+            display: flex; align-items: stretch;
+            margin-top: var(--space-lg); padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+            position: relative; z-index: 1;
+        }
+        .intro-stat {
+            flex: 1; display: flex; flex-direction: row;
+            align-items: baseline; gap: 6px;
+            padding: 0 var(--space-md); text-align: left;
+            justify-content: center;
+        }
+        .intro-stat .num {
+            font-size: 1.3rem; font-weight: 800; line-height: 1;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #f06a80 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            flex-shrink: 0;
+        }
+        .intro-stat .num.accent {
+            background: linear-gradient(135deg, var(--color-accent) 0%, #f8c14a 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .intro-stat .num.blue {
+            background: linear-gradient(135deg, var(--color-profile) 0%, #7ac0fe 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .intro-stat .num.green {
+            background: linear-gradient(135deg, #50c878 0%, #80e8a0 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .intro-stat .label {
+            font-size: 0.72rem; color: var(--color-text-secondary);
+            font-weight: 500; letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .intro-stat .sub {
+            font-size: 0.58rem; color: rgba(255,255,255,0.15);
+            letter-spacing: 0.05em; white-space: nowrap;
+        }
+        .intro-divider {
+            width: 1px; align-self: center;
+            height: 32px;
+            background: var(--color-border); flex-shrink: 0;
+        }
+        @media (max-width: 768px) {
+            .intro-container { padding: var(--space-lg); }
+            .intro-title { font-size: 1.1rem; }
+            .intro-themes { gap: var(--space-md); }
+            .theme-card { flex-direction: column; gap: var(--space-md); padding: var(--space-md); }
+            .theme-icon { width: 36px; height: 36px; }
+            .theme-icon svg { width: 18px; height: 18px; }
+            .sub-item { flex-wrap: wrap; gap: 2px 8px; }
+            .sub-brief { width: 100%; padding-left: 14px; }
+            .intro-stats { flex-wrap: nowrap; gap: 0; }
+            .intro-divider:last-of-type { display: none; }
+            .intro-stat { flex: 0 1 auto; padding: 0 var(--space-xs); }
+            .intro-stat .num { font-size: 1.1rem; }
+            .intro-stat .label { font-size: 0.65rem; }
+            .intro-stat .sub { display: none; }
+        }
+        @media (max-width: 480px) {
+            .intro-container { padding: var(--space-md); }
+            .intro-title { font-size: 1rem; }
+            .intro-desc { font-size: 0.78rem; }
+            .theme-card { padding: var(--space-sm); }
+            .theme-title { font-size: 0.85rem; }
+            .intro-stat { flex: 1 1 40%; }
+        }
     </style>
 </head>
 <body>
@@ -974,6 +1210,188 @@
         </div>
     </div>
 </header>
+
+<!-- ── Portfolio Introduction Module ── -->
+<section class="portfolio-intro" aria-label="作品集简介">
+    <div class="intro-container">
+        <div class="intro-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Portfolio Overview
+        </div>
+
+        <h2 class="intro-title">
+            🚀 欢迎来到 <span class="hl-grad">Power BI 商业级作品集</span>
+        </h2>
+        <p class="intro-desc">
+            本作品集由 <strong>Jevon Zhu</strong> 倾力打造，打破传统 BI 仅展示"静态图表"的局限，
+            采用<strong>"产品化交付"</strong>与<strong>"全生命周期"</strong>的思维，为您呈现一套工业级的现代数据可视化与分析解决方案。
+        </p>
+        <p class="intro-desc">
+            整个系统依托 <strong>Databricks + Power BI</strong> 现代数据栈构建，深度融合 <strong>RLS 行级安全</strong>与<strong>多维打通架构</strong>。
+            您可以通过导航探索以下三大核心主题：
+        </p>
+
+        <!-- Theme Cards -->
+        <div class="intro-themes">
+            <div class="theme-card">
+                <div class="theme-icon theme-icon-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <div class="theme-content">
+                    <div class="theme-title">
+                        <span class="theme-num">1</span>
+                        Cloud Finance &amp; FinOps
+                        <span class="theme-tag">云财务运营中心</span>
+                    </div>
+                    <p class="theme-desc">聚焦企业云成本优化的战略刚需，打通公有云与 Kyndryl 托管支出，实现多源数据秒级响应。</p>
+                    <div class="theme-subs">
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-primary)"></span>
+                            <span class="sub-name">Consumption</span>
+                            <span class="sub-brief">精细化成本分摊，落地"谁消费、谁买单"的问责机制</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-accent)"></span>
+                            <span class="sub-name">Cloud Efficiency Saving</span>
+                            <span class="sub-brief">跨 BU 追踪 RI/SP 贡献与降本目标达成率</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-profile)"></span>
+                            <span class="sub-name">Cloud &amp; Kyndryl Spend</span>
+                            <span class="sub-brief">打破传统 IT 与公有云数据孤岛，实现三位一体动态预算对账</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:#50c878"></span>
+                            <span class="sub-name">Cloud Cost Management</span>
+                            <span class="sub-brief">基于混合存储架构，实现海量账单的高性能实时穿透</span>
+                        </div>
+                    </div>
+                    <div class="theme-footnote">
+                        <span class="fn-label">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                            全链路闭环
+                        </span>
+                        <div class="fn-badges">
+                            <span class="fn-badge" style="--fb-clr:var(--color-primary)">Intro <span class="fn-desc">视频简介</span></span>
+                            <span class="fn-badge" style="--fb-clr:var(--color-profile)">Profile <span class="fn-desc">架构图</span></span>
+                            <span class="fn-badge" style="--fb-clr:var(--color-accent)">Report <span class="fn-desc">交互报表</span></span>
+                            <span class="fn-badge" style="--fb-clr:#50c878">Business <span class="fn-desc">业务概述</span></span>
+                            <span class="fn-badge" style="--fb-clr:#a078f0">Document <span class="fn-desc">语义模型文档</span></span>
+                            <span class="fn-badge" style="--fb-clr:#f06a80">Analysis <span class="fn-desc">深度分析</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-icon theme-icon-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                </div>
+                <div class="theme-content">
+                    <div class="theme-title">
+                        <span class="theme-num">2</span>
+                        Others
+                        <span class="theme-tag">综合运维与运营分析</span>
+                    </div>
+                    <p class="theme-desc">采用 <strong>3D Coverflow</strong> 动态轮播，多视角透视企业日常全盘运转：</p>
+                    <div class="theme-subs">
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-primary)"></span>
+                            <span class="sub-name">Group Applications Monitoring</span>
+                            <span class="sub-brief">全面监控各组应用系统的运行状态，包括服务可用性、响应时间、错误率及应用健康评分等关键指标</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-accent)"></span>
+                            <span class="sub-name">Platforms Monitoring</span>
+                            <span class="sub-brief">集中监控各平台基础设施的运行健康度，涵盖计算、存储、网络等核心组件的性能与可用性</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-profile)"></span>
+                            <span class="sub-name">System Stability Report</span>
+                            <span class="sub-brief">系统稳定性分析报告，跟踪服务 SLA 达标率、故障恢复时间（MTTR）及历史事件趋势</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:#50c878"></span>
+                            <span class="sub-name">Service Management - CLARITY_SMT</span>
+                            <span class="sub-brief">IT 服务管理仪表板，跟踪工单处理效率、服务台绩效及事件解决时效</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:#a078f0"></span>
+                            <span class="sub-name">Cloud Services CCoE</span>
+                            <span class="sub-brief">云服务卓越中心管理看板，跟踪云采用进度、合规状态及云服务目录使用情况</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-primary)"></span>
+                            <span class="sub-name">Access Control Admin</span>
+                            <span class="sub-brief">访问控制管理仪表板，监控用户权限分配、访问审计及合规状态</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-accent)"></span>
+                            <span class="sub-name">Actimize Alert Dashboard</span>
+                            <span class="sub-brief">风控预警分析仪表板，监控可疑交易告警、案例处理效率及合规风险指标</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:var(--color-profile)"></span>
+                            <span class="sub-name">AIA Tech Academy Dashboard</span>
+                            <span class="sub-brief">技术学院学习管理看板，追踪培训完成率、技能发展及课程参与度</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:#50c878"></span>
+                            <span class="sub-name">Banca</span>
+                            <span class="sub-brief">文件上传分析看板，跟踪文件上传量、处理状态及异常监控</span>
+                        </div>
+                        <div class="sub-item">
+                            <span class="sub-dot" style="--dot-clr:#a078f0"></span>
+                            <span class="sub-name">Policy Summary</span>
+                            <span class="sub-brief">云平台合规性分析仪表板，展示合规状态、风险评估及策略执行情况</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-icon theme-icon-3">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </div>
+                <div class="theme-content">
+                    <div class="theme-title">
+                        <span class="theme-num">3</span>
+                        Video Tutorials
+                        <span class="theme-tag">技术沉淀与技巧教学</span>
+                    </div>
+                    <p class="theme-desc">收录了作者关于 <strong>DAX 原理</strong>深度剖析、<strong>Power BI UI 优化</strong>、<strong>增量刷新</strong>及 <strong>Microsoft Fabric</strong> 实战的硬核视频教程，展现从架构设计到知识传递的综合操盘能力。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="intro-stats">
+            <div class="intro-stat">
+                <span class="num">4</span>
+                <span class="label">核心子系统</span>
+                <span class="sub">DevOps 全链路</span>
+            </div>
+            <div class="intro-divider"></div>
+            <div class="intro-stat">
+                <span class="num accent">14</span>
+                <span class="label">Power BI 报告</span>
+                <span class="sub">Profile + Report</span>
+            </div>
+            <div class="intro-divider"></div>
+            <div class="intro-stat">
+                <span class="num green">3</span>
+                <span class="label">数据技术栈</span>
+                <span class="sub">Databricks · Power BI · DAX</span>
+            </div>
+            <div class="intro-divider"></div>
+            <div class="intro-stat">
+                <span class="num blue">27</span>
+                <span class="label">业务单元</span>
+                <span class="sub">RLS 行级安全</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 <button class="nav-trigger" id="navTrigger" title="展开导航" type="button">
     <span class="tr-icon-wrap">
@@ -1728,6 +2146,25 @@
 
         navBtn.addEventListener('click', function() {
             showNav();
+            // Wait for the nav-collapse container to fully expand (max-height CSS transition 0.5s)
+            var wrap = document.getElementById('sectionTabsWrap');
+            if (!wrap) return;
+            var lastH = -1, stableFrames = 0;
+            function doScroll() {
+                var h = wrap.offsetHeight;
+                if (h === lastH) { stableFrames++; } else { stableFrames = 0; lastH = h; }
+                // Stable for 3 frames and sufficiently tall = done expanding
+                if (stableFrames >= 3 && h > 50) {
+                    var target = document.querySelector('.main-tabs-outer');
+                    if (target) {
+                        var top = target.getBoundingClientRect().top + window.scrollY;
+                        window.scrollTo({top: Math.max(0, top - 160), behavior: 'smooth'});
+                    }
+                } else {
+                    requestAnimationFrame(doScroll);
+                }
+            }
+            requestAnimationFrame(doScroll);
         });
 
         // Auto-hide on first load after 2s
