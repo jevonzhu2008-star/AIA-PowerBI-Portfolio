@@ -401,8 +401,8 @@
         }
         .nav-trigger {
             position: fixed; z-index: 99;
-            left: 0; top: 25%;
-            transform: translateY(-50%) translateX(-100%);
+            left: 0; top: 80px;
+            transform: translateX(-100%);
             display: flex; align-items: center; gap: 8px;
             padding: 12px 14px 12px 10px;
             border: none;
@@ -419,7 +419,7 @@
             border-left: 3px solid var(--color-primary);
         }
         .nav-trigger.visible {
-            transform: translateY(-50%) translateX(0);
+            transform: translateX(0);
             border-left-color: var(--color-primary);
             box-shadow: 4px 0 30px rgba(233,69,96,0.2), 0 0 0 1px rgba(233,69,96,0.15);
             animation: triggerPulse 2.5s ease-in-out infinite;
