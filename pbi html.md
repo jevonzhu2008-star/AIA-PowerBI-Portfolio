@@ -48,16 +48,16 @@
 <iframe title="Group Applications Monitoring Dashboard" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZjMzMjItZTU5NS00M2M4LWFkMWYtOTJmNjY1NzMxMmQwIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection48e0148969a7a9e57dbf" frameborder="0" allowFullScreen="true"></iframe>
 
 ### Platforms Monitoring
-<iframe title="Platforms Monitoring" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiY2MwMGJmNGMtYjVmZS00ODA4LWI5MDUtYTgxZGZjZmVkMjBhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection9e126a67e2067650023d" frameborder="0" allowFullScreen="true"></iframe>
+<iframe title="Platforms Monitoring" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiY2MwMGJmNGMtYjVmZS00ODA4LWI5MDUtYTgxZGZjZmVkMjBhIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection4d5f04025cbd90d529c9" frameborder="0" allowFullScreen="true"></iframe>
 
 ### System Stability
 <iframe title="System Stability Report" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZDMyMmYxYTktMDI1Ny00ODg4LWFiMTMtYjk3Yjk1YTM3YzY0IiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
 
 ### Service Management 
-<iframe title="Service Management -CLARITY_SMT" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMzUzMTgzMzctOGEzMy00ZTNjLWE5NTMtMTA5MzAxYWNlNDQyIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection8daf68e46eaf5d2c7a97" frameborder="0" allowFullScreen="true"></iframe>
+<iframe title="Service Management -CLARITY_SMT" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMzUzMTgzMzctOGEzMy00ZTNjLWE5NTMtMTA5MzAxYWNlNDQyIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection1e2615bedc24029c8ac5" frameborder="0" allowFullScreen="true"></iframe>
 
 ### Cloud Services CCoE
-<iframe title="Cloud Services CCoE" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTdhODk3YWUtODhiYS00Y2VlLWI0NDktYWVlYmU2ODUzMzZlIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSection1e2615bedc24029c8ac5" frameborder="0" allowFullScreen="true"></iframe>
+<iframe title="Cloud Services CCoE" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTdhODk3YWUtODhiYS00Y2VlLWI0NDktYWVlYmU2ODUzMzZlIiwidCI6ImIyZGE5Y2IyLTU5YmEtNGQzMy1iMDc1LTFjYjc0NWRkZGUxYyIsImMiOjEwfQ%3D%3D&pageName=ReportSectionfb609da3900c20b08b08" frameborder="0" allowFullScreen="true"></iframe>
 
 ## Operational Analytics
 
