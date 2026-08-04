@@ -29,9 +29,9 @@
 - 主题：暗黑科技风（Dark Mode，如 Tailwind 的 `bg-slate-900` / `bg-slate-950`），支持高亮发光效果（Glow Effect）。
 - 色彩系统（用颜色区分层级）：
   - Data Sources: 蓝色调 (Blue - `#3B82F6`)
-  - Ingestion: 绿色调 (Emerald - `#10B981`)
+  - Ingestion: Databricks 品牌红色调（`#FF3621`），Stage 与节点（Auto Loader、Workflows / DLT）图标使用 Databricks 官方图标风格
   - Databricks Medallion: 琥珀/紫色调 (Amber to Purple - Bronze `#D97706`, Silver `#94A3B8`, Gold `#F59E0B`)
-  - Power BI: 紫色/黄黄色调 (Purple/Yellow - `#A855F7`)
+  - Power BI: Microsoft Fabric 品牌绿色调（`#117865`），Stage 与节点（Semantic Model、Reports & Dashboards）图标使用 Microsoft Fabric 官方图标风格
 - 卡片样式：Glassmorphism（玻璃拟态/半透明）、圆角（`rounded-xl`）、微弱边框（`border border-slate-800`）。
 - 动效要求：
   - 数据流动效果：卡片之间的连接线需要有脉冲/光点流动动画（Pulsing Flow / Animated SVG Paths），展示数据正在实时 Data Ingestion。

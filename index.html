@@ -3167,9 +3167,19 @@
             zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
             activity: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
             share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
-            arrow: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'
+            arrow: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+            cloudDownload: '<path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><path d="M12 12v8"/><path d="m8 16 4 4 4-4"/>',
+            workflow: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 7h1.5a2.5 2.5 0 0 1 2.5 2.5V11"/><path d="M14 17h-1.5a2.5 2.5 0 0 1-2.5-2.5V13"/>',
+            spark: '<path fill="#FF9A3D" d="M1 18 L3 14 L10 14 L8 18 Z"/><path fill="#FF6620" d="M8 14 L10 10 L17 10 L15 14 Z"/><path fill="#FF3621" d="M15 10 L17 6 L24 6 L22 10 Z"/>',
+            fabric: '<rect x="2" y="2" width="8" height="8" fill="#0E5C4F"/><rect x="12" y="2" width="10" height="8" fill="#117865"/><rect x="2" y="12" width="6" height="10" fill="#1C8F7B"/><rect x="10" y="12" width="12" height="6" fill="#2AA08B"/>',
+            cube: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+            dashboard: '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>'
         };
         function ICON_WRAP(name) {
+            if (name === 'spark' || name === 'fabric') {
+                /* Databricks / Microsoft Fabric 品牌 logo：保持品牌填充色 */
+                return '<svg viewBox="0 0 24 24" fill="none">' + ICONS[name] + '</svg>';
+            }
             return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[name] || ICONS.box) + '</svg>';
         }
 
@@ -3218,12 +3228,12 @@
                 ]
             },
             {
-                title: 'Ingestion', sub: 'Databricks Native · Lakehouse Pipeline',
-                color: '#10B981', icon: 'git',
+                title: 'Ingestion', sub: 'Databricks Lakehouse Pipeline',
+                color: '#FF3621', icon: 'spark',
                 nodes: [
                     {
-                        id: 's2n1', icon: 'git', title: 'Databricks Auto Loader',
-                        sub: 'Cloud Files API / Event Grid Trigger', color: '#10B981',
+                        id: 's2n1', icon: 'cloudDownload', title: 'Databricks Auto Loader',
+                        sub: 'Cloud Files API / Event Grid Trigger', color: '#FF3621',
                         desc: '基于 Cloud Files API 增量监听 Blob 落地区，事件驱动（Event Grid Trigger）实时捕获新文件，自动推断与演进 Schema。',
                         tags: ['Cloud Files API', 'Event Grid', 'Schema Evolution'],
                         cap: '增量流式入湖 · Schema Evolution',
@@ -3234,8 +3244,8 @@
                         outputs: ['Bronze Delta Lake 原始层（Append-only）']
                     },
                     {
-                        id: 's2n2', icon: 'zap', title: 'Workflows / DLT & Jobs',
-                        sub: 'Delta Live Tables · Pipeline Orchestration', color: '#10B981',
+                        id: 's2n2', icon: 'workflow', title: 'Workflows / DLT & Jobs',
+                        sub: 'Delta Live Tables · Pipeline Orchestration', color: '#FF3621',
                         desc: '以 Delta Live Tables 声明式定义增量管道，Workflows 统一调度任务与依赖，支撑 Batch 与 Streaming 混合处理。',
                         tags: ['Delta Live Tables', 'Jobs', 'Batch & Streaming'],
                         cap: '管道编排 · DLT 声明式',
@@ -3290,12 +3300,12 @@
                 ]
             },
             {
-                title: 'Serving & Analytics', sub: 'Power BI',
-                color: '#A855F7', icon: 'chart',
+                title: 'Serving & Analytics', sub: 'Microsoft Fabric · Power BI',
+                color: '#117865', icon: 'fabric',
                 nodes: [
                     {
-                        id: 's4n1', icon: 'pie', title: 'Power BI Semantic Model',
-                        sub: 'Import / DirectQuery Composite', color: '#A855F7',
+                        id: 's4n1', icon: 'cube', title: 'Power BI Semantic Model',
+                        sub: 'Import / DirectQuery Composite', color: '#117865',
                         desc: '以复合模型组织 Gold 层数据，通过 DAX 计算核心 FinOps 度量，并以 RLS/OLS 实现 27 个业务单元的行列级安全。',
                         tags: ['Composite Model', 'DAX', 'RLS / OLS'],
                         cap: '复合模型 · RLS / OLS',
@@ -3306,8 +3316,8 @@
                         outputs: ['度量与语义 → 报表 / 看板']
                     },
                     {
-                        id: 's4n2', icon: 'chart', title: 'Reports & Dashboards',
-                        sub: 'FinOps Executive KPI', color: '#A855F7',
+                        id: 's4n2', icon: 'dashboard', title: 'Reports & Dashboards',
+                        sub: 'FinOps Executive KPI', color: '#117865',
                         desc: '面向管理层与运维的交互报表：Executive KPI、成本分摊、RI/SP 节省与单据级钻取穿透。',
                         tags: ['Report', 'Drill-through', 'KPI'],
                         cap: 'Executive KPI · Drill-through',
