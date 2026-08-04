@@ -22,9 +22,36 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: App_1/package-lock.json
+
+      - name: Build App_1 (Fabric interactive portfolio)
+        working-directory: App_1
+        run: |
+          npm ci
+          npm run build:fabric
+
+      - name: Stage site for upload
+        run: |
+          mkdir -p _site/app1
+          # Copy repo content, excluding .git, previous staging, and App_1 source tree
+          # (its build output is deployed separately to /app1/)
+          tar --exclude='./.git' \
+              --exclude='./_site' \
+              --exclude='./App_1' \
+              -cf - . | tar xf - -C _site
+          # Deploy App_1 build to the /app1/ subpath
+          cp -r App_1/dist/. _site/app1/
+
       - uses: actions/configure-pages@v5
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: _site
+
       - id: deployment
         uses: actions/deploy-pages@v4
