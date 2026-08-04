@@ -3431,7 +3431,8 @@
                 var toEl = document.querySelector('.arch-node[data-id="' + e[1] + '"]');
                 if (!fromEl || !toEl) return;
 
-                var color = (nodeMap[e[0]] && nodeMap[e[0]].color) || '#8899aa';
+                /* 箭头颜色与目标卡片对齐 */
+                var color = (nodeMap[e[1]] && nodeMap[e[1]].color) || '#8899aa';
 
                 var a = rectFor(fromEl);
                 var b = rectFor(toEl);
@@ -3443,7 +3444,7 @@
                         ', ' + (x2 - dx).toFixed(1) + ',' + y2.toFixed(1) +
                         ', ' + x2.toFixed(1) + ',' + y2.toFixed(1);
 
-                /* 每条边独立箭头 marker，填充源节点颜色 */
+                /* 每条边独立箭头 marker，填充目标节点颜色 */
                 var markerId = 'archArrow_' + i;
                 var marker = document.createElementNS(ns, 'marker');
                 marker.setAttribute('id', markerId);
