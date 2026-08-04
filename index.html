@@ -1172,6 +1172,347 @@
             .theme-title { font-size: 0.85rem; }
             .intro-stat { flex: 1 1 40%; }
         }
+
+        /* ════════════════════════════════════════════════════════════
+           Architecture Topology — 项目技术架构
+           ════════════════════════════════════════════════════════════ */
+        .arch-container {
+            margin-top: 18px;
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            animation: fadeScale 0.35s var(--ease-out) both;
+        }
+        .arch-header {
+            display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
+            flex-wrap: wrap;
+            padding: 16px var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+            background: rgba(255,255,255,0.012);
+        }
+        .arch-header-left { display: flex; align-items: center; gap: var(--space-md); flex-wrap: wrap; min-width: 0; }
+        .arch-header h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; display: flex; align-items: center; gap: 10px; }
+        .arch-header h2 .arch-logo {
+            width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, rgba(233,69,96,0.18), rgba(165,85,247,0.18));
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--color-primary);
+        }
+        .arch-header h2 .arch-logo svg { width: 16px; height: 16px; }
+        .arch-status {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em;
+            color: #7ecf8a; padding: 5px 12px; border-radius: 20px;
+            background: rgba(80,200,120,0.1); border: 1px solid rgba(80,200,120,0.22);
+            white-space: nowrap;
+        }
+        .arch-status .arch-status-dot {
+            width: 7px; height: 7px; border-radius: 50%;
+            background: #50c878; box-shadow: 0 0 0 0 rgba(80,200,120,0.5);
+            animation: archStatusPulse 2s var(--ease-in-out) infinite;
+        }
+        @keyframes archStatusPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(80,200,120,0.5); }
+            70%  { box-shadow: 0 0 0 7px rgba(80,200,120,0); }
+            100% { box-shadow: 0 0 0 0 rgba(80,200,120,0); }
+        }
+        .arch-header-right { display: flex; align-items: center; gap: var(--space-sm); }
+        .arch-mode-toggle {
+            display: inline-flex; gap: 2px; padding: 3px;
+            background: rgba(255,255,255,0.04); border: 1px solid var(--color-border);
+            border-radius: 10px;
+        }
+        .arch-mode-toggle button {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border: none; border-radius: 8px;
+            background: transparent; color: var(--color-text-muted);
+            font-size: 0.72rem; font-weight: 600; cursor: pointer;
+            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+        }
+        .arch-mode-toggle button svg { width: 14px; height: 14px; }
+        .arch-mode-toggle button:hover { color: #c0d0e0; }
+        .arch-mode-toggle button.active {
+            background: rgba(233,69,96,0.18); color: #fff;
+            box-shadow: inset 0 0 0 1px rgba(233,69,96,0.35);
+        }
+        .arch-hint {
+            font-size: 0.72rem; color: var(--color-text-muted); line-height: 1.7;
+            padding: 0 var(--space-lg) var(--space-md);
+        }
+        .arch-hint strong { color: #b0c0d0; font-weight: 600; }
+
+        /* ── Canvas ── */
+        .arch-canvas { position: relative; padding: 0 var(--space-lg) var(--space-lg); }
+        .arch-stages {
+            display: flex; gap: 44px; align-items: stretch;
+        }
+        .arch-stage {
+            flex: 1 1 0; min-width: 0;
+            display: flex; flex-direction: column; gap: 18px;
+        }
+        .arch-stage-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 12px;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+        }
+        .arch-stage-header .arch-stage-step {
+            font-family: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
+            font-size: 0.62rem; font-weight: 800; letter-spacing: 0.06em;
+            color: var(--stage-color, var(--color-primary));
+            opacity: 0.9;
+        }
+        .arch-stage-header .arch-stage-icon {
+            width: 22px; height: 22px; flex-shrink: 0;
+            color: var(--stage-color, var(--color-primary));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .arch-stage-header .arch-stage-icon svg { width: 18px; height: 18px; }
+        .arch-stage-header .arch-stage-title {
+            font-size: 0.78rem; font-weight: 700; color: #dce4ec;
+            line-height: 1.3; min-width: 0;
+        }
+        .arch-stage-header .arch-stage-sub {
+            font-size: 0.6rem; color: var(--color-text-muted); margin-top: 1px;
+            font-weight: 400;
+        }
+
+        /* ── Node Cards ── */
+        .arch-node {
+            position: relative; z-index: 2; cursor: pointer;
+            display: flex; flex-direction: column; gap: 7px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.07);
+            background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.012));
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: transform var(--duration-base) var(--ease-out),
+                        border-color var(--duration-base) var(--ease-out),
+                        box-shadow var(--duration-base) var(--ease-out),
+                        background var(--duration-base) var(--ease-out);
+        }
+        .arch-node::before {
+            content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: var(--accent, var(--color-primary));
+            opacity: 0.7;
+            transition: opacity var(--duration-base) var(--ease-out);
+        }
+        .arch-node:hover, .arch-node.hovered {
+            transform: translateY(-4px) scale(1.03);
+            border-color: color-mix(in srgb, var(--accent, var(--color-primary)) 45%, transparent);
+            box-shadow: 0 10px 32px rgba(0,0,0,0.45),
+                        0 0 0 1px color-mix(in srgb, var(--accent, var(--color-primary)) 30%, transparent),
+                        0 0 24px color-mix(in srgb, var(--accent, var(--color-primary)) 14%, transparent);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--accent, var(--color-primary)) 10%, rgba(21,21,42,0.9)), rgba(21,21,42,0.6));
+            z-index: 5;
+        }
+        .arch-node.dim { opacity: 0.38; filter: saturate(0.4); }
+        .arch-node .arch-node-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+        .arch-node-icon {
+            width: 34px; height: 34px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 9px;
+            background: color-mix(in srgb, var(--accent, var(--color-primary)) 14%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent, var(--color-primary)) 28%, transparent);
+            color: var(--accent, var(--color-primary));
+            transition: transform var(--duration-base) var(--ease-out);
+        }
+        .arch-node:hover .arch-node-icon, .arch-node.hovered .arch-node-icon { transform: scale(1.08); }
+        .arch-node-icon svg { width: 18px; height: 18px; }
+        .arch-node-title {
+            font-size: 0.8rem; font-weight: 700; color: #e8ecf0; line-height: 1.35;
+        }
+        .arch-node-title small { display: block; font-size: 0.62rem; font-weight: 500; color: var(--color-text-muted); margin-top: 1px; }
+        .arch-node-desc { font-size: 0.7rem; line-height: 1.6; color: var(--color-text-secondary); }
+        .arch-node-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+        .arch-tag {
+            font-size: 0.58rem; font-weight: 600; letter-spacing: 0.02em;
+            padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+            background: color-mix(in srgb, var(--accent, var(--color-primary)) 12%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent, var(--color-primary)) 24%, transparent);
+            color: color-mix(in srgb, var(--accent, var(--color-primary)) 82%, #fff);
+        }
+        .arch-node .arch-node-cap { display: flex; align-items: center; gap: 6px; margin-top: 1px; }
+        .arch-node .arch-node-cap svg { width: 12px; height: 12px; opacity: 0.7; }
+        .arch-node .arch-node-cap span {
+            font-size: 0.62rem; color: var(--color-text-muted);
+            border-bottom: 1px dashed rgba(255,255,255,0.16);
+            transition: color var(--duration-fast) var(--ease-out);
+        }
+        .arch-node:hover .arch-node-cap span, .arch-node.hovered .arch-node-cap span { color: #b0c0d0; }
+
+        /* Compact mode: collapse descriptions & tags */
+        .arch-canvas[data-mode="compact"] .arch-node-desc { display: none; }
+        .arch-canvas[data-mode="compact"] .arch-node-tags { display: none; }
+        .arch-canvas[data-mode="compact"] .arch-node { gap: 4px; padding: 10px 12px; }
+        .arch-canvas[data-mode="compact"] .arch-node-title small { display: block; }
+
+        /* ── SVG links ── */
+        .arch-svg {
+            position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: visible;
+        }
+        .arch-link {
+            fill: none;
+            stroke: rgba(255,255,255,0.22);
+            stroke-width: 2.2;
+            stroke-dasharray: 8 8;
+            animation: archDash 1.4s linear infinite;
+            transition: stroke var(--duration-base) var(--ease-out), stroke-width var(--duration-base) var(--ease-out), filter var(--duration-base) var(--ease-out);
+        }
+        @keyframes archDash { to { stroke-dashoffset: -16; } }
+        .arch-link.active {
+            stroke-width: 3.4;
+            stroke-dasharray: none;
+            animation: none;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+        .arch-link.dim { opacity: 0.1; animation: none; }
+        .arch-linkpath-dot {
+            fill: #fff; opacity: 0.95;
+            filter: drop-shadow(0 0 5px var(--dot-color, #fff));
+        }
+        .arch-node-mask { position: relative; z-index: 2; }
+        .arch-flow-label {
+            position: absolute; z-index: 6; pointer-events: none;
+            font-size: 0.58rem; font-weight: 700; letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.55);
+            text-transform: uppercase;
+            background: rgba(10,10,18,0.75);
+            padding: 3px 10px; border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.12);
+            white-space: nowrap;
+            transition: opacity var(--duration-base) var(--ease-out);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .arch-flow-label.active { color: #fff; opacity: 1; border-color: rgba(255,255,255,0.3); }
+
+        /* ── Drawer ── */
+        .arch-backdrop {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(5,5,12,0.55);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s var(--ease-out);
+        }
+        .arch-backdrop.open { opacity: 1; pointer-events: auto; }
+        .arch-drawer {
+            position: fixed; top: 0; right: 0; bottom: 0; z-index: 10000;
+            width: min(480px, 100vw);
+            background: linear-gradient(180deg, #14142a 0%, #101022 100%);
+            border-left: 1px solid var(--color-border-hover);
+            box-shadow: -20px 0 60px rgba(0,0,0,0.6);
+            transform: translateX(100%);
+            transition: transform 0.42s var(--ease-out);
+            display: flex; flex-direction: column;
+        }
+        .arch-drawer.open { transform: translateX(0); }
+        .arch-drawer-header {
+            display: flex; align-items: center; gap: 12px;
+            padding: 18px var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .arch-drawer-header .arch-drawer-icon {
+            width: 44px; height: 44px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+            background: color-mix(in srgb, var(--accent, var(--color-primary)) 16%, transparent);
+            border: 1px solid color-mix(in srgb, var(--accent, var(--color-primary)) 30%, transparent);
+            color: var(--accent, var(--color-primary));
+        }
+        .arch-drawer-header .arch-drawer-icon svg { width: 22px; height: 22px; }
+        .arch-drawer-header h3 { font-size: 1.02rem; font-weight: 700; line-height: 1.3; }
+        .arch-drawer-header .arch-drawer-sub { font-size: 0.66rem; color: var(--color-text-muted); margin-top: 2px; }
+        .arch-drawer-close {
+            margin-left: auto; flex-shrink: 0;
+            width: 34px; height: 34px; border-radius: 9px;
+            border: 1px solid var(--color-border); background: rgba(255,255,255,0.03);
+            color: var(--color-text-muted); cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+        }
+        .arch-drawer-close:hover { color: #fff; background: rgba(233,69,96,0.15); border-color: rgba(233,69,96,0.35); }
+        .arch-drawer-close svg { width: 16px; height: 16px; }
+        .arch-drawer-body { flex: 1; overflow-y: auto; padding: var(--space-lg); display: flex; flex-direction: column; gap: 22px; }
+        .arch-drawer-section h4 {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--color-text-muted); margin-bottom: 10px;
+        }
+        .arch-drawer-section h4 svg { width: 14px; height: 14px; opacity: 0.8; }
+        .arch-drawer-section p { font-size: 0.8rem; line-height: 1.75; color: #b8c6d4; }
+        .arch-drawer-section p strong { color: #e8ecf0; }
+        .arch-code {
+            background: #0b0b16; border: 1px solid var(--color-border);
+            border-radius: 11px; overflow: hidden;
+            font-size: 0.74rem;
+        }
+        .arch-code .arch-code-bar {
+            display: flex; align-items: center; gap: 6px;
+            padding: 7px 12px; border-bottom: 1px solid var(--color-border);
+            background: rgba(255,255,255,0.02);
+            font-size: 0.62rem; color: var(--color-text-muted); letter-spacing: 0.04em;
+        }
+        .arch-code .arch-code-bar .arch-code-dots { display: flex; gap: 5px; margin-right: 6px; }
+        .arch-code .arch-code-bar .arch-code-dots i {
+            width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+        }
+        .arch-code pre {
+            margin: 0; padding: 13px 14px; overflow-x: auto;
+            font-family: 'Cascadia Code', Consolas, 'Courier New', monospace;
+            font-size: 0.72rem; line-height: 1.7; color: #c8d6e5;
+        }
+        .arch-code code .tok-kw { color: #f06a80; }
+        .arch-code code .tok-s  { color: #7ecf8a; }
+        .arch-code code .tok-f  { color: #6db3f2; }
+        .arch-code code .tok-n  { color: #e8c46a; }
+        .arch-code code .tok-c  { color: #5b6b7c; font-style: italic; }
+        .arch-code code .tok-t  { color: #a078f0; }
+        .arch-io-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .arch-io-box {
+            border: 1px solid var(--color-border); border-radius: 10px; padding: 10px 12px;
+            background: rgba(255,255,255,0.015);
+        }
+        .arch-io-box .arch-io-title {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.62rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .arch-io-box.arch-io-in .arch-io-title { color: var(--color-profile); }
+        .arch-io-box.arch-io-out .arch-io-title { color: var(--color-report); }
+        .arch-io-box .arch-io-title svg { width: 12px; height: 12px; }
+        .arch-io-box ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .arch-io-box li { font-size: 0.7rem; color: #9fb0c0; line-height: 1.5; padding-left: 12px; position: relative; }
+        .arch-io-box li::before {
+            content: ''; position: absolute; left: 0; top: 7px;
+            width: 5px; height: 5px; border-radius: 50%;
+            background: var(--color-text-muted);
+        }
+        .arch-io-in li::before { background: var(--color-profile); }
+        .arch-io-out li::before { background: var(--color-report); }
+
+        /* ── Responsive ── */
+        @media (max-width: 1000px) {
+            .arch-stages { overflow-x: auto; padding-bottom: 14px; scroll-snap-type: x proximity; }
+            .arch-stage { flex: 0 0 240px; scroll-snap-align: start; }
+            .arch-canvas { overflow-x: hidden; }
+            .arch-svg { min-width: 100%; }
+        }
+        @media (max-width: 640px) {
+            .arch-header { padding: 12px var(--space-md); }
+            .arch-header h2 { font-size: 0.95rem; }
+            .arch-canvas { padding: 0 var(--space-md) var(--space-md); }
+            .arch-stage { flex: 0 0 220px; }
+            .arch-io-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -1389,6 +1730,40 @@
                 <span class="label">业务单元</span>
                 <span class="sub">RLS 行级安全</span>
             </div>
+        </div>
+    </div>
+
+    <!-- ════ Architecture Topology — 项目技术架构 ════ -->
+    <div class="arch-container">
+        <div class="arch-header">
+            <div class="arch-header-left">
+                <h2>
+                    <span class="arch-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="3"/><circle cx="12" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="5" cy="18" r="3"/><circle cx="12" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><line x1="5" y1="9" x2="5" y2="15"/><line x1="12" y1="9" x2="12" y2="15"/><line x1="19" y1="9" x2="19" y2="15"/></svg></span>
+                    FinOps &amp; Data Lakehouse Architecture
+                </h2>
+                <span class="arch-status"><span class="arch-status-dot"></span>Pipeline Status: Healthy (Live Streaming)</span>
+            </div>
+            <div class="arch-header-right">
+                <div class="arch-mode-toggle" role="group" aria-label="拓扑图显示模式">
+                    <button type="button" data-mode="compact" title="仅显示节点概览">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        简略模式
+                    </button>
+                    <button type="button" data-mode="detailed" class="active" title="展示完整节点详情">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                        架构模式
+                    </button>
+                </div>
+            </div>
+        </div>
+        <p class="arch-hint">
+            <strong>端到端数据流拓扑：</strong>
+            从云账单 / SharePoint / Blob 等多源数据抽取，经 Databricks Native 管道（Auto Loader + Workflows / DLT）增量入湖，在 Medallion 分层建模（Bronze → Silver → Gold），最终由 Power BI 语义模型提供企业级 FinOps 决策分析。
+            <strong>点击任意节点</strong>查看业务能力、技术实现与数据流向。
+        </p>
+        <div class="arch-canvas" id="archCanvas" data-mode="detailed">
+            <svg class="arch-svg" id="archSvg" aria-hidden="true"></svg>
+            <div class="arch-stages" id="archStages"></div>
         </div>
     </div>
 </section>
@@ -1953,6 +2328,22 @@
     </div>
 </footer>
 
+<!-- ── Architecture Detail Drawer ── -->
+<div class="arch-backdrop" id="archBackdrop"></div>
+<aside class="arch-drawer" id="archDrawer" role="dialog" aria-modal="true" aria-labelledby="archDrawerTitle">
+    <div class="arch-drawer-header">
+        <div class="arch-drawer-icon" id="archDrawerIcon"></div>
+        <div style="min-width:0;">
+            <h3 id="archDrawerTitle"></h3>
+            <div class="arch-drawer-sub" id="archDrawerSub"></div>
+        </div>
+        <button class="arch-drawer-close" id="archDrawerClose" type="button" aria-label="关闭详情面板">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="arch-drawer-body" id="archDrawerBody"></div>
+</aside>
+
 <button class="doc-scroll-top" id="docScrollTop" type="button" title="回到顶部">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
@@ -2003,7 +2394,7 @@
         var HIDE_DELAY = 15000; /* 15 seconds */
 
         // Section / Main-tab label map
-        var secLabels = ['Cloud Finance & FinOps', 'Others', 'Tutorials'];
+        var secLabels = ['Cloud Finance & FinOps', 'Others', 'Video Tutorials'];
         var mainLabels = {
             '0-0': 'Consumption',
             '0-1': 'Cloud Efficiency Saving',
@@ -2721,6 +3112,575 @@
         // (hash change, first load)
         window.addEventListener('hashchange', function() {
             setTimeout(updateBtn, 100);
+        });
+    })();
+
+    /* ════════════════════════════════════════════════════════════
+       Architecture Topology — FinOps & Data Lakehouse
+       渲染端到端数据流拓扑图：Data Sources → Ingestion →
+       Databricks Medallion (Bronze/Silver/Gold) → Power BI
+       ════════════════════════════════════════════════════════════ */
+    (function() {
+        'use strict';
+
+        var canvas = document.getElementById('archCanvas');
+        if (!canvas) return;
+        var svg = document.getElementById('archSvg');
+        var stagesEl = document.getElementById('archStages');
+        var drawer = document.getElementById('archDrawer');
+        var backdrop = document.getElementById('archBackdrop');
+        if (!svg || !stagesEl || !drawer || !backdrop) return;
+
+        var rendered = false;
+
+        /* ── Lucide-style stroke icons (inline SVG paths) ── */
+        var ICONS = {
+            globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+            file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>',
+            box: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+            git: '<circle cx="6" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/>',
+            layers: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+            database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+            star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+            chart: '<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>',
+            pie: '<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+            shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+            key: '<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>',
+            refresh: '<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>',
+            filter: '<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+            zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+            activity: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
+            share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+            arrow: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>'
+        };
+        function ICON_WRAP(name) {
+            return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[name] || ICONS.box) + '</svg>';
+        }
+
+        /* ── Topology Data: 4 stages, per Data Architecture Topology.md ── */
+        var STAGES = [
+            {
+                title: 'Data Sources', sub: 'Billing · Reference · Raw Files',
+                color: '#3B82F6', icon: 'globe',
+                nodes: [
+                    {
+                        id: 's1n1', icon: 'globe', title: 'REST API',
+                        sub: 'Cloud Billing / Cost API', color: '#3B82F6',
+                        desc: '从云厂商计费 API 抓取日度/月度 Cost & Usage 明细，包含实例级资源标识、Region、Service 与标签。',
+                        tags: ['OData / REST', 'Cost & Usage', '分页拉取'],
+                        cap: '计费明细自动抓取',
+                        business: '以 REST API 对接云厂商计费服务（Cost & Usage），自动化拉取企业全量云账单。数据落到湖内原始区后，支撑后续的成本分摊、预算对账与承诺（MACC / RI / SP）达标分析，是全套 FinOps 度量的一手数据源。',
+                        tech: 'Python 拉取并落地原始区',
+                        code: 'import requests, json\n\n# 分页拉取全部计费明细（DAILY 粒度）\nparams = {"granularity": "DAILY", "paginationToken": token}\nresp = requests.get(COST_API_URL, headers=auth, params=params)\nrows = resp.json()["results"]\n\n# 写入 ADLS raw land zone（供 Auto Loader 监听）\nfor r in rows:\n    raw_events.append(r)',
+                        inputs: ['云厂商订阅凭证', 'Cost & Usage API 端点', '分页游标 / 重试策略'],
+                        outputs: ['原始 Billing JSON / CSV', '→ ADLS raw land zone']
+                    },
+                    {
+                        id: 's1n2', icon: 'file', title: 'SharePoint',
+                        sub: 'Excel / CSV / Mappings', color: '#3B82F6',
+                        desc: '承载组织映射、成本中心、预算基线、RI/SP 分配规则等参考数据，为事实表提供维度归属关系。',
+                        tags: ['Mapping', '预算基线', '参考数据'],
+                        cap: 'Mapping 参考数据源',
+                        business: '财务团队在 SharePoint 维护 Excel/CSV 形式的成本中心、BU 映射、预算基线与商务承诺规则。该层作为参考数据（Reference Data）的权威来源，配合事实表完成维度解析与归属分摊。',
+                        tech: '读取工作簿并标准化',
+                        code: 'df = spark.read \\\n        .format("sharepoint") \\\n        .option("file", "Mapping_v2.xlsx") \\\n        .load()\n\ndf.write.format("delta").mode("append")\n  .saveAsTable("raw.mapping_cost_center")',
+                        inputs: ['财务团队 Mapping 工作簿', '预算 / 承诺基线表'],
+                        outputs: ['标准化参考表 → Silver 层']
+                    },
+                    {
+                        id: 's1n3', icon: 'box', title: 'Azure Blob Storage',
+                        sub: 'Raw Files / Logs / Billing Drops', color: '#3B82F6',
+                        desc: '集中存放原始账单文件、日志与计费增量文件（Billing Drops），作为 Lakehouse 的原始落地区。',
+                        tags: ['Landing Zone', '增量文件', '日志'],
+                        cap: '原始账单落地区',
+                        business: '作为全量数据的 Landing Zone：REST 抽取产物、人工上传文件与 Billing Drops 统一落盘，按 月/日 分区组织，供增量加载引擎持续监听，保证数据可追溯、可重放。',
+                        tech: '分层目录规范',
+                        code: '# 账单落地规范（Billing Drops）\npath = "abfss://landing@aia" \\\n       ".dfs.core.windows.net/billing/2026/{month}"\n\n# 目录按 月/日 分区，Auto Loader 增量监听\n# ingest_YYYYMM / day=DD 元数据分区',
+                        inputs: ['REST 抽取结果', '人工上传 / 调度产物'],
+                        outputs: ['增量文件 → Auto Loader 监听目录']
+                    }
+                ]
+            },
+            {
+                title: 'Ingestion', sub: 'Databricks Native · Lakehouse Pipeline',
+                color: '#10B981', icon: 'git',
+                nodes: [
+                    {
+                        id: 's2n1', icon: 'git', title: 'Databricks Auto Loader',
+                        sub: 'Cloud Files API / Event Grid Trigger', color: '#10B981',
+                        desc: '基于 Cloud Files API 增量监听 Blob 落地区，事件驱动（Event Grid Trigger）实时捕获新文件，自动推断与演进 Schema。',
+                        tags: ['Cloud Files API', 'Event Grid', 'Schema Evolution'],
+                        cap: '增量流式入湖 · Schema Evolution',
+                        business: '以 Auto Loader 对接 Blob Landing Zone，通过 Cloud Files API 增量识别新文件、Event Grid 事件触发实时加载；无需手动管理文件清单，Schema 自动演进，是湖仓增量入湖的标准入口。',
+                        tech: 'Auto Loader（增量流式）',
+                        code: '(spark.readStream\n  .format("cloudFiles")\n  .option("cloudFiles.format", "json")\n  .option("cloudFiles.schemaLocation", "/schema/billing")\n  .load("/billing/"))\n.writeStream\n  .option("checkpointLocation", "/chk/billing")\n  .start()   # Schema Evolution 自动演进',
+                        inputs: ['REST API 抽取结果', 'SharePoint 参考数据', 'Blob 增量文件 / Billing Drops'],
+                        outputs: ['Bronze Delta Lake 原始层（Append-only）']
+                    },
+                    {
+                        id: 's2n2', icon: 'zap', title: 'Workflows / DLT & Jobs',
+                        sub: 'Delta Live Tables · Pipeline Orchestration', color: '#10B981',
+                        desc: '以 Delta Live Tables 声明式定义增量管道，Workflows 统一调度任务与依赖，支撑 Batch 与 Streaming 混合处理。',
+                        tags: ['Delta Live Tables', 'Jobs', 'Batch & Streaming'],
+                        cap: '管道编排 · DLT 声明式',
+                        business: '以 Delta Live Tables（DLT）声明式定义 Bronze → Silver → Gold 的增量管道，Databricks Workflows 统一调度任务依赖与失败重试；Batch / Streaming 混合编排，实现数据管道的声明式、可观测与自愈。',
+                        tech: 'DLT 声明式管道',
+                        code: 'CREATE OR REFRESH INCREMENTAL TABLE\n  silver.fact_cloud_spend\nAS SELECT\n  bill_id, cost, committed_cost,\n  org_key, region, service\nFROM live.bronze_fact_cloud_bill\nWHERE cost > 0;   -- DLT 声明式增量',
+                        inputs: ['Auto Loader 增量原始流', 'Job 依赖 / 调度参数'],
+                        outputs: ['Medallion 各层表（Bronze → Gold）']
+                    }
+                ]
+            },
+            {
+                title: 'Databricks Lakehouse', sub: 'Medallion Architecture',
+                color: '#7C3AED', icon: 'layers',
+                nodes: [
+                    {
+                        id: 's3n1', icon: 'database', title: 'Bronze Layer',
+                        sub: 'Raw Delta Lake · ODS', color: '#D97706',
+                        desc: '原始数据原样落盘（Append-only），建立可追溯、可重放的原始数据底座，任何上游变更均可重放对齐。',
+                        tags: ['Delta Lake', 'Append-only', 'CDC Ready'],
+                        cap: '原始底座 · Append-only',
+                        business: '以 Operational Data Store 思路保存最原始、未加工的账单与参考数据，append-only 保证历史可追溯；上游任何抽取逻辑变更，都可基于原始底座整段重放，是数据血缘与审计的根基。',
+                        tech: 'Delta 表属性控制',
+                        code: 'CREATE OR REPLACE TABLE bronze.fact_cloud_bill\nUSING DELTA\nTBLPROPERTIES (\n  delta.appendOnly = true,\n  delta.enableChangeDataFeed = true\n) AS\nSELECT * FROM cloud_files("/billing/");',
+                        inputs: ['Auto Loader 增量原始流', 'DLT 管道声明式依赖'],
+                        outputs: ['Bronze 原始表 → Silver 层清洗']
+                    },
+                    {
+                        id: 's3n2', icon: 'filter', title: 'Silver Layer',
+                        sub: 'Cleansed / Transformed', color: '#94A3B8',
+                        desc: '清洗去重、类型转换、外键解析（Key Resolution），构建一致性维度与明细事实，消除多源实体标识冲突。',
+                        tags: ['Key Resolution', 'SCD', 'Data Quality'],
+                        cap: '一致性维度 · Key Resolution',
+                        business: '对 Bronze 明细执行清洗去重、类型转换与 Key Resolution：将多源中同一实体（BU、项目、成本中心）的标识统一解析为代理键，构建一致性维度与标准事实，为上层模型提供干净可信的语义底座。',
+                        tech: 'MERGE + 代理键解析',
+                        code: 'MERGE INTO silver.fact_cloud_spend t\nUSING bronze.fact_cloud_bill s\nON t.bill_id = s.bill_id\nWHEN MATCHED THEN UPDATE SET t.cost = s.cost\nWHEN NOT MATCHED THEN INSERT *;\n\n-- Key Resolution：以成本中心映射\n-- 解析 BU / Project / OrgKey',
+                        inputs: ['Bronze 原始表', 'Mapping 参考数据'],
+                        outputs: ['Silver 事实/维度 → Gold 集市']
+                    },
+                    {
+                        id: 's3n3', icon: 'star', title: 'Gold Layer',
+                        sub: 'Curated Data Marts · Star Schema', color: '#F59E0B',
+                        desc: '面向业务汇总的星型模型集市，输出 Chargeback 分摊、聚合事实与 KPI，供语义模型直接消费。',
+                        tags: ['Star Schema', 'Chargeback', 'Aggregation'],
+                        cap: 'Star Schema · Chargeback',
+                        business: '面向业务汇总的星型模型集市：以事实表 + 维度表组织 Chargeback 分摊、聚合事实与 FinOps KPI，将 Silver 明细收敛为报表可直接消费的汇总层，是"谁消费、谁买单"与承诺达标的核心计算中枢。',
+                        tech: 'Star Schema 视图',
+                        code: 'CREATE OR REPLACE VIEW gold.v_finops_spend AS\nSELECT d.org_name, d.bu, d.cost_center,\n       SUM(f.cost)        AS total_cost,\n       SUM(f.commit_cost) AS committed_cost\nFROM silver.fact_cloud_spend f\nJOIN silver.dim_org d ON f.org_key = d.org_key\nGROUP BY d.org_name, d.bu, d.cost_center;',
+                        inputs: ['Silver 明细事实 / 一致性维度'],
+                        outputs: ['Gold 数据集市 → 语义模型']
+                    }
+                ]
+            },
+            {
+                title: 'Serving & Analytics', sub: 'Power BI',
+                color: '#A855F7', icon: 'chart',
+                nodes: [
+                    {
+                        id: 's4n1', icon: 'pie', title: 'Power BI Semantic Model',
+                        sub: 'Import / DirectQuery Composite', color: '#A855F7',
+                        desc: '以复合模型组织 Gold 层数据，通过 DAX 计算核心 FinOps 度量，并以 RLS/OLS 实现 27 个业务单元的行列级安全。',
+                        tags: ['Composite Model', 'DAX', 'RLS / OLS'],
+                        cap: '复合模型 · RLS / OLS',
+                        business: '以 Import + DirectQuery 复合模型连接 Gold 数据集市，通过 DAX 计算核心 FinOps 度量（总成本、承诺达成、成本偏差等）；RLS/OLS 实现 27 个业务单元的行列级安全管控，做到"一人一部门、只看其数据"。',
+                        tech: 'DAX 度量 + RLS 安全',
+                        code: '// 核心 FinOps 度量\nTotal Cloud Spend =\n    SUMX(fact_cloud_spend, [effective_cost])\n\n// 承诺达标率（MACC）\nMACC_Progress =\n    DIVIDE([Total Cloud Spend], [Committed Spend])\n\n// RLS 行级安全\n[OrgKey] IN\n  LOOKUPVALUE(\'User Access\'[OrgKey],\n              \'User Access\'[UPN],\n              USERPRINCIPALNAME())',
+                        inputs: ['Gold 数据集市（事实/维度）', '用户访问权限表'],
+                        outputs: ['度量与语义 → 报表 / 看板']
+                    },
+                    {
+                        id: 's4n2', icon: 'chart', title: 'Reports & Dashboards',
+                        sub: 'FinOps Executive KPI', color: '#A855F7',
+                        desc: '面向管理层与运维的交互报表：Executive KPI、成本分摊、RI/SP 节省与单据级钻取穿透。',
+                        tags: ['Report', 'Drill-through', 'KPI'],
+                        cap: 'Executive KPI · Drill-through',
+                        business: '面向管理层与运维团队的交互式看板：Executive KPI 总览、成本分摊视图、RI/SP 节省追踪与异常预警，支持从战略指标逐级钻取到单据级明细，完成"看板 → 归因 → 行动"的闭环。',
+                        tech: 'DAX 报表度量',
+                        code: '// Executive KPI 核心度量\nCost Variance % =\n    DIVIDE([Actual Spend] - [Budget], [Budget])\n\n// Drill-through 至单据级明细\n// 报表页间交叉筛选 + 钻取',
+                        inputs: ['语义模型度量与维度'],
+                        outputs: ['决策洞察 / 订阅推送 / 导出']
+                    }
+                ]
+            }
+        ];
+
+        /* Edges: [fromNodeId, toNodeId, label] */
+        var EDGES = [
+            ['s1n1', 's2n1', 'Billing'],
+            ['s1n2', 's2n1', 'Mapping'],
+            ['s1n3', 's2n1', 'Raw'],
+            ['s2n1', 's2n2', 'Stream'],
+            ['s2n1', 's3n1', 'Load'],
+            ['s2n2', 's3n1', 'DLT'],
+            ['s3n1', 's3n2', 'Cleanse'],
+            ['s3n2', 's3n3', 'Model'],
+            ['s3n3', 's4n1', 'Curate'],
+            ['s4n1', 's4n2', 'Serving']
+        ];
+
+        var nodeEls = [];
+        var linkEls = [];
+        var labelEls = [];
+        var nodeMap = {};
+
+        /* ── Render stages & node cards ── */
+        function buildStages() {
+            stagesEl.innerHTML = '';
+            nodeEls = [];
+            nodeMap = {};
+
+            STAGES.forEach(function(st) {
+                var col = document.createElement('div');
+                col.className = 'arch-stage';
+                col.style.setProperty('--stage-color', st.color);
+
+                var head = document.createElement('div');
+                head.className = 'arch-stage-header';
+                head.innerHTML =
+                    '<span class="arch-stage-step">STAGE</span>' +
+                    '<span class="arch-stage-icon">' + ICON_WRAP(st.icon) + '</span>' +
+                    '<span style="min-width:0;">' +
+                        '<div class="arch-stage-title">' + st.title + '</div>' +
+                        '<div class="arch-stage-sub">' + st.sub + '</div>' +
+                    '</span>';
+                col.appendChild(head);
+
+                st.nodes.forEach(function(n) {
+                    var tags = n.tags.map(function(t) {
+                        return '<span class="arch-tag">' + t + '</span>';
+                    }).join('');
+
+                    var el = document.createElement('div');
+                    el.className = 'arch-node';
+                    el.dataset.id = n.id;
+                    el.setAttribute('role', 'button');
+                    el.setAttribute('tabindex', '0');
+                    el.style.setProperty('--accent', n.color || st.color);
+                    el.innerHTML =
+                        '<div class="arch-node-top">' +
+                            '<div class="arch-node-icon">' + ICON_WRAP(n.icon) + '</div>' +
+                            '<div class="arch-node-title">' + n.title + '<small>' + n.sub + '</small></div>' +
+                        '</div>' +
+                        '<div class="arch-node-desc">' + n.desc + '</div>' +
+                        '<div class="arch-node-tags">' + tags + '</div>' +
+                        '<div class="arch-node-cap">' + ICON_WRAP('arrow') + '<span>' + n.cap + '</span></div>';
+
+                    col.appendChild(el);
+                    nodeEls.push(el);
+                    nodeMap[n.id] = n;
+                });
+
+                stagesEl.appendChild(col);
+            });
+
+            /* Interactive hover + click */
+            nodeEls.forEach(function(el) {
+                el.addEventListener('mouseenter', function() { setHighlight(el.dataset.id); });
+                el.addEventListener('mouseleave', clearHighlight);
+                el.addEventListener('click', function() { openDrawer(el.dataset.id); });
+                el.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); }
+                });
+            });
+        }
+
+        /* ── Draw SVG connector links with flowing dots ── */
+        function drawLinks() {
+            if (!canvas.offsetWidth) return;
+            var cRect = canvas.getBoundingClientRect();
+            var w = cRect.width, h = cRect.height;
+            if (w < 10 || h < 10) return;
+
+            svg.setAttribute('width', w);
+            svg.setAttribute('height', h);
+            svg.innerHTML = '';
+
+            /* clear old labels */
+            labelEls.forEach(function(l) { if (l.parentNode) l.parentNode.removeChild(l); });
+            labelEls = [];
+            linkEls = [];
+
+            var defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            svg.appendChild(defs);
+
+            var ns = 'http://www.w3.org/2000/svg';
+            function rectFor(el) {
+                var r = el.getBoundingClientRect();
+                return { x: r.left - cRect.left, y: r.top - cRect.top, w: r.width, h: r.height };
+            }
+
+            EDGES.forEach(function(e, i) {
+                var fromEl = document.querySelector('.arch-node[data-id="' + e[0] + '"]');
+                var toEl = document.querySelector('.arch-node[data-id="' + e[1] + '"]');
+                if (!fromEl || !toEl) return;
+
+                var color = (nodeMap[e[0]] && nodeMap[e[0]].color) || '#8899aa';
+
+                var a = rectFor(fromEl);
+                var b = rectFor(toEl);
+                var x1 = a.x + a.w, y1 = a.y + a.h / 2;
+                var x2 = b.x, y2 = b.y + b.h / 2;
+                var dx = Math.max(30, (x2 - x1) * 0.5);
+                var d = 'M' + x1.toFixed(1) + ',' + y1.toFixed(1) +
+                        ' C' + (x1 + dx).toFixed(1) + ',' + y1.toFixed(1) +
+                        ', ' + (x2 - dx).toFixed(1) + ',' + y2.toFixed(1) +
+                        ', ' + x2.toFixed(1) + ',' + y2.toFixed(1);
+
+                /* 每条边独立箭头 marker，填充源节点颜色 */
+                var markerId = 'archArrow_' + i;
+                var marker = document.createElementNS(ns, 'marker');
+                marker.setAttribute('id', markerId);
+                marker.setAttribute('viewBox', '0 0 12 12');
+                marker.setAttribute('refX', '10');
+                marker.setAttribute('refY', '6');
+                marker.setAttribute('markerWidth', '9');
+                marker.setAttribute('markerHeight', '9');
+                marker.setAttribute('orient', 'auto-start-reverse');
+                marker.innerHTML = '<path d="M1,1 L11,6 L1,11 L3,6 Z" fill="' + color + '" opacity="0.85"/>';
+                defs.appendChild(marker);
+
+                var path = document.createElementNS(ns, 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'arch-link');
+                path.setAttribute('marker-end', 'url(#' + markerId + ')');
+                path.setAttribute('id', 'archLink_' + i);
+                path.dataset.from = e[0];
+                path.dataset.to = e[1];
+                path.dataset.color = color;
+                path.style.color = color;
+                path.style.stroke = color;
+                path.style.strokeOpacity = '0.55';
+                svg.appendChild(path);
+                linkEls.push(path);
+
+                /* flowing light dots along the path */
+                [0, 0.85].forEach(function(delay) {
+                    var dot = document.createElementNS(ns, 'circle');
+                    dot.setAttribute('class', 'arch-linkpath-dot');
+                    dot.setAttribute('r', '3.6');
+                    dot.style.setProperty('--dot-color', color);
+                    var m = document.createElementNS(ns, 'animateMotion');
+                    m.setAttribute('dur', '2.2s');
+                    m.setAttribute('begin', delay + 's');
+                    m.setAttribute('repeatCount', 'indefinite');
+                    var mpath = document.createElementNS(ns, 'mpath');
+                    mpath.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#archLink_' + i);
+                    m.appendChild(mpath);
+                    dot.appendChild(m);
+                    svg.appendChild(dot);
+                });
+
+                /* flow label at path midpoint */
+                if (e[2]) {
+                    var len = path.getTotalLength ? path.getTotalLength() : 0;
+                    var pt = (len > 0 && path.getPointAtLength) ? path.getPointAtLength(len * 0.5) : null;
+                    var lab = document.createElement('div');
+                    lab.className = 'arch-flow-label';
+                    lab.textContent = e[2];
+                    lab.dataset.from = e[0];
+                    lab.dataset.to = e[1];
+                    canvas.appendChild(lab);
+                    if (pt) {
+                        /* 标签以路径中点为中心（translate(-50%,-50%)） */
+                        lab.style.left = pt.x + 'px';
+                        lab.style.top = pt.y + 'px';
+                        lab.style.transform = 'translate(-50%, -50%)';
+                    } else {
+                        lab.style.left = ((x1 + x2) / 2) + 'px';
+                        lab.style.top = ((y1 + y2) / 2) + 'px';
+                        lab.style.transform = 'translate(-50%, -50%)';
+                    }
+                    labelEls.push(lab);
+                }
+            });
+
+            /* 重建后若存在 hover 节点，恢复其高亮状态 */
+            if (currentHoverId) applyHighlight(currentHoverId);
+        }
+
+        /* ── Hover highlight: related nodes + links ── */
+        var currentHoverId = null;
+
+        function relatedOf(id) {
+            var out = [id];
+            EDGES.forEach(function(e) {
+                if (e[0] === id) out.push(e[1]);
+                if (e[1] === id) out.push(e[0]);
+            });
+            return out;
+        }
+
+        function setHighlight(id) {
+            currentHoverId = id;
+            applyHighlight(id);
+        }
+
+        function applyHighlight(id) {
+            var rel = relatedOf(id);
+            nodeEls.forEach(function(el) {
+                var isRel = rel.indexOf(el.dataset.id) !== -1;
+                el.classList.toggle('hovered', isRel);
+                el.classList.toggle('dim', !isRel);
+            });
+            linkEls.forEach(function(l) {
+                var active = rel.indexOf(l.dataset.from) !== -1 && rel.indexOf(l.dataset.to) !== -1;
+                l.classList.toggle('active', active);
+                l.classList.toggle('dim', !active);
+                if (active) { l.style.color = l.dataset.color; l.style.stroke = l.dataset.color; l.style.strokeOpacity = '0.9'; }
+                else { l.style.color = l.dataset.color; l.style.stroke = l.dataset.color; l.style.strokeOpacity = '0.55'; }
+            });
+            labelEls.forEach(function(l) {
+                var active = rel.indexOf(l.dataset.from) !== -1 && rel.indexOf(l.dataset.to) !== -1;
+                l.classList.toggle('active', active);
+            });
+        }
+
+        function clearHighlight() {
+            currentHoverId = null;
+            nodeEls.forEach(function(el) {
+                el.classList.remove('hovered', 'dim');
+            });
+            linkEls.forEach(function(l) {
+                l.classList.remove('active', 'dim');
+                l.style.color = l.dataset.color;
+                l.style.stroke = l.dataset.color;
+                l.style.strokeOpacity = '0.55';
+            });
+            labelEls.forEach(function(l) { l.classList.remove('active'); });
+        }
+
+        /* ── Lightweight syntax highlighting (SQL / DAX / Python) ── */
+        function hl(code) {
+            var esc = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            var KWORDS = 'SELECT|FROM|WHERE|GROUP|BY|ORDER|CREATE|OR|REPLACE|VIEW|TABLE|AS|JOIN|LEFT|INNER|OUTER|ON|MERGE|INTO|USING|WHEN|MATCHED|AND|NOT|THEN|INSERT|UPDATE|DELETE|WITH|FILTER|ALL|VALUES|CAST|SUM|COUNT|DISTINCT|CASE|ELSE|END|IF|RETURN|LOOKUPVALUE|USERPRINCIPALNAME|CALCULATE|MEASURE|VAR|DIVIDE|SUMMARIZE|ADDCOLUMNS|TREATAS|KEEPFILTERS|REMOVEFILTERS';
+            var re = new RegExp(
+                '(\\/\\/[^\\n]*|--[^\\n]*|\\/\\*[\\s\\S]*?\\*\\/)' +  // comments
+                '|(\'(?:[^\'\\\\]|\\\\.)*\'|"(?:[^"\\\\]|\\\\.)*")' +  // strings
+                '|(\\b\\d+(?:\\.\\d+)?\\b)' +                         // numbers
+                '|(\\b[A-Za-z_]\\w*)(?=\\()' +                        // function calls
+                '|\\b(' + KWORDS + ')\\b',                            // keywords
+                'g'
+            );
+            return esc.replace(re, function(m, c, s, n, f, k) {
+                if (c) return '<span class="tok-c">' + m + '</span>';
+                if (s) return '<span class="tok-s">' + m + '</span>';
+                if (n) return '<span class="tok-n">' + m + '</span>';
+                if (k) return '<span class="tok-kw">' + m.toUpperCase() + '</span>';
+                if (f) return '<span class="tok-f">' + m + '</span>';
+                return m;
+            });
+        }
+
+        /* ── Detail drawer ── */
+        function findStageByNode(id) {
+            for (var i = 0; i < STAGES.length; i++) {
+                for (var j = 0; j < STAGES[i].nodes.length; j++) {
+                    if (STAGES[i].nodes[j].id === id) return STAGES[i];
+                }
+            }
+            return null;
+        }
+
+        function openDrawer(id) {
+            var n = nodeMap[id];
+            if (!n) return;
+            var st = findStageByNode(id) || {};
+
+            var iconBox = document.getElementById('archDrawerIcon');
+            var titleEl = document.getElementById('archDrawerTitle');
+            var subEl = document.getElementById('archDrawerSub');
+            var bodyEl = document.getElementById('archDrawerBody');
+            if (!iconBox || !titleEl || !subEl || !bodyEl) return;
+
+            var color = n.color || st.color || '#e94560';
+            drawer.style.setProperty('--accent', color);
+            iconBox.innerHTML = ICON_WRAP(n.icon);
+            titleEl.textContent = n.title;
+            subEl.textContent = (st.title || '') + ' · ' + n.sub;
+
+            bodyEl.innerHTML =
+                '<section class="arch-drawer-section">' +
+                    '<h4>' + ICON_WRAP('activity') + ' 业务功能 · Business Capability</h4>' +
+                    '<p>' + n.business + '</p>' +
+                '</section>' +
+                '<section class="arch-drawer-section">' +
+                    '<h4>' + ICON_WRAP('key') + ' 技术实现 · Tech Stack</h4>' +
+                    '<p>' + n.tech + '</p>' +
+                    '<div class="arch-code">' +
+                        '<div class="arch-code-bar"><span class="arch-code-dots">' +
+                            '<i style="background:#f06a80"></i><i style="background:#f4a64a"></i><i style="background:#7ecf8a"></i>' +
+                        '</span> ' + (n.lang || 'code') + '</div>' +
+                        '<pre><code>' + hl(n.code) + '</code></pre>' +
+                    '</div>' +
+                '</section>' +
+                '<section class="arch-drawer-section">' +
+                    '<h4>' + ICON_WRAP('share') + ' 输入 / 输出数据流 · Inputs &amp; Outputs</h4>' +
+                    '<div class="arch-io-grid">' +
+                        '<div class="arch-io-box arch-io-in"><div class="arch-io-title">' + ICON_WRAP('arrow') + ' INPUTS</div><ul>' +
+                            n.inputs.map(function(i) { return '<li>' + i + '</li>'; }).join('') +
+                        '</ul></div>' +
+                        '<div class="arch-io-box arch-io-out"><div class="arch-io-title">' + ICON_WRAP('arrow') + ' OUTPUTS</div><ul>' +
+                            n.outputs.map(function(o) { return '<li>' + o + '</li>'; }).join('') +
+                        '</ul></div>' +
+                    '</div>' +
+                '</section>';
+
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDrawer() {
+            drawer.classList.remove('open');
+            backdrop.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        backdrop.addEventListener('click', closeDrawer);
+        document.getElementById('archDrawerClose').addEventListener('click', closeDrawer);
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeDrawer();
+        });
+
+        /* ── Mode toggle (compact / detailed) ── */
+        document.querySelectorAll('.arch-mode-toggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.arch-mode-toggle button').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                canvas.dataset.mode = btn.dataset.mode;
+                requestAnimationFrame(function() { setTimeout(drawLinks, 60); });
+            });
+        });
+
+        /* ── Init ── 架构模块常驻首屏（欢迎介绍下方），页面加载即渲染 ── */
+        var sectionEnterDelay = 520; /* fadeUp 入场动画余量 */
+
+        function renderAll() {
+            buildStages();
+            /* 等待布局与入场动画稳定后再绘制连线，避免坐标偏移 */
+            setTimeout(function() { drawLinks(); }, sectionEnterDelay);
+        }
+
+        renderAll();
+        rendered = true;
+
+        /* 字体 / 资源加载完成后重绘一次，确保连线与节点对齐 */
+        window.addEventListener('load', function onArchLoad() {
+            window.removeEventListener('load', onArchLoad);
+            drawLinks();
+        });
+
+        /* 动画结束后再次对齐（intro 有 fadeUp 入场动画，transform 会影响 getBoundingClientRect） */
+        setTimeout(function() { if (rendered) drawLinks(); }, 1400);
+
+        var rzTimer = null;
+        window.addEventListener('resize', function() {
+            if (!rendered) return;
+            clearTimeout(rzTimer);
+            rzTimer = setTimeout(function() { drawLinks(); }, 150);
         });
     })();
 })();
