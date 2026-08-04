@@ -2727,8 +2727,8 @@
                             loading.innerHTML = '<span style="color:#f4a64a">正在加载解析库，请稍后重试…</span>';
                             return;
                         }
-                        /* 加时间戳破除缓存，避免浏览器复用一个失败的旧响应 */
-                        fetch(match.file + '?v=' + Date.now(), { cache: 'no-store' }).then(function(r) {
+                        /* 优先无参 fetch（避免代理对动态 query 的拦截），失败时加时间戳重试一次 */
+                        fetch(match.file).then(function(r) {
                             if (!r.ok) throw new Error('HTTP ' + r.status);
                             return r.text();
                         }).then(function(md) {
@@ -2738,7 +2738,19 @@
                                 content.style.display = 'block';
                             }
                         }).catch(function() {
-                            if (loading) loading.innerHTML = '<span style="color:#d31145">文档加载失败，请稍后重试</span>';
+                            /* 重试一次：带时间戳破除缓存 */
+                            fetch(match.file + '?v=' + Date.now()).then(function(r2) {
+                                if (!r2.ok) throw new Error('HTTP ' + r2.status);
+                                return r2.text();
+                            }).then(function(md2) {
+                                if (loading) loading.style.display = 'none';
+                                if (content) {
+                                    content.innerHTML = marked.parse(md2);
+                                    content.style.display = 'block';
+                                }
+                            }).catch(function() {
+                                if (loading) loading.innerHTML = '<span style="color:#d31145">文档加载失败，请稍后重试</span>';
+                            });
                         });
                     }
                 }
