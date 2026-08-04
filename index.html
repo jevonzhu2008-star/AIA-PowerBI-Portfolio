@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PowerBI 作品集</title>
     <link rel="icon" type="image/jpeg" href="icon-red.jpg">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- marked 解析库本地化：避免依赖 jsdelivr CDN（大陆网络访问不稳定导致 Document 无法加载） -->
+    <script src="lib/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
@@ -2726,15 +2727,18 @@
                             loading.innerHTML = '<span style="color:#f4a64a">正在加载解析库，请稍后重试…</span>';
                             return;
                         }
-                        fetch(match.file).then(function(r) {
+                        /* 加时间戳破除缓存，避免浏览器复用一个失败的旧响应 */
+                        fetch(match.file + '?v=' + Date.now(), { cache: 'no-store' }).then(function(r) {
                             if (!r.ok) throw new Error('HTTP ' + r.status);
                             return r.text();
                         }).then(function(md) {
-                            content.innerHTML = marked.parse(md);
-                            loading.style.display = 'none';
-                            content.style.display = 'block';
+                            if (loading) loading.style.display = 'none';
+                            if (content) {
+                                content.innerHTML = marked.parse(md);
+                                content.style.display = 'block';
+                            }
                         }).catch(function() {
-                            loading.innerHTML = '<span style="color:#d31145">文档加载失败</span>';
+                            if (loading) loading.innerHTML = '<span style="color:#d31145">文档加载失败，请稍后重试</span>';
                         });
                     }
                 }
