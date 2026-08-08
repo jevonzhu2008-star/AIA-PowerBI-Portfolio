@@ -401,10 +401,11 @@
             pointer-events: none;
         }
         .nav-trigger {
+            display: none;
             position: fixed; z-index: 9998;
             left: 0; top: 80px;
             transform: translateX(-100%);
-            display: flex; align-items: center; gap: 8px;
+            align-items: center; gap: 8px;
             padding: 12px 14px 12px 10px;
             border: none;
             border-radius: 0 14px 14px 0;
@@ -459,8 +460,7 @@
         }
         .nav-trigger:hover .tr-text .tr-main { color: var(--color-primary); }
 
-        .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; transition: margin-top 0.5s var(--ease-out); }
-        .content-wrapper.shifted { margin-top: -20px; }
+        .content-wrapper { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--space-lg) 60px; }
         .section-content { display: none; animation: none; }
         .section-content.active { display: block; animation: slideUp 0.4s var(--ease-out) both; }
         .main-panel { display: none; animation: none; }
@@ -2429,10 +2429,8 @@
         }
     };
 
-    /* ── Collapsible Navigation: auto-hide 2s after tab click ── */
+    /* ── Collapsible Navigation: always expanded (auto-hide removed) ── */
     (function() {
-        var hideTimer = null;
-        var HIDE_DELAY = 15000; /* 15 seconds */
 
         // Section / Main-tab label map
         var secLabels = ['Cloud Finance & FinOps', 'Monitoring', 'Video Tutorials'];
@@ -2518,106 +2516,11 @@
 
         window.updateReportBadge = updateCurrentReport;
 
-        function shiftContentUp(shift) {
-            document.querySelectorAll('.section-content.active .content-wrapper').forEach(function(w) {
-                if (shift) { w.classList.add('shifted'); } else { w.classList.remove('shifted'); }
-            });
-        }
-
-        function showNav() {
-            if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
-            document.querySelectorAll('.nav-collapse').forEach(function(el) {
-                el.classList.remove('nav-hidden');
-            });
-            document.getElementById('navTrigger').classList.remove('visible');
-            document.getElementById('currentReport').classList.remove('visible');
-            shiftContentUp(false);
-        }
-
-        function scheduleHide() {
-            if (hideTimer) { clearTimeout(hideTimer); }
-            hideTimer = setTimeout(function() {
-                document.querySelectorAll('.nav-collapse').forEach(function(el) {
-                    el.classList.add('nav-hidden');
-                });
-                document.getElementById('navTrigger').classList.add('visible');
-                updateCurrentReport();
-                document.getElementById('currentReport').classList.add('visible');
-                shiftContentUp(true);
-                hideTimer = null;
-            }, HIDE_DELAY);
-        }
-
-        // Also update report badge on card-tab clicks
+        // Update report badge on tab/card clicks (nav is always expanded now)
         document.addEventListener('click', function(e) {
             var target = e.target.closest('.section-tab, .main-tab, .card-tab');
             if (target) {
-                // If nav is hidden, update badge
-                if (document.getElementById('sectionTabsWrap').classList.contains('nav-hidden')) {
-                    updateCurrentReport();
-                }
-            }
-        });
-
-        // Trigger on section-tab and main-tab clicks only (not card-tabs / sub-tabs)
-        document.addEventListener('click', function(e) {
-            var target = e.target.closest('.section-tab, .main-tab');
-            if (target) {
-                showNav();
-                scheduleHide();
-            }
-        });
-
-        // Nav trigger — hover to auto-show, click also supported
-        var navBtn = document.getElementById('navTrigger');
-
-        navBtn.addEventListener('mouseenter', function() {
-            showNav();
-            scheduleHide();
-        });
-
-        navBtn.addEventListener('click', function() {
-            showNav();
-            // Wait for the nav-collapse container to fully expand (max-height CSS transition 0.5s)
-            var wrap = document.getElementById('sectionTabsWrap');
-            if (!wrap) return;
-            var lastH = -1, stableFrames = 0;
-            function doScroll() {
-                var h = wrap.offsetHeight;
-                if (h === lastH) { stableFrames++; } else { stableFrames = 0; lastH = h; }
-                // Stable for 3 frames and sufficiently tall = done expanding
-                if (stableFrames >= 3 && h > 50) {
-                    var target = document.querySelector('.main-tabs-outer');
-                    if (target) {
-                        var top = target.getBoundingClientRect().top + window.scrollY;
-                        window.scrollTo({top: Math.max(0, top - 160), behavior: 'smooth'});
-                    }
-                } else {
-                    requestAnimationFrame(doScroll);
-                }
-            }
-            requestAnimationFrame(doScroll);
-        });
-
-        // Auto-hide on first load after 2s
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                document.querySelectorAll('.nav-collapse').forEach(function(el) {
-                    el.classList.add('nav-hidden');
-                });
-                document.getElementById('navTrigger').classList.add('visible');
                 updateCurrentReport();
-                document.getElementById('currentReport').classList.add('visible');
-            }, 2000);
-        });
-
-        // Also show nav when hovering near left edge if hidden
-        document.addEventListener('mousemove', function(e) {
-            if (e.clientX < 20) {
-                var trigger = document.getElementById('navTrigger');
-                if (trigger && trigger.classList.contains('visible')) {
-                    trigger.style.opacity = '1';
-                }
             }
         });
     })();
@@ -2679,22 +2582,12 @@
             var idx = card.dataset.section;
             var secBtn = sectionTabs.find(function(t) { return t.dataset.section === idx; });
             if (secBtn) secBtn.click();
-            // Scroll to the section tabs area (they expand on section-tab click via nav handler)
+            // Scroll to the section tabs area (nav is always expanded)
             setTimeout(function() {
                 var wrap = document.getElementById('sectionTabsWrap');
                 if (!wrap) return;
-                var lastH = -1, stableFrames = 0;
-                function doScroll() {
-                    var h = wrap.offsetHeight;
-                    if (h === lastH) { stableFrames++; } else { stableFrames = 0; lastH = h; }
-                    if (stableFrames >= 3 && h > 50) {
-                        var top = wrap.getBoundingClientRect().top + window.scrollY;
-                        window.scrollTo({top: Math.max(0, top - 80), behavior: 'smooth'});
-                    } else {
-                        requestAnimationFrame(doScroll);
-                    }
-                }
-                requestAnimationFrame(doScroll);
+                var top = wrap.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({top: Math.max(0, top - 80), behavior: 'smooth'});
             }, 60);
         });
     });
@@ -3087,8 +2980,8 @@
                 layoutItems();
                 track.querySelectorAll('video').forEach(function(v) { v.pause(); });
                 restartAuto();
-                // Update report badge if section 1 nav is hidden
-                if (document.getElementById('sectionTabsWrap').classList.contains('nav-hidden') && typeof window.updateReportBadge === 'function') {
+                // Update report badge to reflect current carousel item
+                if (typeof window.updateReportBadge === 'function') {
                     window.updateReportBadge();
                 }
             }
