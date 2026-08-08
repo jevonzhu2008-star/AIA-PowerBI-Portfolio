@@ -9,7 +9,7 @@
  *
  * 结构：Section → MainTab → SubTab
  * - Cloud Finance & FinOps: 4 个主标签 × (Profile + Report) 两个子标签
- * - Others: 2 个主标签，每个下面多个 carousel 报表
+ * - Monitoring: 2 个主标签，每个下面多个 carousel 报表
  */
 
 export interface PowerBiReport {
@@ -122,7 +122,7 @@ const cloudFinanceSections: MainTab[] = [
   },
 ];
 
-// ── Others ──
+// ── Monitoring ──
 
 const othersSections: MainTab[] = [
   {
@@ -207,8 +207,8 @@ export const SECTIONS: Section[] = [
     mainTabs: cloudFinanceSections,
   },
   {
-    id: "others",
-    label: "Others",
+    id: "monitoring",
+    label: "Monitoring",
     hint: "综合运维与运营分析",
     mainTabs: othersSections,
   },

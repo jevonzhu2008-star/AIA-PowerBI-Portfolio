@@ -1627,7 +1627,7 @@
                 <div class="theme-content">
                     <div class="theme-title">
                         <span class="theme-num">2</span>
-                        Others
+                        Monitoring
                         <span class="theme-tag">综合运维与运营分析</span>
                     </div>
                     <p class="theme-desc">采用 <strong>3D Coverflow</strong> 动态轮播，多视角透视企业日常全盘运转：</p>
@@ -1782,7 +1782,7 @@
         </button>
         <button class="section-tab" role="tab" aria-selected="false" data-section="1">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-            Others
+            Monitoring
         </button>
         <button class="section-tab" role="tab" aria-selected="false" data-section="2">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
@@ -2114,7 +2114,7 @@
     </main>
 </div>
 
-<!-- ════ Section 1: Others ════ -->
+<!-- ════ Section 1: Monitoring ════ -->
 <div class="section-content" data-section="1">
     <div class="nav-collapse" id="mainTabsWrap1"><div class="container main-tabs-outer">
         <nav class="main-tabs" role="tablist" aria-label="报表分类">
@@ -2390,7 +2390,7 @@
         var HIDE_DELAY = 15000; /* 15 seconds */
 
         // Section / Main-tab label map
-        var secLabels = ['Cloud Finance & FinOps', 'Others', 'Video Tutorials'];
+        var secLabels = ['Cloud Finance & FinOps', 'Monitoring', 'Video Tutorials'];
         var mainLabels = {
             '0-0': 'Consumption',
             '0-1': 'Cloud Efficiency Saving',
@@ -2411,7 +2411,7 @@
             var cardKey = '';
 
             if (secIdx === '1') {
-                // Others section — carousel title goes into capsule
+                // Monitoring section — carousel title goes into capsule
                 var activePanel = content ? content.querySelector('.main-panel.active') : null;
                 if (activePanel) {
                     var activeItem = activePanel.querySelector('.carousel-item.active');
@@ -2454,7 +2454,7 @@
             document.getElementById('crMain').textContent = mainName;
             var tag = document.getElementById('crTag');
             tag.textContent = cardKey;
-            // Set class: for Others section use fallback color, for FinOps use cardKey directly
+            // Set class: for Monitoring section use fallback color, for FinOps use cardKey directly
             var cls = 'cr-tag';
             if (secIdx === '1') {
                 // Different color per carousel index — cycle through distinct colors
@@ -2945,7 +2945,7 @@
         document.body.appendChild(overlay);
     })();
 
-    /* ── Carousels for Others section ── */
+    /* ── Carousels for Monitoring section ── */
     (function() {
         var timers = {};
         var carousels = document.querySelectorAll('.carousel-wrapper');
