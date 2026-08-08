@@ -480,10 +480,11 @@
 
         /* ── Card Tab Bar ── */
         .card-tabs {
-            display: flex; gap: var(--space-xs); align-items: center;
+            display: flex; gap: 8px; align-items: center;
             padding: var(--space-sm) var(--space-lg);
             border-bottom: 1px solid var(--color-border);
             background: rgba(255,255,255,0.012);
+            flex-wrap: wrap;
         }
         .card-tabs .card-tab-refresh {
             flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
@@ -495,17 +496,36 @@
         .card-tabs .card-tab-refresh:active { transform: rotate(60deg); }
         .card-tabs .card-tab-refresh.spinning { animation: spin 0.6s linear infinite; color: var(--color-primary); }
         .card-tabs .card-tab-refresh svg { width: 16px; height: 16px; }
+        /* FinOps 螺旋闭环风格胶囊标签 */
         .card-tab {
-            display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
-            padding: 9px 18px; border: none; border-radius: var(--radius-sm);
-            background: transparent; color: #667;
-            font-size: 0.82rem; font-weight: 500; cursor: pointer;
-            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), transform 0.3s var(--ease-out);
-            white-space: nowrap; min-height: 38px; min-width: 110px;
+            display: inline-flex; align-items: baseline; gap: 5px;
+            padding: 6px 14px; border: 1px solid transparent; border-radius: 18px;
+            background: color-mix(in srgb, var(--fb-clr, var(--color-primary)) 12%, transparent);
+            color: var(--fb-clr, var(--color-primary));
+            font-size: 0.78rem; font-weight: 600; cursor: pointer;
+            transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), transform 0.3s var(--ease-out);
+            white-space: nowrap;
         }
-        .card-tab:hover { color: #aab; background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+        .card-tab .card-tab-desc {
+            font-weight: 400; font-size: 0.68rem;
+            color: color-mix(in srgb, var(--fb-clr, var(--color-primary)) 55%, var(--color-text-muted));
+        }
+        .card-tab:hover {
+            background: color-mix(in srgb, var(--fb-clr, var(--color-primary)) 20%, transparent);
+            border-color: color-mix(in srgb, var(--fb-clr, var(--color-primary)) 45%, transparent);
+            transform: translateY(-1px);
+        }
         .card-tab:active { transform: scale(0.98); }
-        .card-tab.active { color: #fff; background: rgba(233,69,96,0.25); box-shadow: 0 2px 8px rgba(233,69,96,0.1); transform: translateY(0); }
+        .card-tab.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--fb-clr, var(--color-primary)), color-mix(in srgb, var(--fb-clr, var(--color-primary)) 75%, #000));
+            border-color: transparent;
+            box-shadow: 0 3px 12px color-mix(in srgb, var(--fb-clr, var(--color-primary)) 40%, transparent);
+            transform: translateY(0);
+        }
+        .card-tab.active .card-tab-desc {
+            color: color-mix(in srgb, #fff 80%, transparent);
+        }
         .card-tab svg { width: 16px; height: 16px; flex-shrink: 0; }
 
         /* ── Card Sections ── */
@@ -1016,11 +1036,51 @@
                         border-color var(--duration-base) var(--ease-out),
                         box-shadow var(--duration-base) var(--ease-out);
             position: relative; overflow: hidden;
+            cursor: pointer;
         }
         .theme-card:hover {
             background: rgba(255,255,255,0.022);
             border-color: var(--color-border-hover);
             box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        }
+        .theme-card .theme-go {
+            position: absolute; right: 14px; top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex; align-items: center;
+            padding: 5px; border-radius: 50%;
+            color: var(--color-text-muted);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--color-border);
+            font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.02em; white-space: nowrap;
+            transition: padding var(--duration-base) var(--ease-out),
+                        border-radius var(--duration-base) var(--ease-out),
+                        color var(--duration-fast) var(--ease-out),
+                        background var(--duration-fast) var(--ease-out),
+                        border-color var(--duration-fast) var(--ease-out),
+                        transform var(--duration-base) var(--ease-out),
+                        box-shadow var(--duration-fast) var(--ease-out);
+        }
+        .theme-card .theme-go svg { width: 14px; height: 14px; }
+        .theme-card .theme-go .theme-go-text {
+            max-width: 0; overflow: hidden; opacity: 0;
+            transition: max-width var(--duration-base) var(--ease-out),
+                        opacity var(--duration-fast) var(--ease-out),
+                        margin-left var(--duration-base) var(--ease-out);
+        }
+        .theme-card:hover .theme-go {
+            padding: 6px 12px 6px 8px; border-radius: 16px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--color-primary), #c23152);
+            border-color: transparent;
+            transform: translateY(-50%) translateX(2px);
+            box-shadow: 0 4px 16px rgba(233,69,96,0.35);
+        }
+        .theme-card:hover .theme-go .theme-go-text {
+            max-width: 90px; opacity: 1; margin-left: 5px;
+        }
+        .theme-card .theme-content {
+            padding-right: 44px;
         }
         .theme-icon {
             flex-shrink: 0;
@@ -1570,7 +1630,8 @@
 
         <!-- Theme Cards -->
         <div class="intro-themes">
-            <div class="theme-card">
+            <div class="theme-card" data-section="0">
+                <div class="theme-go" title="点击跳转查看"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span class="theme-go-text">查看详情</span></div>
                 <div class="theme-icon theme-icon-1">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 </div>
@@ -1620,7 +1681,8 @@
                 </div>
             </div>
 
-            <div class="theme-card">
+            <div class="theme-card" data-section="1">
+                <div class="theme-go" title="点击跳转查看"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span class="theme-go-text">查看详情</span></div>
                 <div class="theme-icon theme-icon-2">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
                 </div>
@@ -1686,7 +1748,8 @@
                 </div>
             </div>
 
-            <div class="theme-card">
+            <div class="theme-card" data-section="2">
+                <div class="theme-go" title="点击跳转查看"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg><span class="theme-go-text">查看详情</span></div>
                 <div class="theme-icon theme-icon-3">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
                 </div>
@@ -1820,23 +1883,23 @@
         <section class="main-panel active" role="tabpanel" data-main="0">
             <div class="report-card">
                 <div class="card-tabs" role="tablist" aria-label="视图切换">
-                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Intro
+                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro" style="--fb-clr:var(--color-primary)">
+                        Intro <span class="card-tab-desc">产品视频简介</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile" style="--fb-clr:var(--color-profile)">
+                        Profile <span class="card-tab-desc">架构总览</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="report">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="3" height="10" rx="0.6"/><rect x="10.5" y="5" width="3" height="13" rx="0.6"/><rect x="16" y="2" width="3" height="16" rx="0.6"/></svg> Report
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="report" style="--fb-clr:var(--color-accent)">
+                        Report <span class="card-tab-desc">交互分析报表</span>
                     </button>
-                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Business
+                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business" style="--fb-clr:#50c878">
+                        Business <span class="card-tab-desc">业务价值概述</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc" style="--fb-clr:#a078f0">
+                        Document <span class="card-tab-desc">语义模型文档</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Analysis
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis" style="--fb-clr:#f06a80">
+                        Analysis <span class="card-tab-desc">深度分析报告</span>
                     </button>
                 </div>
 
@@ -1894,23 +1957,23 @@
         <section class="main-panel" role="tabpanel" data-main="1">
             <div class="report-card">
                 <div class="card-tabs" role="tablist" aria-label="视图切换">
-                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Intro
+                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro" style="--fb-clr:var(--color-primary)">
+                        Intro <span class="card-tab-desc">产品视频简介</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile" style="--fb-clr:var(--color-profile)">
+                        Profile <span class="card-tab-desc">架构总览</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="report">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="3" height="10" rx="0.6"/><rect x="10.5" y="5" width="3" height="13" rx="0.6"/><rect x="16" y="2" width="3" height="16" rx="0.6"/></svg> Report
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="report" style="--fb-clr:var(--color-accent)">
+                        Report <span class="card-tab-desc">交互分析报表</span>
                     </button>
-                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Business
+                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business" style="--fb-clr:#50c878">
+                        Business <span class="card-tab-desc">业务价值概述</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc" style="--fb-clr:#a078f0">
+                        Document <span class="card-tab-desc">语义模型文档</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Analysis
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis" style="--fb-clr:#f06a80">
+                        Analysis <span class="card-tab-desc">深度分析报告</span>
                     </button>
                 </div>
 
@@ -1968,23 +2031,23 @@
         <section class="main-panel" role="tabpanel" data-main="2">
             <div class="report-card">
                 <div class="card-tabs" role="tablist" aria-label="视图切换">
-                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Intro
+                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro" style="--fb-clr:var(--color-primary)">
+                        Intro <span class="card-tab-desc">产品视频简介</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile" style="--fb-clr:var(--color-profile)">
+                        Profile <span class="card-tab-desc">架构总览</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="report">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="3" height="10" rx="0.6"/><rect x="10.5" y="5" width="3" height="13" rx="0.6"/><rect x="16" y="2" width="3" height="16" rx="0.6"/></svg> Report
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="report" style="--fb-clr:var(--color-accent)">
+                        Report <span class="card-tab-desc">交互分析报表</span>
                     </button>
-                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Business
+                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business" style="--fb-clr:#50c878">
+                        Business <span class="card-tab-desc">业务价值概述</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc" style="--fb-clr:#a078f0">
+                        Document <span class="card-tab-desc">语义模型文档</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Analysis
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis" style="--fb-clr:#f06a80">
+                        Analysis <span class="card-tab-desc">深度分析报告</span>
                     </button>
                 </div>
 
@@ -2041,23 +2104,23 @@
         <section class="main-panel" role="tabpanel" data-main="3">
             <div class="report-card">
                 <div class="card-tabs" role="tablist" aria-label="视图切换">
-                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Intro
+                    <button class="card-tab active" role="tab" aria-selected="true" data-card="intro" style="--fb-clr:var(--color-primary)">
+                        Intro <span class="card-tab-desc">产品视频简介</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="profile" style="--fb-clr:var(--color-profile)">
+                        Profile <span class="card-tab-desc">架构总览</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="report">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="3" height="10" rx="0.6"/><rect x="10.5" y="5" width="3" height="13" rx="0.6"/><rect x="16" y="2" width="3" height="16" rx="0.6"/></svg> Report
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="report" style="--fb-clr:var(--color-accent)">
+                        Report <span class="card-tab-desc">交互分析报表</span>
                     </button>
-                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Business
+                    <button class="card-tab biz-tab" role="tab" aria-selected="false" data-card="business" style="--fb-clr:#50c878">
+                        Business <span class="card-tab-desc">业务价值概述</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Document
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="doc" style="--fb-clr:#a078f0">
+                        Document <span class="card-tab-desc">语义模型文档</span>
                     </button>
-                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Analysis
+                    <button class="card-tab" role="tab" aria-selected="false" data-card="analysis" style="--fb-clr:#f06a80">
+                        Analysis <span class="card-tab-desc">深度分析报告</span>
                     </button>
                 </div>
 
@@ -2625,6 +2688,32 @@
                     });
                 });
             }, 50);
+        });
+    });
+
+    /* ── Theme Cards → Section navigation ── */
+    document.querySelectorAll('.intro-themes .theme-card[data-section]').forEach(function(card) {
+        card.addEventListener('click', function() {
+            var idx = card.dataset.section;
+            var secBtn = sectionTabs.find(function(t) { return t.dataset.section === idx; });
+            if (secBtn) secBtn.click();
+            // Scroll to the section tabs area (they expand on section-tab click via nav handler)
+            setTimeout(function() {
+                var wrap = document.getElementById('sectionTabsWrap');
+                if (!wrap) return;
+                var lastH = -1, stableFrames = 0;
+                function doScroll() {
+                    var h = wrap.offsetHeight;
+                    if (h === lastH) { stableFrames++; } else { stableFrames = 0; lastH = h; }
+                    if (stableFrames >= 3 && h > 50) {
+                        var top = wrap.getBoundingClientRect().top + window.scrollY;
+                        window.scrollTo({top: Math.max(0, top - 80), behavior: 'smooth'});
+                    } else {
+                        requestAnimationFrame(doScroll);
+                    }
+                }
+                requestAnimationFrame(doScroll);
+            }, 60);
         });
     });
 
