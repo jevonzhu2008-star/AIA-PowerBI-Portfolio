@@ -1,0 +1,41 @@
+{
+  "name": "aia-powerbi-portfolio",
+  "productName": "AIA PowerBI Portfolio",
+  "version": "1.1.0",
+  "description": "AIA Group PowerBI 作品集展示应用（页面指向项目根目录，更新即时生效）",
+  "main": "main.js",
+  "author": "Jevon Zhu",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.aia.portfolio",
+    "files": [
+      "main.js"
+    ],
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "AIA-PowerBI-Portfolio-${version}.exe"
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "npmRebuild": false
+  },
+  "devDependencies": {
+    "electron": "^43.4.0",
+    "electron-builder": "^26.15.3"
+  }
+}
