@@ -1,26 +1,42 @@
 // AIA PowerBI 作品集 —— Electron 主进程
-// 页面指向「部署好的项目目录」（GitHub Pages 站点源 = 项目根目录），
-// 因此更新项目根目录的 index.html 后，App 即时生效，无需重新打包。
+// 页面来源（智能回退）：
+//   1. 外部项目目录 —— 本机开发/演示优先使用，更新页面即时生效
+//   2. 包内快照 —— 拷贝到其他电脑（找不到外部目录）时自动使用，保证可运行
+// 可用环境变量 AIA_PORTFOLIO_DIR 显式指定外部项目目录。
 const { app, BrowserWindow, shell, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
-// 项目根目录（含 index.html 及全部相对资源）。
-// 默认指向本机项目；如移动项目位置，可用环境变量 AIA_PORTFOLIO_DIR 覆盖，无需重打包。
-const PORTFOLIO_DIR =
-  process.env.AIA_PORTFOLIO_DIR || 'D:\\OneDrive - IPowerBI\\文档 - AIA Group\\Project\\AIA 作品集';
+const DEFAULT_PROJECT_DIR =
+  'D:\\OneDrive - IPowerBI\\文档 - AIA Group\\Project\\AIA 作品集';
+const PROJECT_DIR = process.env.AIA_PORTFOLIO_DIR || DEFAULT_PROJECT_DIR;
 
-const INDEX_FILE = path.join(PORTFOLIO_DIR, 'index.html');
-const ICON_FILE = path.join(PORTFOLIO_DIR, 'icon-red.jpg');
+// 解析页面来源：外部项目目录存在则用之，否则回退包内快照
+function resolvePage() {
+  const externalIndex = path.join(PROJECT_DIR, 'index.html');
+  if (fs.existsSync(externalIndex)) {
+    return {
+      index: externalIndex,
+      icon: path.join(PROJECT_DIR, 'icon-red.jpg'),
+      source: 'external'
+    };
+  }
+  return {
+    index: path.join(__dirname, 'index.html'),
+    icon: path.join(__dirname, 'icon-red.jpg'),
+    source: 'bundled'
+  };
+}
 
 function createWindow() {
+  const page = resolvePage();
   const win = new BrowserWindow({
     width: 1440,
     height: 900,
     minWidth: 1024,
     minHeight: 700,
     show: false,
-    icon: fs.existsSync(ICON_FILE) ? ICON_FILE : undefined,
+    icon: fs.existsSync(page.icon) ? page.icon : undefined,
     backgroundColor: '#0a0a12', // 与页面 --color-bg 一致，避免加载闪白
     autoHideMenuBar: true,      // 隐藏菜单栏，保持 App 观感（Alt 可临时唤出）
     webPreferences: {
@@ -39,19 +55,22 @@ function createWindow() {
     return { action: 'deny' };
   });
 
-  win.loadFile(INDEX_FILE);
+  win.loadFile(page.index);
 }
 
 app.whenReady().then(() => {
-  // 校验项目目录存在，否则给出明确提示而非白屏
-  if (!fs.existsSync(INDEX_FILE)) {
+  const page = resolvePage();
+  if (!fs.existsSync(page.index)) {
     dialog.showErrorBox(
       '无法找到作品集页面',
-      `未找到：\n${INDEX_FILE}\n\n请确认项目目录位置，或设置环境变量 AIA_PORTFOLIO_DIR 指向包含 index.html 的项目目录。`
+      `未找到页面：\n${page.index}\n\n请确认项目目录位置，或重新打包 App。`
     );
     app.quit();
     return;
   }
+
+  // 日志（开发/测试可见）：记录本次页面来源，便于诊断
+  console.log(`[AIA Portfolio] 页面来源: ${page.source} → ${page.index}`);
 
   createWindow();
 

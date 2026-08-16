@@ -1,2 +1,7 @@
 node_modules/
 dist/
+# 包内快照（由 scripts/sync-assets.js 从项目根同步，原件在项目根已入库，此处不重复跟踪）
+index.html
+icon-red.jpg
+lib/
+*_report.html
