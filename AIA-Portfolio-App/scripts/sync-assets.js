@@ -12,7 +12,12 @@ const FILES = [
   'Consumption_report.html',
   'Cloud Efficiency Saving_report.html',
   'Cloud and Kyndryl_report.html',
-  'Cloud Cost Management_report.html'
+  'Cloud Cost Management_report.html',
+  // 「文档」页签要加载的语义模型文档（与 index.html 中 docFiles 一一对应）
+  'Consumption语义模型文档.md',
+  'Cloud Efficiency Saving语义模型文档.md',
+  'Cloud & kyndryl Spend语义模型文档.md',
+  'Cloud Cost Management Introduction语义模型文档.md'
 ];
 const LIB_FILES = ['marked.min.js', 'chart.umd.min.js'];
 

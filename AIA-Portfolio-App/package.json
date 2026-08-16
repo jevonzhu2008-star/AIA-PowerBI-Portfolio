@@ -1,7 +1,7 @@
 {
   "name": "aia-powerbi-portfolio",
   "productName": "AIA PowerBI Portfolio",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "AIA Group PowerBI 作品集展示应用（本机联动项目目录，其他电脑自动用包内快照）",
   "main": "main.js",
   "author": "Jevon Zhu",
@@ -22,7 +22,8 @@
       "index.html",
       "icon-red.jpg",
       "lib/**/*",
-      "*_report.html"
+      "*_report.html",
+      "*.md"
     ],
     "win": {
       "icon": "build/icon.png",
