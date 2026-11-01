@@ -21,6 +21,7 @@
       "main.js",
       "index.html",
       "icon-red.jpg",
+      "*.mp4",
       "lib/**/*",
       "*_report.html",
       "*.md"

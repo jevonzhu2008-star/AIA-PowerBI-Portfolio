@@ -9,6 +9,7 @@ const APP = path.resolve(__dirname, '..');        // App 目录
 const FILES = [
   'index.html',
   'icon-red.jpg',
+  'promo-web.mp4', // 首页启动动画（开场视频，网页版）
   'Consumption_report.html',
   'Cloud Efficiency Saving_report.html',
   'Cloud and Kyndryl_report.html',

@@ -1,3 +1,5 @@
 *.mp4
+# 首页启动动画的网页版需要随站点部署（GitHub Pages 无 COS 时直接从这里加载）
+!promo-web.mp4
 *.xlsx
 .gstack/

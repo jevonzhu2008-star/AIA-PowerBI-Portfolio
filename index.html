@@ -1698,7 +1698,92 @@
             .arch-stage { flex: 0 0 220px; }
             .arch-io-grid { grid-template-columns: 1fr; }
         }
+
+        /* ── Intro Splash（启动动画 / 开场视频） ── */
+        html.intro-skipped .intro-splash { display: none; }
+        body.intro-lock { overflow: hidden; }
+
+        .intro-splash {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            background: #04040a; overflow: hidden;
+            /* 默认不透明：首帧直接盖住首页，避免开场前闪现页面 */
+            opacity: 1;
+            transition: opacity 700ms var(--ease-out), transform 1000ms var(--ease-out);
+        }
+        .intro-splash.is-done { display: none; }
+        .intro-splash.is-leaving {
+            opacity: 0; pointer-events: none;
+            transform: scale(1.04);
+        }
+        .intro-splash .intro-video {
+            display: block; width: 100%; height: 100%;
+            object-fit: contain; background: #04040a;
+        }
+        .intro-splash .intro-vignette {
+            position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 36%, rgba(0,0,0,0.55) 100%);
+        }
+        .intro-splash .intro-ui {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            padding: 18px 22px 28px;
+            opacity: 0; transform: translateY(8px);
+            transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+        }
+        .intro-splash.ui-ready .intro-ui { opacity: 1; transform: none; }
+        .intro-sound, .intro-skip {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 9px 15px; border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(12,12,22,0.5);
+            color: rgba(232,236,240,0.82);
+            font-family: inherit; font-size: 0.74rem; letter-spacing: 0.08em;
+            cursor: pointer;
+            -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+            transition: color 250ms var(--ease-out),
+                        background 250ms var(--ease-out),
+                        border-color 250ms var(--ease-out),
+                        box-shadow 250ms var(--ease-out),
+                        transform 250ms var(--ease-out);
+        }
+        .intro-sound:hover, .intro-skip:hover {
+            color: #fff; border-color: rgba(233,69,96,0.6);
+            background: rgba(233,69,96,0.14);
+            box-shadow: 0 6px 24px rgba(233,69,96,0.25);
+        }
+        .intro-sound:active, .intro-skip:active { transform: scale(0.97); }
+        .intro-skip svg { width: 14px; height: 14px; }
+        .intro-sound svg { width: 15px; height: 15px; }
+        .intro-skip kbd {
+            font-family: inherit; font-size: 0.62rem; letter-spacing: 0.06em;
+            padding: 2px 6px; border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.16);
+            color: rgba(232,236,240,0.5);
+        }
+        .intro-sound .ic-sound { display: none; }
+        .intro-sound.is-on .ic-muted { display: none; }
+        .intro-sound.is-on .ic-sound { display: block; }
+        .intro-progress {
+            position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+            background: rgba(255,255,255,0.08);
+        }
+        .intro-progress-fill {
+            display: block; width: 0; height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            box-shadow: 0 0 12px var(--color-primary-glow);
+        }
+        .hero .intro-replay { animation: fadeUp 0.4s var(--ease-out) both; }
+        @media (max-width: 640px) {
+            .intro-splash .intro-ui { padding: 14px 14px 20px; }
+            .intro-skip kbd { display: none; }
+            .intro-sound, .intro-skip { font-size: 0.7rem; padding: 8px 12px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .intro-splash, .intro-splash.is-leaving { transition-duration: 1ms; }
+        }
     </style>
+    <noscript><style>.intro-splash { display: none !important; }</style></noscript>
     <script>
     /* 主题初始化：优先读取用户偏好，其次跟随系统偏好，默认深色（提前设置避免首屏闪烁） */
     (function() {
@@ -1713,9 +1798,178 @@
         } catch (e) {}
         document.documentElement.setAttribute('data-theme', t);
     })();
+    /* 启动动画初始化：本标签页已看过 / 系统开启「减少动态效果」时直接跳过（提前判定，避免闪现） */
+    (function() {
+        var skip = false;
+        try {
+            if (sessionStorage.getItem('aia-intro-seen') === '1') skip = true;
+        } catch (e) {}
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) skip = true;
+        if (skip) document.documentElement.classList.add('intro-skipped');
+    })();
     </script>
 </head>
 <body>
+
+<!-- ── 启动动画：开场视频（播放完毕自动淡出进入首页） ── -->
+<div class="intro-splash" id="introSplash" role="dialog" aria-modal="true" aria-label="开场动画">
+    <video class="intro-video" id="introVideo" src="promo-web.mp4" muted playsinline preload="auto" disablepictureinpicture aria-label="Power BI 作品集开场视频" data-fallback="https://aia-powerbi-portfolio-1258707227.cos.ap-guangzhou.myqcloud.com/introductions/promo-web.mp4"></video>
+    <div class="intro-vignette" aria-hidden="true"></div>
+    <div class="intro-ui">
+        <button type="button" class="intro-sound" id="introSound" aria-pressed="false" title="开启声音">
+            <svg class="ic-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            <svg class="ic-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            <span class="intro-sound-label">开启声音</span>
+        </button>
+        <button type="button" class="intro-skip" id="introSkip">
+            跳过开场
+            <kbd>Esc</kbd>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+    </div>
+    <div class="intro-progress" aria-hidden="true"><span class="intro-progress-fill" id="introProgress"></span></div>
+</div>
+<script>
+(function() {
+    'use strict';
+    var splash = document.getElementById('introSplash');
+    if (!splash) return;
+    var video = document.getElementById('introVideo');
+    var soundBtn = document.getElementById('introSound');
+    var soundLabel = soundBtn.querySelector('.intro-sound-label');
+    var skipBtn = document.getElementById('introSkip');
+    var fill = document.getElementById('introProgress');
+    var playing = false;
+    var finished = false;
+    var doneTimer = null;
+    var uiTimer = null;
+
+    function markSeen() {
+        try { sessionStorage.setItem('aia-intro-seen', '1'); } catch (e) {}
+    }
+
+    function onKey(e) {
+        if (e.key === 'Escape') { e.preventDefault(); finish(); }
+    }
+
+    function finish() {
+        if (finished) return;
+        finished = true;
+        markSeen();
+        clearTimeout(uiTimer);
+        document.removeEventListener('keydown', onKey);
+        if (video) { try { video.pause(); } catch (e) {} }
+        document.body.classList.remove('intro-lock');
+        splash.classList.remove('ui-ready');
+        splash.classList.add('is-leaving');
+        splash.setAttribute('aria-hidden', 'true');
+        clearTimeout(doneTimer);
+        doneTimer = setTimeout(function() {
+            splash.classList.add('is-done');
+            splash.classList.remove('is-leaving');
+        }, 1000);
+    }
+
+    function onProgress() {
+        if (!video || !video.duration) return;
+        var pct = (video.currentTime / video.duration) * 100;
+        fill.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    }
+
+    function showUI() {
+        clearTimeout(uiTimer);
+        uiTimer = setTimeout(function() { splash.classList.add('ui-ready'); }, 900);
+    }
+
+    function start() {
+        if (playing) return;
+        playing = true;
+        finished = false;
+        document.documentElement.classList.remove('intro-skipped');
+        clearTimeout(doneTimer);
+        splash.classList.remove('is-done', 'is-leaving');
+        splash.removeAttribute('aria-hidden');
+        document.body.classList.add('intro-lock');
+        document.addEventListener('keydown', onKey);
+        try { video.currentTime = 0; } catch (e) {}
+        var p = video.play();
+        if (p && typeof p.catch === 'function') {
+            p.catch(function() { finish(); });
+        }
+        showUI();
+    }
+
+    /* 视频不可用：先试远端备用地址，仍失败则静默跳过，不影响首页 */
+    var fallbackTried = false;
+    function bail() {
+        markSeen();
+        finished = true;
+        clearTimeout(watchdog);
+        clearTimeout(uiTimer);
+        document.removeEventListener('keydown', onKey);
+        document.body.classList.remove('intro-lock');
+        splash.classList.remove('ui-ready');
+        splash.classList.add('is-done');
+        splash.setAttribute('aria-hidden', 'true');
+    }
+    video.addEventListener('error', function() {
+        var fb = video.getAttribute('data-fallback');
+        if (fb && !fallbackTried) {
+            fallbackTried = true;
+            video.muted = true;
+            video.src = fb;
+            var p = video.play();
+            if (p && typeof p.catch === 'function') p.catch(bail);
+            watchdog = setTimeout(function() {
+                if (video.readyState < 2) bail();
+            }, 8000);
+            return;
+        }
+        bail();
+    });
+    video.addEventListener('loadeddata', function() { clearTimeout(watchdog); });
+
+    var watchdog = setTimeout(function() {
+        if (video.readyState < 2) bail();
+    }, 8000);
+
+    video.addEventListener('timeupdate', onProgress);
+    video.addEventListener('ended', function() { onProgress(); finish(); });
+
+    skipBtn.addEventListener('click', finish);
+    soundBtn.addEventListener('click', function() {
+        video.muted = !video.muted;
+        var on = !video.muted;
+        soundBtn.classList.toggle('is-on', on);
+        soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        soundBtn.title = on ? '关闭声音' : '开启声音';
+        soundLabel.textContent = on ? '关闭声音' : '开启声音';
+    });
+
+    /* Hero 区的「重播开场」按钮（该按钮位于脚本之后解析，等 DOM 就绪再绑定） */
+    document.addEventListener('DOMContentLoaded', function() {
+        var replayBtn = document.getElementById('introReplay');
+        if (!replayBtn) return;
+        replayBtn.addEventListener('click', function() {
+            playing = false;
+            video.muted = true;
+            soundBtn.classList.remove('is-on');
+            soundBtn.setAttribute('aria-pressed', 'false');
+            soundBtn.title = '开启声音';
+            soundLabel.textContent = '开启声音';
+            fill.style.width = '0%';
+            start();
+        });
+    });
+
+    /* 已判定跳过（本标签页看过 / 减少动态效果）则不动 */
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    try {
+        if (sessionStorage.getItem('aia-intro-seen') === '1') return;
+    } catch (e) {}
+    start();
+})();
+</script>
 
 <header class="hero">
     <div class="deco-layer">
@@ -1737,6 +1991,9 @@
                     <span class="name">Jevon Zhu</span>
                 </span>
             </div>
+            <button type="button" class="theme-toggle intro-replay" id="introReplay" title="重播开场动画" aria-label="重播开场动画">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+            </button>
             <button type="button" class="theme-toggle" id="themeToggle" title="切换浅色 / 深色主题" aria-label="切换浅色 / 深色主题">
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
