@@ -37,11 +37,12 @@ PowerBI 作品集展示页面，嵌入 AIA Group 的 Power BI 报告（Cloud & C
 
 ## 启动动画（开场视频）
 
-`index.html` 打开时先播放全屏开场视频 `promo-web.mp4`（1920×1080、约 50 秒），播完后淡出进入首页。本地与 GitHub Pages 加载同一个文件。
+`index.html` 打开时**不再自动播放**开场视频，直接进入首页；只有用户主动点 hero 区的「重播开场」按钮时，才全屏播放 `promo-web.mp4`（1920×1080、约 50 秒），播完后淡出回到首页。本地与 GitHub Pages 加载同一个文件。
 
 - 结构：`body` 顶部 `.intro-splash`（`#introSplash`）= `<video>` + 暗角 + 左下「开启声音」+ 右下「跳过开场 (Esc)」+ 底部进度条，跟随其后的一段 `<script>` 负责播放控制
-- 跳过条件：`sessionStorage['aia-intro-seen'] === '1'`（本标签页看过/跳过过）或系统开启「减少动态效果」——在 `<head>` 脚本里提前判定并给 `<html>` 加 `.intro-skipped`，避免闪现
-- 声音：浏览器禁止有声自动播放，故默认静音播放，用户点「开启声音」后取消静音（`aia-intro-seen` 不影响此按钮）
+- 默认隐藏：`<head>` 脚本无条件给 `<html>` 加 `.intro-skipped`，CSS 用 `html.intro-skipped .intro-splash { display: none }` 隐藏开场层，全程不闪现；`#introReplay` 点击时调用 `start()`，`start()` 会移除该 class 再播放
+- 预加载：`<video preload="metadata">`，不在首页加载阶段拉取 14MB 视频；加载阶段的 `error` 只切换备用源，不预取也不退出
+- 声音：浏览器禁止有声自动播放，故默认静音播放，用户点「开启声音」后取消静音
 - 容错：`promo-web.mp4` 加载失败时先尝试 `video[data-fallback]` 的 COS 地址，仍失败则静默跳过，不影响首页
 - 重播：hero 区的圆形按钮 `#introReplay`（`.theme-toggle.intro-replay`）会重置播放进度并重新播放
 - 换视频：把新视频放到项目根，用 ffmpeg 压成网页版再替换 `promo-web.mp4`（建议 `ffmpeg -i 源.mp4 -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart promo-web.mp4`）；`.gitignore` 里 `!promo-web.mp4` 已放行入库，push 后 Pages 自动部署

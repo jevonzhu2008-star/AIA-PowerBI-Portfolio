@@ -1798,22 +1798,16 @@
         } catch (e) {}
         document.documentElement.setAttribute('data-theme', t);
     })();
-    /* 启动动画初始化：本标签页已看过 / 系统开启「减少动态效果」时直接跳过（提前判定，避免闪现） */
-    (function() {
-        var skip = false;
-        try {
-            if (sessionStorage.getItem('aia-intro-seen') === '1') skip = true;
-        } catch (e) {}
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) skip = true;
-        if (skip) document.documentElement.classList.add('intro-skipped');
-    })();
+    /* 开场视频不再随页面加载自动播放：默认给 <html> 加 intro-skipped 直接进入首页，
+       仅当用户点击 hero 区「重播开场」按钮时才显示并播放（按钮里的 start() 会移除该 class） */
+    document.documentElement.classList.add('intro-skipped');
     </script>
 </head>
 <body>
 
 <!-- ── 启动动画：开场视频（播放完毕自动淡出进入首页） ── -->
 <div class="intro-splash" id="introSplash" role="dialog" aria-modal="true" aria-label="开场动画">
-    <video class="intro-video" id="introVideo" src="promo-web.mp4" muted playsinline preload="auto" disablepictureinpicture aria-label="Power BI 作品集开场视频" data-fallback="https://aia-powerbi-portfolio-1258707227.cos.ap-guangzhou.myqcloud.com/introductions/promo-web.mp4"></video>
+    <video class="intro-video" id="introVideo" src="promo-web.mp4" muted playsinline preload="metadata" disablepictureinpicture aria-label="Power BI 作品集开场视频" data-fallback="https://aia-powerbi-portfolio-1258707227.cos.ap-guangzhou.myqcloud.com/introductions/promo-web.mp4"></video>
     <div class="intro-vignette" aria-hidden="true"></div>
     <div class="intro-ui">
         <button type="button" class="intro-sound" id="introSound" aria-pressed="false" title="开启声音">
@@ -1843,10 +1837,7 @@
     var finished = false;
     var doneTimer = null;
     var uiTimer = null;
-
-    function markSeen() {
-        try { sessionStorage.setItem('aia-intro-seen', '1'); } catch (e) {}
-    }
+    var watchdog = null;
 
     function onKey(e) {
         if (e.key === 'Escape') { e.preventDefault(); finish(); }
@@ -1855,8 +1846,8 @@
     function finish() {
         if (finished) return;
         finished = true;
-        markSeen();
         clearTimeout(uiTimer);
+        clearTimeout(watchdog);
         document.removeEventListener('keydown', onKey);
         if (video) { try { video.pause(); } catch (e) {} }
         document.body.classList.remove('intro-lock');
@@ -1896,13 +1887,18 @@
         if (p && typeof p.catch === 'function') {
             p.catch(function() { finish(); });
         }
+        clearTimeout(watchdog);
+        if (video.readyState < 2) {
+            watchdog = setTimeout(function() {
+                if (video.readyState < 2) bail();
+            }, 8000);
+        }
         showUI();
     }
 
     /* 视频不可用：先试远端备用地址，仍失败则静默跳过，不影响首页 */
     var fallbackTried = false;
     function bail() {
-        markSeen();
         finished = true;
         clearTimeout(watchdog);
         clearTimeout(uiTimer);
@@ -1918,6 +1914,8 @@
             fallbackTried = true;
             video.muted = true;
             video.src = fb;
+            /* 首页加载阶段（开场处于隐藏状态）：只换备用源，不预取也不退出 */
+            if (!playing) return;
             var p = video.play();
             if (p && typeof p.catch === 'function') p.catch(bail);
             watchdog = setTimeout(function() {
@@ -1925,13 +1923,9 @@
             }, 8000);
             return;
         }
-        bail();
+        if (playing) bail();
     });
     video.addEventListener('loadeddata', function() { clearTimeout(watchdog); });
-
-    var watchdog = setTimeout(function() {
-        if (video.readyState < 2) bail();
-    }, 8000);
 
     video.addEventListener('timeupdate', onProgress);
     video.addEventListener('ended', function() { onProgress(); finish(); });
@@ -1962,12 +1956,7 @@
         });
     });
 
-    /* 已判定跳过（本标签页看过 / 减少动态效果）则不动 */
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    try {
-        if (sessionStorage.getItem('aia-intro-seen') === '1') return;
-    } catch (e) {}
-    start();
+    /* 开场视频不再自动播放：仅点击 hero 区「重播开场」按钮时由 start() 播放 */
 })();
 </script>
 
